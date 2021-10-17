@@ -1,0 +1,8 @@
+*.~
+*.swp
+*.fa
+*.fai
+bigsis/
+node_modules/
+logs/
+tests/test_data/
