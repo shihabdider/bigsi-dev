@@ -267,6 +267,7 @@ async function mergeBigsis(bigsis){
 /** Converts bigsi into a flat array of ints
  */
 function bigsiToInts(bigsi, intSize){
+    console.log(`bigsi dimensions: ${bigsi.size()} [rows, cols]`)
     const flatRows = bigsi().flat()
 
     const intRows = []
@@ -304,19 +305,17 @@ function makeBinaryDumpBigsi(u16IntRows){
 
 
 
-/**
- * @param { TypedArray } binaryDumpBigsi - bigsi as a TypedArray 
- * @param { string } filename - name of the file we are writing to
- *
- * @returns - writes TypedArray to binary file
+/** 
+ * @param { TypedArray } binaryDumpBigsi - bigsi matrix in TypedArray format
+ * @param { string } outputPath
  */
-function writeBinaryDumpBigsi(binaryDumpBigsi, filename){
+function writeBinaryDumpBigsi(binaryDumpBigsi, outputPath){
 
-    fs.writeFileSync(filename, binaryDumpBigsi, 'binary', function (err) {
+    fs.writeFileSync(outputPath, binaryDumpBigsi, 'binary', function (err) {
         if(err) {
             console.log(err)
         } else {
-            console.log(`BIGSI binary dump written to: ${filename}`);
+            console.log(`BIGSI binary dump written to: ${outputPath}`);
             }
     });
 }
@@ -327,9 +326,9 @@ function writeBinaryDumpBigsi(binaryDumpBigsi, filename){
  * @returns { Array of Hexdecimal strings } hexBigsi
  */
 function makeHexBigsi(bigsi){
-    let hexBigsi = []
     const numRows = bigsi.size()[0]
 
+    let hexBigsi = []
     for (let i = 0; i < numRows; i++){
         const ithRow = bigsi(i)
         const binaryString = ithRow.join('')
