@@ -85,8 +85,8 @@ function reverseComplement(sequence){
     return revComplementSeq
 }
 
+// Based on MashMap's winnowing algorithm
 function extractMinimizers(seq){
-    //seq: sequence string
     seq = seq.toUpperCase()
 
     const kmerSize = 16
@@ -127,20 +127,10 @@ function extractMinimizers(seq){
     return minimizers
 }
 
-function makeMinimizersBloomFilter(minimizers, sizeBloomFilter=160000){
-    /* Inputs:
-     *  minimizers -- array of minimizers
-     *  sizeBloomfilter -- length of the Bloom filter (300kb)
-     *
-     * Outputs:
-     *  minimizersBloomFilter -- Bloom filter with inserted minimizers
-     *
-     */
-
-    const minimizersBloomFilter = new BloomFilter(sizeBloomFilter, nbHashes=1)
-    for (let i=0; i < minimizers.length; i++){
-        minimizersBloomFilter.add(minimizers[i].toString())
-
+function makeMinimizersBloomFilter(minimizers, bloomFilterSize=160000, numHashes=1){
+    const minimizersBloomFilter = new BloomFilter(bloomFilterSize, nbHashes=numHashes)
+    for (const minimizer of minimizers){
+        minimizersBloomFilter.add(minimizer.toString())
     }
     return minimizersBloomFilter
 }
