@@ -19,7 +19,7 @@ BIGSI_parameters = {
 
 def compute_num_hash_funcs(bf_size, num_inserted):
     '''Computes optimal number of hash functions for a bloom filter'''
-    return (bf_size/num_inserted)*math.log(2)
+    return math.ceil((bf_size/num_inserted)*math.log(2))
 
 
 def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
@@ -40,24 +40,38 @@ def compute_false_hit(false_pos, num_minimizers, perc_identity):
 def compute_bf_size(false_prob_rate, num_inserted_elements):
     '''Computes the array size of the bloom filter given false positive rate
     and number of elements inserted'''
-    num_bits = (-num_inserted_elements*math.log(false_prob_rate)) \
-        / ((math.log(2))**2)
+    num_bits = -num_inserted_elements/math.log((1 - false_prob_rate))
     return num_bits
 
 def bits_to_mb(bits):
     return bits/(8*10**6)
 
-false_pos = 0.36
-num_inserted = 300_000
-num_minimizers_query = 6_000
-perc_identity = 0.4
+def print_bf_stats():
+    num_inserted = 300_000
+    num_minimizers_query = 100
+    perc_identity = 0.8
+    false_hit_thresh = 1e-2
+    for bf_size_bits in range(1, 10**9, 10**3):
+        bf_size_mb = bits_to_mb(bf_size_bits)
+        num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
+        false_pos_rate = compute_bf_false_pos(num_hashes, num_inserted,
+                                              bf_size_bits)
+        false_hit = compute_false_hit(false_pos_rate,
+                                      num_minimizers_query,
+                                      perc_identity)
+        false_hit = false_hit*22*16
+        bf_stats = 'bf size (in bits): {0} \n \t(in Mb) {1} \n optimal number hashes\
+            {2} \n false positive rate: {3} \n false hit rate: {4}'.format(
+                bf_size_bits, bf_size_mb*22*16, num_hashes, 
+                false_pos_rate, false_hit)
+        if false_hit <= false_hit_thresh:
+            print('optimal params found!')
+            print(bf_stats)
+            break
 
-bf_size_bits = compute_bf_size(false_pos, num_inserted)
-bf_size_mb = bits_to_mb(bf_size_bits)
-num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
-false_pos_rate = compute_bf_false_pos(2, num_inserted, bf_size_bits)
-false_hit = compute_false_hit(false_pos, num_minimizers_query, perc_identity)
-print(bf_size_bits, bf_size_mb*22*16, num_hashes, false_pos_rate, false_hit*22*16)
+
+print_bf_stats()
+
 
 # Minimizers
 
