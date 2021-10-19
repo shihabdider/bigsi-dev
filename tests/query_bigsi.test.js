@@ -43,6 +43,18 @@ const genomeSeq = new IndexedFasta({
     chunkSizeLimit: 50000000
 });
 
+/*
+ * Basic test for frag vs. no frag query:
+ *  Ref hg38 chr1 and query ACADM gene (~40Kb -> 8 frags and 800 minimizers)
+ * Variations:
+ *  1. Exact match vs 80% identity match: Require rebuilding the bigsi with new 
+ *  size parameter
+ *  2. 80% identity match artificial seq: Requires adding artifical random 
+ *  mutations to ACADM
+ *  3. 80% identity structural variant: Requires adding artifical structural 
+ *  mutation to ACADM (insert/delete <8Kb segment)
+ */
+
 test('makeQueryFragsMinimizers - should return an array of arrays of ints', async () => {
     const querySeq = await seq.getSequence('1')
     const result = await queryBigsi.makeQueryFragsMinimizers(querySeq)

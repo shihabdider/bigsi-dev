@@ -18,7 +18,7 @@
 
 const cdf = require('binomial-cdf')
 const matrix = require('matrix-js')
-const commonFunc = require('./common_func.js')
+const commonFunc = require('./helper.js')
 const BitSet = require('bitset')
 const fs = require('fs')
 //import Uint1Array from 'uint1array'
