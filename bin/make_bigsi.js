@@ -34,7 +34,7 @@ function makeBucketMap(seqSize, seqName, seqIdx, numBucketsPerSeq, bucketOverhan
  * seq - indexFasta of entire genome/sequence
  * seqSizeThreshold - min size of sequence (to filter small sequences)
  */
-async function makeBucketToPosition(seq, seqSizeThreshold, numBucketsPerSeq=16){
+async function makeBucketToPositionMap(seq, seqSizeThreshold, numBucketsPerSeq=16){
     const seqSizes = await seq.getSequenceSizes()
 
     let bucketToPositionMap = {}
@@ -194,7 +194,7 @@ async function makeGenomeBigsis(genome, numBuckets, seqSizeThreshold=3*10**7){
         genomeBigsis.push(seqBigsi)
         const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`Process uses ${memoryUsed} MB`)
-        seqBuckets = []
+        seqBuckets = null
     }
 
     return genomeBigsis
@@ -296,9 +296,24 @@ function writeBigsiToJSON(bigsi, outputPath){
 
 }
 
+function main(seq, numBuckets, seqSizeThreshold){
+    const bigsis = await makeBigsi.makeGenomeBigsis(seq, numBuckets, seqSizeThreshold)
+    console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
+    const bigsi = await makeBigsi.mergeBigsis(bigsis)
+    console.log(`Bigsis merged!`)
+
+    const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
+    console.log(`Process uses ${memoryUsed}`)
+
+    const u16IntRows = makeBigsi.bigsiToInts(bigsi, 16)
+    const binaryBigsi = makeBigsi.makeBinaryBigsi(u16IntRows)
+
+    return binaryBigsi
+}
+
 module.exports = {
     makeBucketMap: makeBucketMap,
-    makeBucketToPosition: makeBucketToPosition,
+    makeBucketToPositionMap: makeBucketToPositionMap,
     writeBucketMapToJSON: writeBucketMapToJSON,
     splitSeqIntoBuckets: splitSeqIntoBuckets,
     makeBucketsBloomFilters: makeBucketsBloomFilters,
@@ -311,5 +326,6 @@ module.exports = {
     writeBinaryBigsi: writeBinaryBigsi,
     makeHexBigsi: makeHexBigsi,
     writeBigsiToJSON: writeBigsiToJSON,
-    makeBucketToGenome: makeBucketToGenome
+    makeBucketToGenome: makeBucketToGenome,
+    main: main
 }
