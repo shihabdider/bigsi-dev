@@ -3,82 +3,57 @@ const matrix = require('matrix-js')
 const BitSet = require('bitset')
 const fs = require('fs')
 
-/**
- * @param { number } seqSize - size of the sequence
- * @param { string } seqName - name of sequence
- * @param { number } bucketNumStart, bucketNumEnd - first and last bucket 
- * numbers of the sequence
- * @param { number } overhang - bucket overhangs (equal to upper bound of query 
- * sequence length
- *
- * @returns { object } bucketMap - maps buckets => { refName: "1", bucketStart: 0, bucketEnd: 0 }
- */
-function makeBucketMap(seqSize, seqName, bucketNumStart, bucketNumEnd, overhang=190000){
-    const numBuckets = bucketNumEnd - bucketNumStart + 1
-    const bucketSize = Math.round((seqSize + ((numBuckets - 1)*overhang))/numBuckets)
+// bucketOverhang - overhangs (equal to half the upper bound of query sequence length or 150K) 
+function makeBucketMap(seqSize, seqName, seqIdx, numBucketsPerSeq, bucketOverhang=150_000){
+    const bucketStart = seqIdx*numBucketsPerSeq
+    const bucketEnd = bucketStart + numBucketsPerSeq - 1
+    const bucketSize = Math.round((seqSize + ((numBucketsPerSeq - 1)*bucketOverhang))/numBucketsPerSeq)
 
     const bucketMap = {} 
     for (let bucketNum=bucketNumStart; bucketNum <= bucketNumEnd; bucketNum++){
-        bucketMap[bucketNum] = {}
 
-        const intervalStart = Math.max((bucketSize-overhang)*(bucketNum%numBuckets), 0)
+        const intervalStart = Math.max((bucketSize-bucketOverhang)*(bucketNum%numBucketsPerSeq), 0)
         let intervalEnd = intervalStart + bucketSize
 
-        // Handle last bucket
-        if (bucketNum == numBuckets - 1){
+        // Handle final bucket
+        if (bucketNum == numBucketsPerSeq - 1){
             intervalEnd = seqSize
         }
 
-        bucketMap[bucketNum] = Object.assign(
-            {
+        bucketMap[bucketNum] = {
                 refName: seqName,
                 bucketStart: intervalStart,
                 bucketEnd: intervalEnd,
-            }, 
-            bucketMap[bucketNum]
-        )
-        
+            }
     }
 
     return bucketMap
 }
 
 /** 
- * @param { indexedFasta } seq - indexFasta of entire genome/sequence
- * @param { number } seqSizeThreshold - min size of sequence (to filter small 
- * sequences)
- * @param { number } numBuckets - number of buckets per sequence
- *
- * @returns { object } bucketToPosition - maps buckets => { refName: "1", start: 0, end: 0 }
+ * seq - indexFasta of entire genome/sequence
+ * seqSizeThreshold - min size of sequence (to filter small sequences)
  */
-async function makeBucketToPosition(seq, seqSizeThreshold, numBuckets=16){
+async function makeBucketToPosition(seq, seqSizeThreshold, numBucketsPerSeq=16){
     const seqSizes = await seq.getSequenceSizes()
 
-    let bucketToPosition = {}
+    let bucketToPositionMap = {}
     let seqIdx = 0
     for (seqName in seqSizes) {
         const seqSize = seqSizes[seqName]
-        if ( seqSize > seqSizeThreshold ) {
-            const bucketStart = seqIdx*numBuckets
-            const bucketEnd = bucketStart + numBuckets - 1
-            const bucketMap = makeBucketMap(seqSize, seqName, bucketStart, bucketEnd)
-            bucketToPosition = { ...bucketToPosition, ...bucketMap }
+        if ( seqSize >= seqSizeThreshold ) {
+            const bucketMap = makeBucketMap(seqSize, seqName, seqIdx, numBucketsPerSeq)
+            bucketToPositionMap = { ...bucketToPositionMap, ...bucketMap }
             seqIdx++
         }
     }
 
-    return bucketToPosition
+    return bucketToPositionMap
  }
 
-/** 
- * @param { object } bucketToPosition - maps buckets => { refName: "1", start: 0, end: 1 }
- * @param { string } outputFilename - name of output file
- *
- * @returns json file with bucketToPosition
- */
-function writeBucketMapToJSON(bucketToPosition, outputFilename){
+function writeBucketMapToJSON(bucketToPositionMap, outputFilename){
     
-    const bucketMapJSON = JSON.stringify(bucketToPosition, null, 4);
+    const bucketMapJSON = JSON.stringify(bucketToPositionMap, null, 4);
 
     fs.writeFile(outputFilename, bucketMapJSON, function(err){
         if(err) {
@@ -90,22 +65,14 @@ function writeBucketMapToJSON(bucketToPosition, outputFilename){
 
 }
 
-async function splitSeqIntoBuckets(seq, seqName, numBuckets, overhang=300_000){
-    /* Inputs:
-     *  seq -- sequence object from IndexedFasta lib
-     *  seqName -- name of sequence in fai file
-     *  numBuckets -- number of overlapping buckets to split sequence into
-     *
-     * Outputs:
-     *  buckets -- array of sequence strings
-    */
+async function splitSeqIntoBuckets(seq, seqName, numBuckets, bucketOverhang=150_000){
 
     const seqSize = await seq.getSequenceSize(seqName);
-    const bucketSize = Math.round((seqSize + ((numBuckets - 1)*overhang))/numBuckets)
+    const bucketSize = Math.round((seqSize + ((numBuckets - 1)*bucketOverhang))/numBuckets)
 
     const buckets = []
     for (let i=0; i < numBuckets; i++){
-        const bucketStart = Math.max((bucketSize-overhang)*i, 0)
+        const bucketStart = Math.max((bucketSize-bucketOverhang)*i, 0)
         let bucketEnd = bucketStart + bucketSize
 
         // Handle last bucket
@@ -122,13 +89,6 @@ async function splitSeqIntoBuckets(seq, seqName, numBuckets, overhang=300_000){
 }
 
 function makeBucketsBloomFilters(bucketSequences){
-    /* Inputs:
-     *  bucketSequences -- array of bucket sequences (strings)
-     *
-     * Outputs:
-     *  bucketsBloomFilters -- array of Bloom filters (one for each bucket)
-     *
-     */
 
     const bucketsBloomFilters = []
     for (let idx=0; idx < bucketSequences.length; idx++){
@@ -145,13 +105,6 @@ function makeBucketsBloomFilters(bucketSequences){
 }
 
 async function buildBigsi(bucketSequences){
-    /* Inputs:
-     *  bucketSequences -- array of bucket sequences (strings) 
-     *
-     * Outputs:
-     *  bigsi matrix of bucket Bloom filters
-     *
-     */
 
     const bucketsBloomFilters = makeBucketsBloomFilters(bucketSequences)
     const bigsiMatrix = matrix(bucketsBloomFilters.map(bloomFilterObj => bloomFilterObj._filter))
@@ -168,7 +121,7 @@ async function buildBigsi(bucketSequences){
  * format with fai indices)
  *
  * @returns { array of strings } genomeSeqs -- array of genome sequences 
- * (each sequence is a bucket)
+ * (each sequence corresponds to a bucket)
  */
 async function getMultiGenomeSeqs(genomesDir){
     const dir = await fs.promises.opendir(genomesDir)
@@ -198,7 +151,6 @@ async function getMultiGenomeSeqs(genomesDir){
     return genomeSeqs
 }
 
-
 /**
  * @param { String } genomesDir - directory where genomes are stored (in fasta 
  * format with fai indices)
@@ -224,12 +176,12 @@ async function makeBucketToGenome(genomesDir){
 }
 
 /**
- * @param { IndexedFasta } genome - indexedfasta object of genome
+ * @param { IndexedFasta } genome - indexedFasta object of genome
  *
  * @returns { array of matrices } genomeBigsis - array of bigsi matrices for 
  *  each seq in genome
  */
-async function makeGenomeBigsis(genome, numBuckets, seqSizeThreshold=10**7){
+async function makeGenomeBigsis(genome, numBuckets, seqSizeThreshold=3*10**7){
     const seqNames = await commonFunc.getFilteredGenomeSeqs(genome, seqSizeThreshold)
     console.log('seqNames: ', seqNames)
 
@@ -248,13 +200,7 @@ async function makeGenomeBigsis(genome, numBuckets, seqSizeThreshold=10**7){
     return genomeBigsis
 }
 
-/**
- * @param { array of functions } bigsis - array of bigis matrices
- *
- * @returns { function } mergedBigsi - merged bigsi
- */
-
-async function mergeBigsis(bigsis){
+function mergeBigsis(bigsis){
     let mergedBigsi = bigsis[0]
     for (let i=1; i < bigsis.length; i++){
         mergedBigsi = matrix(mergedBigsi.merge.right(bigsis[i]()))
@@ -289,9 +235,9 @@ function bigsiToInts(bigsi, intSize){
 /**
  * @param { array } u16IntRows - bigsi matrix as a flat array of 16-bit ints
  *
- * @returns { TypedArray } binaryDumpBigsi - bigsi as a TypedArray
+ * @returns { TypedArray } binaryBigsi - bigsi as a TypedArray
  */
-function makeBinaryDumpBigsi(u16IntRows){
+function makeBinaryBigsi(u16IntRows){
     const totalBufSize = Math.ceil(u16IntRows.length*2) // buffer size in bytes
     console.log('buffer size: ', totalBufSize)
     const buf = new ArrayBuffer(totalBufSize); // specifies the number of bytes in the buffer
@@ -306,12 +252,12 @@ function makeBinaryDumpBigsi(u16IntRows){
 
 
 /** 
- * @param { TypedArray } binaryDumpBigsi - bigsi matrix in TypedArray format
+ * @param { TypedArray } binaryBigsi - bigsi matrix in TypedArray format
  * @param { string } outputPath
  */
-function writeBinaryDumpBigsi(binaryDumpBigsi, outputPath){
+function writeBinaryBigsi(binaryBigsi, outputPath){
 
-    fs.writeFileSync(outputPath, binaryDumpBigsi, 'binary', function (err) {
+    fs.writeFileSync(outputPath, binaryBigsi, 'binary', function (err) {
         if(err) {
             console.log(err)
         } else {
@@ -320,11 +266,6 @@ function writeBinaryDumpBigsi(binaryDumpBigsi, outputPath){
     });
 }
 
-/**
- * @param { Array of Arrays } bigsi
- *
- * @returns { Array of Hexdecimal strings } hexBigsi
- */
 function makeHexBigsi(bigsi){
     const numRows = bigsi.size()[0]
 
@@ -341,10 +282,6 @@ function makeHexBigsi(bigsi){
 }
 
 
-/** Writes bigsi to JSON 
- * @param { Array } bigsi -- bigsi matrix object as array of strings
- * @param { string } outputPath 
- */
 function writeBigsiToJSON(bigsi, outputPath){
 
     const bigsiJSON = JSON.stringify(bigsi, null, 4);
@@ -359,7 +296,6 @@ function writeBigsiToJSON(bigsi, outputPath){
 
 }
 
-
 module.exports = {
     makeBucketMap: makeBucketMap,
     makeBucketToPosition: makeBucketToPosition,
@@ -371,8 +307,8 @@ module.exports = {
     makeGenomeBigsis: makeGenomeBigsis,
     mergeBigsis: mergeBigsis,
     bigsiToInts: bigsiToInts,
-    makeBinaryDumpBigsi: makeBinaryDumpBigsi,
-    writeBinaryDumpBigsi: writeBinaryDumpBigsi,
+    makeBinaryBigsi: makeBinaryBigsi,
+    writeBinaryBigsi: writeBinaryBigsi,
     makeHexBigsi: makeHexBigsi,
     writeBigsiToJSON: writeBigsiToJSON,
     makeBucketToGenome: makeBucketToGenome

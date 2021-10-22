@@ -145,8 +145,10 @@ function computeSubmatrixHits(submatrix, bigsiHits){
     }
 }
 
-// Hamming weight: count of set bits in a bitset/bitstring (e.g H('1101') = 3)
-function computeSubmatrixHammingWeights(submatrix, bigsiHits) {
+// Containment score is the Jaccard containment identity:
+// Hamming weight of submatrix columns divided by
+// number of minimizers inserted into query Bloom Filter
+function computeQueryContainmentScores(submatrix, bigsiHits) {
     const queryMinimizerCount = submatrix.size()[0]
     submatrix_T = submatrix.trans()
     const hammingWeights = []
@@ -157,9 +159,9 @@ function computeSubmatrixHammingWeights(submatrix, bigsiHits) {
     }
 
     for (let bucketNum = 0; bucketNum < counts.length; i++){
-        const identityScore = counts[bucketNum]/queryMinimizerCount
-        if (identityScore > 0) {
-            bigsiHits[bucketNum]['identity'] = identityScore
+        const containmentScore = counts[bucketNum]/queryMinimizerCount
+        if (containmentScore > 0) {
+            bigsiHits[bucketNum]['containment'] = containmentScore
         }
     }
 
@@ -192,7 +194,7 @@ async function queryBinaryBigsi(bigsiPath, queryFragmentsBloomFilters, numCols){
         const querySubmatrix = await getBinaryBigsiSubmatrix(bigsiArray, queryBFSetBitsIndices, numCols)
 
         if (numFragments == 1){
-            computeSubmatrixHammingWeights(querySubmatrix, bigsiHits)
+            computeQueryContainmentScores(querySubmatrix, bigsiHits)
         } else {
             computeSubmatrixHits(querySubmatrix, bigsiHits)
         }

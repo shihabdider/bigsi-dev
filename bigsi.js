@@ -1,5 +1,5 @@
-const makeBigsi = require('./make_bigsi.js')
-const commonFunc = require('./common_func.js')
+const makeBigsi = require('./bin/make_bigsi.js')
+const commonFunc = require('./bin/helper.js')
 
 async function main(){
     const { argv } = require('yargs')
