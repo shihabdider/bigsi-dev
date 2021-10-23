@@ -1,6 +1,7 @@
 const murmur = require('murmurhash-js')
 const { BloomFilter } = require('bloom-filters')
 const { IndexedFasta } = require('@gmod/indexedfasta')
+const cdf = require('binomial-cdf');
 
 function zeroPadBitstring(bitstring, places){
     const paddedString = bitstring.padStart(places, '0')
@@ -12,40 +13,11 @@ function zeroPad(num, places){
     return paddedString
 }
 
-function bitStringToArrayBuffer(bitString) {
-
-    // split the string into octets
-    var pairs = bitString.match(/[\d]{1,8}/gi)
-
-    // convert the octets to integers
-    var integers = pairs.map(function(s) {
-        return parseInt(s, 2);
-    });
-
-    var array = new Uint8Array(integers);
-
-    return array.buffer;
-}
-
-/**
- * @param { number } rowNum - bigsi row number
- * @param { string } root - parent directory where bigsi is stored
- *
- * @returns { string } path - path of the row binary file 
- */
-function makeBigsiRowPath(rowNum, root){
-    const paddedRowNum = zeroPad(rowNum, 6)
-    const rowPath = `${paddedRowNum.slice(0,3)}/${paddedRowNum.slice(3,6)}`
-    const path = `${root}/${rowPath}.bin`
-
-    return path
-}
-
 async function loadFasta(fastaPath, faiPath){
     const seq = new IndexedFasta({
         path: fastaPath,
         faiPath: faiPath,
-        chunkSizeLimit: 50000000
+        chunkSizeLimit: 5e7
     });
 
     return seq
@@ -73,10 +45,15 @@ async function getFilteredGenomeSeqs(genome, seqSizeThreshold=10**7){
 }
 
 function reverseComplement(sequence){
-    var reverseSeq=sequence.split('').reverse().join('')
+    let reverseSeq = sequence.split('').reverse().join('')
 
-    let COMPLEMENT_BASES = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'},
-        re = /[ATCG]/g;
+    const COMPLEMENT_BASES = {
+        'A': 'T', 
+        'T': 'A', 
+        'G': 'C', 
+        'C': 'G'
+    }
+    const re = /[ATCG]/g;
 
     var revComplementSeq = reverseSeq.replace(re, function (sequence) {
         return COMPLEMENT_BASES[sequence]
@@ -101,7 +78,6 @@ function extractMinimizers(seq){
         let kmerHashFwd = murmur.murmur3(seq.slice(i,i+kmerSize), seed)
         let kmerHashBwd = murmur.murmur3(revSequence.slice(-(i+kmerSize), -i), seed)
         let kmerHash = Math.min(kmerHashFwd, kmerHashBwd)
-        //console.log(kmerHash, seq.slice(i,i+kmerSize))
 
         while (deque.length != 0 && deque[0].offset <= i - windowSize){
             deque.shift()
@@ -113,13 +89,11 @@ function extractMinimizers(seq){
         }
 
         deque.push({'hash':kmerHash, 'offset':i})
-        //console.log('deque', deque.slice(-1)[0])
 
         if (currentWindowIndex >= 0){
             if ( minimizers.length == 0 || minimizers.slice(-1)[0] != deque[0].hash )
             {
                 minimizers.push(deque[0].hash)
-                //console.log('bucketMinimizer', minimizers.slice(-1)[0])
             }
         }
     }
@@ -127,8 +101,49 @@ function extractMinimizers(seq){
     return minimizers
 }
 
-function makeMinimizersBloomFilter(minimizers, bloomFilterSize=160000, numHashes=1){
-    const minimizersBloomFilter = new BloomFilter(bloomFilterSize, nbHashes=numHashes)
+function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize){
+    const numHashes = 1
+
+    const falsePos = (1 - math.exp(
+        -1*numHashes*numElementsInserted/bloomFilterSize
+    ))**numHashes
+    return falsePos
+}
+
+function computeFalseHitProb(falsePosRate, maxQueryMinimizers, containmentScoreThresh){
+    const numMatching = maxQueryMinimizers*containmentScoreThresh
+    const falseHitProb = cdf(numMatching, maxQueryMinimizers, falsePosRate)
+    return false_hit_prob
+}
+
+function computeBloomFilterSize(numElementsInserted, containmentScoreThresh, totalNumBuckets){
+    // initialize set parameters
+    const maxQueryMinimizers = 6_000  // 300Kbp max query = 6k minimizers
+    const falseHitThresh = 1e-2
+    // iterate over a array size range...
+    for ( let bloomFilterSize = 0; bloomFilterSize <= 1e6; bloomFilterSize += 1e3 ){
+        const falsePosRate = computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize)
+        const falseHitProb = computeFalseHitProb(
+            falsePosRate, 
+            maxQueryMinimizers, 
+            containmentScoreThresh
+        )
+
+        // accounting for all buckets in bigsi
+        const falseHitProbUpper = falseHitProb*totalNumBuckets
+        // break if false hit rate less than threshold and return
+        if ( falseHitProbUpper <= falseHitThresh ) {
+            return falseHitProbUpper
+        }
+    }
+}
+
+function makeMinimizersBloomFilter(minimizers){
+    // get number of minimizers
+    const numInserted = minimizers.length
+    // adjust filter size based on number of inserted elements and desired false pos 
+    // rate
+    const minimizersBloomFilter = new BloomFilter(bloomFilterSize, nbHashes=1)
     for (const minimizer of minimizers){
         minimizersBloomFilter.add(minimizer.toString())
     }
@@ -138,8 +153,6 @@ function makeMinimizersBloomFilter(minimizers, bloomFilterSize=160000, numHashes
 module.exports = {
     zeroPadBitstring: zeroPadBitstring,
     zeroPad: zeroPad,
-    bitStringToArrayBuffer: bitStringToArrayBuffer,
-    makeBigsiRowPath: makeBigsiRowPath,
     loadFasta: loadFasta,
     getFilteredGenomeSeqs: getFilteredGenomeSeqs,
     extractMinimizers: extractMinimizers,

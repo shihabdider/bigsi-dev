@@ -92,13 +92,12 @@ async function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
             //console.log('ints: ', bigsi.slice(offsetStart, offsetEnd))
 
             const rowBitString = Array.from(bigsi.slice(offsetStart, offsetEnd))
-                .map((num) => {return num.toString(2)})
+                .map((num) => helper.zeroPadBitstring(num.toString(2), 16))
                 .join('')
 
             // Front padding ensures all columns are accounted for
-            const paddedRowBitString = helper.zeroPadBitstring(rowBitString, numCols)
-            console.log('final padded bitstring: ', paddedRowBitString)
-            const row = paddedRowBitString.split('').map(Number)
+            //console.log('final padded bitstring: ', rowBitString)
+            const row = rowBitstring.split('').map(Number)
             submatrixRows.push(row)
         }
     } catch(err) {
@@ -212,11 +211,11 @@ async function main(querySeq) {
     // Test: non-frag query
     const fragmentSizeZero = 0
     const queryFragmentsMinimizers = await winnowQueryFragments(querySeq, fragmentSizeZero)
-    const queryBloomFilter = await makeFragmentsBloomFilters(queryFragmentsMinimizers)
+    const queryMask = await makeFragmentsBloomFilters(queryFragmentsMinimizers)
 
     const bigsiPath = 'http://localhost:3001/public/hg38_16int_bdump.bin'
     const numCols = 32
-    const filteredBigsiHits = await queryBinaryBigsi(bigsiPath, queryBloomFilter, numCols)
+    const filteredBigsiHits = await queryBinaryBigsi(bigsiPath, queryMask, numCols)
 
     return filteredBigsiHits
 }
