@@ -1,5 +1,10 @@
-const hexBigsi = require('./test_data/hg38_hex.json')
+//const hexBigsi = require('./test_data/hg38_hex.json')
 const BitSet = require('bitset')
+
+function zeroPadBitstring(bitstring, places){
+    const paddedString = bitstring.padStart(places, '0')
+    return paddedString
+}
 
 function zeroPad(num, places){
     const paddedString = String(num).padStart(places, '0')
@@ -60,8 +65,26 @@ function cardinalityTest(){
     }
 }
 
+function u16IntToBitArrayTest(){
+    // start with a bitarray representing a row
+    const rowArray = [0, 0, 1, 0, 0, 1, 1, 0]
+    // convert bitarray to an array of 2 ints
+    const firstInt = parseInt('0010', 2)
+    const secondInt = parseInt('0110', 2)
+    const intArray = [firstInt, secondInt]
+    // convert array to a bitstring
+    const bitstring = intArray.map((num) => zeroPadBitstring(num.toString(2), 4)).join('')
+    // pad bitstring
+    //const paddedBS = zeroPadBitstring(bitstring, 8)
+    // compare split array back to a bitarray
+    const row = bitstring.split('').map(Number)
+    // compare the two bitarrays
+    console.log(rowArray, '\n', row)
+
+}
+
 function main(){
-    cardinalityTest()
+    u16IntToBitArrayTest()
 }
 
 main()

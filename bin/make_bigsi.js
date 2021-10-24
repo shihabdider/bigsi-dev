@@ -88,14 +88,19 @@ async function splitSeqIntoBuckets(seq, seqName, numBuckets, bucketOverhang=150_
     return buckets
 }
 
-function makeBucketsBloomFilters(bucketSequences){
+function makeBucketsBloomFilters(bucketSequences, totalNumBuckets){
+    const containmentScoreThresh = 0.80
 
     const bucketsBloomFilters = []
     for (let idx=0; idx < bucketSequences.length; idx++){
         const bucketSequence = bucketSequences[idx]
         const bucketMinimizers = commonFunc.extractMinimizers(bucketSequence)
 
-        const bucketBloomFilter = commonFunc.makeMinimizersBloomFilter(bucketMinimizers)
+        const bucketBloomFilter = commonFunc.makeMinimizersBloomFilter(
+                bucketMinimizers, 
+                containmentScoreThresh, 
+                totalNumBuckets
+            )
         console.log(`${bucketBloomFilter.length} minimizers inserted into bloom filter for bucket ${idx}`)
         bucketsBloomFilters.push(bucketBloomFilter)
     }
@@ -106,7 +111,8 @@ function makeBucketsBloomFilters(bucketSequences){
 
 async function buildBigsi(bucketSequences){
 
-    const bucketsBloomFilters = makeBucketsBloomFilters(bucketSequences)
+    const totalNumBuckets = bucketSequences.length
+    const bucketsBloomFilters = makeBucketsBloomFilters(bucketSequences, totalNumBuckets)
     const bigsiMatrix = matrix(bucketsBloomFilters.map(bloomFilterObj => bloomFilterObj._filter))
     const bigsi = matrix(bigsiMatrix.trans())
 

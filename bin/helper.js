@@ -112,7 +112,7 @@ function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize){
 
 function computeFalseHitProb(falsePosRate, maxQueryMinimizers, containmentScoreThresh){
     const numMatching = maxQueryMinimizers*containmentScoreThresh
-    const falseHitProb = cdf(numMatching, maxQueryMinimizers, falsePosRate)
+    const falseHitProb = 1 - cdf(numMatching, maxQueryMinimizers, falsePosRate)
     return false_hit_prob
 }
 
@@ -133,14 +133,23 @@ function computeBloomFilterSize(numElementsInserted, containmentScoreThresh, tot
         const falseHitProbUpper = falseHitProb*totalNumBuckets
         // break if false hit rate less than threshold and return
         if ( falseHitProbUpper <= falseHitThresh ) {
-            return falseHitProbUpper
+            return bloomFilterSize
         }
     }
 }
 
-function makeMinimizersBloomFilter(minimizers){
+function makeMinimizersBloomFilter(
+    minimizers, 
+    containmentScoreThresh, 
+    totalNumBuckets
+) {
     // get number of minimizers
     const numInserted = minimizers.length
+    const bloomFilterSize = computeBloomFilterSize(
+        numInserted, 
+        containmentScoreThresh, 
+        totalNumBuckets
+    )
     // adjust filter size based on number of inserted elements and desired false pos 
     // rate
     const minimizersBloomFilter = new BloomFilter(bloomFilterSize, nbHashes=1)

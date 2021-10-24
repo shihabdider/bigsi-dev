@@ -1,4 +1,4 @@
-const commonFunc = require('../common_func.js')
+const commonFunc = require('../bin/helper.js')
 const { IndexedFasta, BgzipIndexedFasta } = require('@gmod/indexedfasta')
 
 // Init a seq object (hg38 chr1) for use with tests
