@@ -1,16 +1,16 @@
-const commonFunc = require('./common_func.js')
+const helper = require('./helper.js')
 const matrix = require('matrix-js')
 const BitSet = require('bitset')
 const fs = require('fs')
 
 // bucketOverhang - overhangs (equal to half the upper bound of query sequence length or 150K) 
-function makeBucketMap(seqSize, seqName, seqIdx, numBucketsPerSeq, bucketOverhang=150_000){
+function makeBucketMap(seqName, seqSize, seqIdx, numBucketsPerSeq, bucketOverhang=150_000){
     const bucketStart = seqIdx*numBucketsPerSeq
     const bucketEnd = bucketStart + numBucketsPerSeq - 1
     const bucketSize = Math.round((seqSize + ((numBucketsPerSeq - 1)*bucketOverhang))/numBucketsPerSeq)
 
     const bucketMap = {} 
-    for (let bucketNum=bucketNumStart; bucketNum <= bucketNumEnd; bucketNum++){
+    for (let bucketNum=bucketStart; bucketNum <= bucketEnd; bucketNum++){
 
         const intervalStart = Math.max((bucketSize-bucketOverhang)*(bucketNum%numBucketsPerSeq), 0)
         let intervalEnd = intervalStart + bucketSize
@@ -42,7 +42,7 @@ async function makeBucketToPositionMap(seq, seqSizeThreshold, numBucketsPerSeq=1
     for (seqName in seqSizes) {
         const seqSize = seqSizes[seqName]
         if ( seqSize >= seqSizeThreshold ) {
-            const bucketMap = makeBucketMap(seqSize, seqName, seqIdx, numBucketsPerSeq)
+            const bucketMap = makeBucketMap(seqName, seqSize, seqIdx, numBucketsPerSeq)
             bucketToPositionMap = { ...bucketToPositionMap, ...bucketMap }
             seqIdx++
         }
@@ -63,6 +63,64 @@ function writeBucketMapToJSON(bucketToPositionMap, outputFilename){
         }
     });
 
+}
+/**
+ * @param { String } genomesDir - directory where genomes are stored (in fasta 
+ * format with fai indices)
+ *
+ * @returns { Object } bucketToGenome -- maps bucket/column of bigsi to 
+ * corresponding genome filename
+ */
+async function makeBucketToGenome(genomesDir){
+    const dir = await fs.promises.opendir(genomesDir)
+
+    const bucketToGenome = {}
+    const currentCol = 0
+    for await (const file of dir) {
+        const isFasta = file.name.endsWith('.fasta') || file.name.endsWith('.fa')
+        if (isFasta){
+            const genomeName = file.name.replace(/\.[^/.]+$/, "")
+            bucketToGenome[currentCol] = genomeName
+            currentCol++
+        }
+    }
+
+    return bucketToGenome
+}
+
+/**
+ * @param { String } genomesDir - directory where genomes are stored (in fasta 
+ * format with fai indices)
+ *
+ * @returns { array of strings } genomeSeqs -- array of genome sequences 
+ * (each sequence corresponds to a bucket)
+ */
+async function getMultiGenomeSeqs(genomesDir){
+    const dir = await fs.promises.opendir(genomesDir)
+
+    const genomeSeqs = []
+    for await (const file of dir) {
+        const isFasta = file.name.endsWith('.fasta') || file.name.endsWith('.fa') || file.name.endsWith('.fsa')
+
+        if (isFasta){
+            console.log('Opening:', file.name)
+            const fai = file.name + '.fai'
+            const genome = await helper.loadFasta(`${dir.path}/${file.name}`, `${dir.path}/${fai}`)
+            const seqSizeThreshold = 0
+            const seqNames = await helper.getFilteredGenomeSeqs(genome, seqSizeThreshold)
+
+            const seqStrings = [] 
+            for (const seqName of seqNames){
+                seq = await genome.getSequence(seqName);   
+                seqStrings.push(seq)
+            }
+            const genomeStr = seqStrings.join('')
+            console.log(`length of genome ${file.name}:`, genomeStr.length)
+            genomeSeqs.push(genomeStr)
+        }
+    }
+    
+    return genomeSeqs
 }
 
 async function splitSeqIntoBuckets(seq, seqName, numBuckets, bucketOverhang=150_000){
@@ -89,19 +147,34 @@ async function splitSeqIntoBuckets(seq, seqName, numBuckets, bucketOverhang=150_
 }
 
 function makeBucketsBloomFilters(bucketSequences, totalNumBuckets){
-    const containmentScoreThresh = 0.80
 
-    const bucketsBloomFilters = []
+    const bucketsMinimizers = []
+    let maxNumElementsInserted = 0
     for (let idx=0; idx < bucketSequences.length; idx++){
         const bucketSequence = bucketSequences[idx]
-        const bucketMinimizers = commonFunc.extractMinimizers(bucketSequence)
+        const bucketMinimizers = helper.extractMinimizers(bucketSequence)
+        bucketsMinimizers.push(bucketMinimizers)
+        console.log(`inserting ${bucketMinimizers.length} minimizers into bloom filter for bucket ${idx}`)
+        if (bucketMinimizers.length > maxNumElementsInserted) {
+            maxNumElementsInserted = bucketMinimizers.length
+        }
+    }
 
-        const bucketBloomFilter = commonFunc.makeMinimizersBloomFilter(
+    console.log(`Max num elemenst inserted: ${maxNumElementsInserted}`)
+
+    const containmentScoreThresh = 0.80
+    const bloomFilterSize = helper.computeBloomFilterSize(
+        maxNumElementsInserted, 
+        containmentScoreThresh, 
+        totalNumBuckets
+    )
+
+    const bucketsBloomFilters = []
+    for (bucketMinimizers of bucketsMinimizers){
+        const bucketBloomFilter = helper.makeMinimizersBloomFilter(
                 bucketMinimizers, 
-                containmentScoreThresh, 
-                totalNumBuckets
+                bloomFilterSize
             )
-        console.log(`${bucketBloomFilter.length} minimizers inserted into bloom filter for bucket ${idx}`)
         bucketsBloomFilters.push(bucketBloomFilter)
     }
 
@@ -116,69 +189,10 @@ async function buildBigsi(bucketSequences){
     const bigsiMatrix = matrix(bucketsBloomFilters.map(bloomFilterObj => bloomFilterObj._filter))
     const bigsi = matrix(bigsiMatrix.trans())
 
-    bucketSequences = []
+    bucketSequences = null
 
     return bigsi
 
-}
-
-/**
- * @param { String } genomesDir - directory where genomes are stored (in fasta 
- * format with fai indices)
- *
- * @returns { array of strings } genomeSeqs -- array of genome sequences 
- * (each sequence corresponds to a bucket)
- */
-async function getMultiGenomeSeqs(genomesDir){
-    const dir = await fs.promises.opendir(genomesDir)
-
-    const genomeSeqs = []
-    for await (const file of dir) {
-        const isFasta = file.name.endsWith('.fasta') || file.name.endsWith('.fa') || file.name.endsWith('.fsa')
-
-        if (isFasta){
-            console.log('Opening:', file.name)
-            const fai = file.name + '.fai'
-            const genome = await commonFunc.loadFasta(`${dir.path}/${file.name}`, `${dir.path}/${fai}`)
-            const seqSizeThreshold = 0
-            const seqNames = await commonFunc.getFilteredGenomeSeqs(genome, seqSizeThreshold)
-
-            const seqStrings = [] 
-            for (const seqName of seqNames){
-                seq = await genome.getSequence(seqName);   
-                seqStrings.push(seq)
-            }
-            const genomeStr = seqStrings.join('')
-            console.log(`length of genome ${file.name}:`, genomeStr.length)
-            genomeSeqs.push(genomeStr)
-        }
-    }
-    
-    return genomeSeqs
-}
-
-/**
- * @param { String } genomesDir - directory where genomes are stored (in fasta 
- * format with fai indices)
- *
- * @returns { Object } bucketToGenome -- maps bucket/column of bigsi to 
- * corresponding genome filename
- */
-async function makeBucketToGenome(genomesDir){
-    const dir = await fs.promises.opendir(genomesDir)
-
-    const bucketToGenome = {}
-    const currentCol = 0
-    for await (const file of dir) {
-        const isFasta = file.name.endsWith('.fasta') || file.name.endsWith('.fa')
-        if (isFasta){
-            const genomeName = file.name.replace(/\.[^/.]+$/, "")
-            bucketToGenome[currentCol] = genomeName
-            currentCol++
-        }
-    }
-
-    return bucketToGenome
 }
 
 /**
@@ -188,7 +202,7 @@ async function makeBucketToGenome(genomesDir){
  *  each seq in genome
  */
 async function makeGenomeBigsis(genome, numBuckets, seqSizeThreshold=3*10**7){
-    const seqNames = await commonFunc.getFilteredGenomeSeqs(genome, seqSizeThreshold)
+    const seqNames = await helper.getFilteredGenomeSeqs(genome, seqSizeThreshold)
     console.log('seqNames: ', seqNames)
 
     const genomeBigsis = []
@@ -302,17 +316,17 @@ function writeBigsiToJSON(bigsi, outputPath){
 
 }
 
-function main(seq, numBuckets, seqSizeThreshold){
-    const bigsis = await makeBigsi.makeGenomeBigsis(seq, numBuckets, seqSizeThreshold)
+async function main(seq, numBuckets, seqSizeThreshold){
+    const bigsis = await makeGenomeBigsis(seq, numBuckets, seqSizeThreshold)
     console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
-    const bigsi = await makeBigsi.mergeBigsis(bigsis)
+    const bigsi = await mergeBigsis(bigsis)
     console.log(`Bigsis merged!`)
 
     const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
     console.log(`Process uses ${memoryUsed}`)
 
-    const u16IntRows = makeBigsi.bigsiToInts(bigsi, 16)
-    const binaryBigsi = makeBigsi.makeBinaryBigsi(u16IntRows)
+    const u16IntRows = bigsiToInts(bigsi, 16)
+    const binaryBigsi = makeBinaryBigsi(u16IntRows)
 
     return binaryBigsi
 }

@@ -8,9 +8,22 @@ function zeroPadBitstring(bitstring, places){
     return paddedString
 }
 
-function zeroPad(num, places){
-    const paddedString = String(num).padStart(places, '0')
-    return paddedString
+function reverseComplement(sequence){
+    let reverseSeq = sequence.split('').reverse().join('')
+
+    const COMPLEMENT_BASES = {
+        'A': 'T', 
+        'T': 'A', 
+        'G': 'C', 
+        'C': 'G'
+    }
+    const re = /[ATCG]/g;
+
+    var revComplementSeq = reverseSeq.replace(re, function (sequence) {
+        return COMPLEMENT_BASES[sequence]
+    });
+
+    return revComplementSeq
 }
 
 async function loadFasta(fastaPath, faiPath){
@@ -42,24 +55,6 @@ async function getFilteredGenomeSeqs(genome, seqSizeThreshold=10**7){
 
     return filteredSeqNames
     
-}
-
-function reverseComplement(sequence){
-    let reverseSeq = sequence.split('').reverse().join('')
-
-    const COMPLEMENT_BASES = {
-        'A': 'T', 
-        'T': 'A', 
-        'G': 'C', 
-        'C': 'G'
-    }
-    const re = /[ATCG]/g;
-
-    var revComplementSeq = reverseSeq.replace(re, function (sequence) {
-        return COMPLEMENT_BASES[sequence]
-    });
-
-    return revComplementSeq
 }
 
 // Based on MashMap's winnowing algorithm
@@ -104,28 +99,28 @@ function extractMinimizers(seq){
 function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize){
     const numHashes = 1
 
-    const falsePos = (1 - math.exp(
+    const falsePos = (1 - Math.exp(
         -1*numHashes*numElementsInserted/bloomFilterSize
     ))**numHashes
     return falsePos
 }
 
-function computeFalseHitProb(falsePosRate, maxQueryMinimizers, containmentScoreThresh){
-    const numMatching = maxQueryMinimizers*containmentScoreThresh
-    const falseHitProb = 1 - cdf(numMatching, maxQueryMinimizers, falsePosRate)
-    return false_hit_prob
+function computeFalseHitProb(falsePosRate, minQueryMinimizers, containmentScoreThresh){
+    const numMatching = minQueryMinimizers*containmentScoreThresh
+    const falseHitProb = 1 - cdf(numMatching, minQueryMinimizers, falsePosRate)
+    return falseHitProb
 }
 
-function computeBloomFilterSize(numElementsInserted, containmentScoreThresh, totalNumBuckets){
+function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, totalNumBuckets){
     // initialize set parameters
-    const maxQueryMinimizers = 6_000  // 300Kbp max query = 6k minimizers
+    const minQueryMinimizers = 100  // 5Kbp min query = 100 minimizers
     const falseHitThresh = 1e-2
     // iterate over a array size range...
     for ( let bloomFilterSize = 0; bloomFilterSize <= 1e6; bloomFilterSize += 1e3 ){
-        const falsePosRate = computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize)
+        const falsePosRate = computeBloomFilterFalsePosRate(maxNumElementsInserted, bloomFilterSize)
         const falseHitProb = computeFalseHitProb(
             falsePosRate, 
-            maxQueryMinimizers, 
+            minQueryMinimizers, 
             containmentScoreThresh
         )
 
@@ -133,23 +128,13 @@ function computeBloomFilterSize(numElementsInserted, containmentScoreThresh, tot
         const falseHitProbUpper = falseHitProb*totalNumBuckets
         // break if false hit rate less than threshold and return
         if ( falseHitProbUpper <= falseHitThresh ) {
+            console.log(`optimal bloom filter size: ${bloomFilterSize}`)
             return bloomFilterSize
         }
     }
 }
 
-function makeMinimizersBloomFilter(
-    minimizers, 
-    containmentScoreThresh, 
-    totalNumBuckets
-) {
-    // get number of minimizers
-    const numInserted = minimizers.length
-    const bloomFilterSize = computeBloomFilterSize(
-        numInserted, 
-        containmentScoreThresh, 
-        totalNumBuckets
-    )
+function makeMinimizersBloomFilter( minimizers, bloomFilterSize) {
     // adjust filter size based on number of inserted elements and desired false pos 
     // rate
     const minimizersBloomFilter = new BloomFilter(bloomFilterSize, nbHashes=1)
@@ -161,10 +146,13 @@ function makeMinimizersBloomFilter(
 
 module.exports = {
     zeroPadBitstring: zeroPadBitstring,
-    zeroPad: zeroPad,
+    reverseComplement: reverseComplement,
     loadFasta: loadFasta,
     getFilteredGenomeSeqs: getFilteredGenomeSeqs,
     extractMinimizers: extractMinimizers,
-    reverseComplement: reverseComplement,
+    computeBloomFilterFalsePosRate: computeBloomFilterFalsePosRate,
+    computeFalseHitProb: computeFalseHitProb,
+    computeBloomFilterSize: computeBloomFilterSize,
     makeMinimizersBloomFilter: makeMinimizersBloomFilter,
 }
+

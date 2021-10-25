@@ -1,5 +1,5 @@
 const makeBigsi = require('./bin/make_bigsi.js')
-const commonFunc = require('./bin/helper.js')
+const helper = require('./bin/helper.js')
 
 async function main(){
     const { argv } = require('yargs')
@@ -9,13 +9,6 @@ async function main(){
             alias: 'r',
             describe: 'Fasta file of reference sequence',
             demandOption: 'Fasta file is required',
-            type: 'string',
-            nargs: 1,
-        })
-        .option('fai', {
-            describe: 'Fasta index file of reference sequence',
-            demandOption: 'Index file is required',
-            default: `${argv.ref}.fai`
             type: 'string',
             nargs: 1,
         })
@@ -34,7 +27,8 @@ async function main(){
             nargs: 1,
         })
 
-    const seq = await commonFunc.loadFasta(argv.ref, argv.fai)
+    const fai = `${argv.ref}.fai`
+    const seq = await helper.loadFasta(argv.ref, fai)
     console.log('Sequence loaded...')
 
     const seqSizeThreshold = 2e8    // >seqSizeThreshold sequences only

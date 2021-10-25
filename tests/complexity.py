@@ -59,12 +59,12 @@ def print_bf_stats():
         false_hit = compute_false_hit(false_pos_rate,
                                       num_minimizers_query,
                                       perc_identity)
-        false_hit = false_hit*22*16
+        false_hit_total = false_hit*22*16
         bf_stats = 'bf size (in bits): {0} \n \t(in Mb) {1} \n optimal number hashes\
-            {2} \n false positive rate: {3} \n false hit rate: {4}'.format(
+            {2} \n false positive rate: {3} \n false hit rate: {4}\n false hit total: {5}'.format(
                 bf_size_bits, bf_size_mb*22*16, num_hashes, 
-                false_pos_rate, false_hit)
-        if false_hit <= false_hit_thresh:
+                false_pos_rate, false_hit, false_hit_total)
+        if false_hit_total <= false_hit_thresh:
             print('optimal params found!')
             print(bf_stats)
             break
