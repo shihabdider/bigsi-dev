@@ -1,47 +1,43 @@
-const queryBigsi = require('../query_bigsi.js')
+const queryBigsi = require('../bin/query_bigsi.js')
 const matrix = require('matrix-js')
 const { IndexedFasta } = require('@gmod/indexedfasta')
 const { BloomFilter } = require('bloom-filters')
 const fs = require('fs')
+const fetch  = require('cross-fetch')
 
-let bigsi = require('./data/testRefBigsi.json');
-bigsi = matrix(bigsi)
-//let genomeBigsi = require('./data/hg38_genome.json')
-//genomeBigsi = matrix(genomeBigsi)
+const binaryBigsiPath = './test_data/hg38_chr1.bin'
+const bucketMapPath = './test_data/hg38_chr1_bucket_map.json'
+//const numCols = 16
 
-let binaryDumpBigsiPath = './tests/data/hg38_16int_bdump.bin'
-const numCols = 32
-
-let bitBigsiPath = './tests/data/testBigsiBinaryFiles'
-
-let hexBigsi = require('./data/testRefHexBigsi.json')
+//let hexBigsi = require('./data/testRefHexBigsi.json')
 
 // query fasta
-const fastaPath = 'tests/data/testQuerySeq.fa'
-const faiPath = 'tests/data/testQuerySeq.fa.fai'
-const seq = new IndexedFasta({
+//const fastaPath = 'tests/test_data/testQuerySeq.fa'
+//const faiPath = 'tests/test_data/testQuerySeq.fa.fai'
+
+const fastaPath = '../../seqs/human/ACADM_hg38chr1.fasta'
+const faiPath = '../../seqs/human/ACADM_hg38chr1.fasta.fai'
+const query = new IndexedFasta({
     path: fastaPath,
     faiPath: faiPath,
     chunkSizeLimit: 50000000
 });
 
-// ref fasta
-const refFastaPath = 'tests/data/testRefSeq.fa'
-const refFaiPath = 'tests/data/testRefSeq.fa.fai'
-const refSeq = new IndexedFasta({
-    path: refFastaPath,
-    faiPath: refFaiPath,
-    chunkSizeLimit: 50000000
-});
+async function getBigsiArray(){
 
-// ref fasta genome (hg38)
-const genomeFastaPath = 'tests/data/GCF_000001405.26_GRCh38_genomic.fna'
-const genomeFaiPath = 'tests/data/GCF_000001405.26_GRCh38_genomic.fna.fai'
-const genomeSeq = new IndexedFasta({
-    path: genomeFastaPath,
-    faiPath: genomeFaiPath,
-    chunkSizeLimit: 50000000
-});
+    //const bigsiPath = 'http://localhost:3001/public/hg38_16int_bdump.bin'
+    const bigsiPath = 'http://localhost:3001/public/hg38_chr1.bin'
+    const response = await fetch(bigsiPath)
+    const bigsiBuffer = await response.arrayBuffer()
+    //const binaryBigsiPath = 'tests/test_data/hg38_chr1.bin'
+    //const bigsiBuffer = fs.readFileSync(binaryBigsiPath)
+    console.log('num bytes in the bigsi buffer:', bigsiBuffer.byteLength)
+
+    let bigsiArray = new Uint16Array(bigsiBuffer);
+    console.log('bigsiArray size: ', bigsiArray.length)
+    
+    return bigsiArray
+}
 
 /*
  * Basic test for frag vs. no frag query:
@@ -55,200 +51,135 @@ const genomeSeq = new IndexedFasta({
  *  mutation to ACADM (insert/delete <8Kb segment)
  */
 
-test('makeQueryFragsMinimizers - should return an array of arrays of ints', async () => {
-    const querySeq = await seq.getSequence('1')
-    const result = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    expect(typeof result[0][0]).toBe('number')
+describe('Preprocess query', () =>{
+    test('if winnowQueryFragments returns an array of minimizers', async () => {
+        const querySeq = await query.getSequence('1')
+        const result = await queryBigsi.winnowQueryFragments(querySeq)
+        expect(typeof result[0][0]).toBe('number')
+    })
+
+    test('if makeFragmentsBloomFilters returns an array of Bloom filters with at least 1 element inserted', 
+        async () => {
+            const querySeq = await query.getSequence('1')
+            const fragMinimizers = await queryBigsi.winnowQueryFragments(querySeq)
+            const bloomFilterSize = 290_000
+            const result = queryBigsi.makeFragmentsBloomFilters(fragMinimizers, bloomFilterSize)
+            console.log(result)
+            expect(result[0]._filter).toContain(1)
+    })
 })
 
-test('makeQueryFragsBloomFilters - should return an array of Bloom filters with at least 1 element inserted', 
-    async () => {
-        const querySeq = await seq.getSequence('1')
-        const fragMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-        const result = queryBigsi.makeQueryFragsBloomFilters(fragMinimizers)
-        expect(result[0]._filter).toContain(1)
-})
 
-test('getQueryBloomFilterOnesIndices - should return 1 value indices for a bloom filter', () => {
-    const testBloomFilter = [1, 0, 1, 0, 0]
-    const result = queryBigsi.getQueryBloomFilterOnesIndices(testBloomFilter)
-    expect(result).toEqual([0,2])
-})
+describe('Query bigsi', () => {
+    describe('Helpers', () => {
+        test('if getBloomFilterSetBitsIndices returns 1 value indices for a bloom filter', () => {
+            const testBloomFilter = [1, 0, 1, 0, 0]
+            const result = queryBigsi.getBloomFilterSetBitsIndices(testBloomFilter)
+            expect(result).toEqual([0,2])
+        })
+    })
 
-test('initBigsiHits - should return an object of objects with properties: refName, start, end, hits ', async () => {
-    const refSeqName = '1'
-    const refSeqSize = await refSeq.getSequenceSize(refSeqName)
-    const result = queryBigsi.initBigsiHits(refSeqSize, refSeqName, numBuckets=10, overhang=30000)
-    expect(result['0']).toEqual(expect.objectContaining(
-        {
-            refName: expect.any(String),
-            start: expect.any(Number),
-            end: expect.any(Number),
-            hits: 0
+    describe('Submatrix handling', () => {
+        async function getRowFilter(){
+            const bigsiArray = await getBigsiArray()
+            const numCols = 16
+            const bloomFilterSize = bigsiArray.length/numCols
+
+            const querySeq = await query.getSequence('1')
+            const queryFragmentsMinimizers = await queryBigsi.winnowQueryFragments(querySeq)
+            const queryBloomFilters = await queryBigsi.makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
+            console.log(queryBloomFilters.length)
+            const rowFilter = await queryBigsi.getBloomFilterSetBitsIndices(queryBloomFilters[0]._filter)
+
+            return rowFilter
         }
-    ))
+
+        test('if getBinaryBigsiSubmatrix returns a valid submatrix', async () => {
+
+            const bigsiArray = await getBigsiArray()
+            const numCols = 16
+            const rowFilter = await getRowFilter()
+
+            const result = queryBigsi.getBinaryBigsiSubmatrix(bigsiArray, rowFilter, numCols)
+            expect(typeof result()[0]).toBe('object')
+        })
+
+        test('if computeSubmatrixHits returns bucket hits for a single query fragment', async () => {
+            const bigsiArray = await getBigsiArray()
+            const numCols = 16
+            const rowFilter = await getRowFilter()
+            const submatrix = queryBigsi.getBinaryBigsiSubmatrix(bigsiArray, rowFilter, numCols)
+
+            const bigsiHits = {}
+            await queryBigsi.computeSubmatrixHits(submatrix, bigsiHits, numCols)
+            console.log(bigsiHits)
+            expect(typeof bigsiHits['1']['hits']).toBe('number')
+        })
+
+        test('if computeQueryContainmentScores returns valid scores for submatrix', async () => {
+            const bigsiArray = await getBigsiArray()
+            const numCols = 16
+            const rowFilter = await getRowFilter()
+            const submatrix = queryBigsi.getBinaryBigsiSubmatrix(bigsiArray, rowFilter, numCols)
+
+            const bigsiHits = {}
+            await queryBigsi.computeQueryContainmentScores(submatrix, bigsiHits)
+            console.log(bigsiHits)
+            expect(typeof bigsiHits['1']['containment']).toBe('number')
+        })
+    })
+
+    describe('Query binary bigsi', () => {
+        test('if queryBinaryBigsi returns object containing fragment hits', async () => {
+            const bigsiArray = await getBigsiArray()
+            const numCols = 32
+            const bloomFilterSize = bigsiArray.length/numCols
+
+            const querySeq = await query.getSequence('1')
+            const queryFragmentsMinimizers = await queryBigsi.winnowQueryFragments(querySeq)
+            const queryBloomFilters = await queryBigsi.makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
+
+            const result = await queryBigsi.queryBinaryBigsi(bigsiArray, queryBloomFilters, numCols)
+            console.log(result)
+            expect(result).toBeDefined()
+        })
+
+        test.only('if queryBinaryBigsi returns object containing non-frag counts', async () => {
+            const bigsiArray = await getBigsiArray()
+            const numCols = 16
+            const bloomFilterSize = bigsiArray.length*16/numCols
+            console.log('bfSize bin:', bloomFilterSize)
+
+            const querySeq = await query.getSequence('1')
+            const fragmentSizeZero = 0
+            const queryFragmentsMinimizers = await queryBigsi.winnowQueryFragments(querySeq, fragmentSizeZero)
+            const queryBloomFilters = await queryBigsi.makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
+
+            const result = await queryBigsi.queryBinaryBigsi(bigsiArray, queryBloomFilters, numCols)
+            console.log(result)
+            expect(result).toBeDefined()
+        })
+    })
+
+    describe('Query hex bigsi', () => {
+        test.only('if hexBigsi returns object containing non-frag counts', async () => {
+            const hexBigsi = require('./test_data/hg38_chr1_hex.json')
+            const bloomFilterSize = hexBigsi.length
+            console.log('bfSize hex:', bloomFilterSize)
+
+            const querySeq = await query.getSequence('1')
+            const fragmentSizeZero = 0
+            const queryFragmentsMinimizers = await queryBigsi.winnowQueryFragments(querySeq, fragmentSizeZero)
+            console.log(queryFragmentsMinimizers)
+            const queryBloomFilters = await queryBigsi.makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
+
+            const result = queryBigsi.queryHexBigsi(hexBigsi, queryBloomFilters)
+            console.log(result)
+            expect(result).toBeDefined()
+        })
+    })
 })
 
 
-test('initGenomeBigsiHits - should return an array of objects', async () => {
-    const result = await queryBigsi.initGenomeBigsiHits(genomeSeq)
-
-    const outputFilename = 'hg38_bigsi_hits.json'
-    const resultJSON = JSON.stringify(result, null, 4);
-
-    fs.writeFile(outputFilename, resultJSON, function(err){
-        if(err) {
-            console.log(err)
-        } else {
-            console.log(`genomeBigsiHits written to: ${outputFilename}`);
-        }
-    });
-
-    expect(result[0]['0']).toEqual(expect.objectContaining(
-        {
-            refName: expect.any(Number),
-            start: expect.any(Number),
-            end: expect.any(Number),
-            hits: 0
-        }
-    ))
-})
-test('getBinaryDumpBigsiSubmatrix - should return an array of {BitSets} for submatrix', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilters = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-    const queryOnesIndices = await queryBigsi.getQueryBloomFilterOnesIndices(queryBloomFilters[0]._filter)
-
-    const result = await queryBigsi.getBinaryDumpBigsiSubmatrix(binaryDumpBigsiPath, queryOnesIndices, numCols)
-    //console.log(result)
-    expect(typeof result[0]).toBe('object')
-})
-
-test('getBitBigsiSubmatrix - should return an array of binary {strings} for submatrix', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilters = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-    const queryOnesIndices = await queryBigsi.getQueryBloomFilterOnesIndices(queryBloomFilters[0]._filter)
-
-    const result = await queryBigsi.getBitBigsiSubmatrix(bitBigsiPath, queryOnesIndices)
-    expect(typeof result[0]).toBe('object')
-})
-
-test('computeBitSubmatrixHits - should return object of objects for bucket hits ', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilters = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-    const queryOnesIndices = await queryBigsi.getQueryBloomFilterOnesIndices(queryBloomFilters[0]._filter)
-    const submatrix = await queryBigsi.getBitBigsiSubmatrix(bitBigsiPath, queryOnesIndices)
-
-    const bigsiHits = {}
-    await queryBigsi.computeBitSubmatrixHits(submatrix, bigsiHits)
-    console.log(bigsiHits)
-    expect(typeof bigsiHits['0']['hits']).toBe('number')
-})
-
-test.only('queryBinaryDumpBigsi - should return object containing fragment hits greater than 0', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-
-    const result = await queryBigsi.queryBinaryDumpBigsi(binaryDumpBigsiPath, queryBloomFilter, numCols)
-    console.log(result)
-    expect(result['0']['hits']).toBeGreaterThan(0)
-})
-
-test('queryBitBigsi - should return object containing fragment hits greater than 0', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-
-    const result = await queryBigsi.queryBitBigsi(bitBigsiPath, queryBloomFilter)
-    console.log(result)
-    expect(result['0']['hits']).toBeGreaterThan(0)
-})
-
-test('getHexBigsiSubmatrix - should return an array of strings for submatrix', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-    const queryOnesIndices = await queryBigsi.getQueryBloomFilterOnesIndices(queryBloomFilter)
-
-    const result = await queryBigsi.getHexBigsiSubmatrix(hexBigsi, queryOnesIndices)
-    expect(typeof result[0]).toBe('string')
-})
-
-test('computeHexSubmatrixHits - should return object of objects for bucket hits ', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-    const queryOnesIndices = await queryBigsi.getQueryBloomFilterOnesIndices(queryBloomFilter)
-    const submatrix = await queryBigsi.getHexBigsiSubmatrix(hexBigsi, queryOnesIndices)
-
-    const genomeBigsiHits = await queryBigsi.initGenomeBigsiHits(genomeSeq)
-
-    await queryBigsi.computeHexSubmatrixHits(submatrix, genomeBigsiHits)
-    expect(typeof genomeBigsiHits['0']['hits']).toBe('number')
-})
-
-test('queryHexBigsi - should return object containing fragment hits greater than 0', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-
-    const genomeBigsiHits = await queryBigsi.initGenomeBigsiHits(genomeSeq)
-
-    const result = await queryBigsi.queryHexBigsi(hexBigsi, queryBloomFilter, genomeBigsiHits)
-    expect(result['0']['hits']).toBeGreaterThan(0)
-})
-
-test('getBigsiSubmatrix - should return a submatrix ', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-    const queryOnesIndices = await queryBigsi.getQueryBloomFilterOnesIndices(queryBloomFilter)
-
-    const result = await queryBigsi.getBigsiSubmatrix(bigsi, queryOnesIndices)
-    expect(typeof result[0][0]).toBe('number')
-})
 
 
-test('computeSubmatrixHits - should return object of objects for bucket hits ', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-    const queryOnesIndices = await queryBigsi.getQueryBloomFilterOnesIndices(queryBloomFilter)
-    const submatrix = await queryBigsi.getBigsiSubmatrix(bigsi, queryOnesIndices)
-
-    const refSeqName = '1'
-    const refSeqSize = await refSeq.getSequenceSize(refSeqName)
-    const bigsiHits = queryBigsi.initBigsiHits(refSeqSize, refSeqName, numBuckets=10, overhang=30000)
-
-
-    await queryBigsi.computeSubmatrixHits(submatrix, bigsiHits)
-    expect(typeof bigsiHits['0']['hits']).toBe('number')
-})
-
-test('queryBigsi - should return object containing fragment hits greater than 0', async () => {
-    const querySeq = await seq.getSequence('1')
-    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-
-    const refSeqName = '1'
-    const refSeqSize = await refSeq.getSequenceSize(refSeqName)
-    const bigsiHits = queryBigsi.initBigsiHits(refSeqSize, refSeqName, numBuckets=10, overhang=30000)
-
-    const result = await queryBigsi.queryBigsi(bigsi, queryBloomFilter, bigsiHits)
-    expect(result['0']['hits']).toBeGreaterThan(0)
-})
-
-//test('queryGenomeBigsis - should return array of objects containing fragment hits greater than 0', async () => {
-//    const querySeq = await seq.getSequence('1')
-//    const queryFragmentsMinimizers = await queryBigsi.makeQueryFragsMinimizers(querySeq)
-//    const queryBloomFilter = await queryBigsi.makeQueryFragsBloomFilters(queryFragmentsMinimizers)
-//
-//    const genomeBigsiHits = await queryBigsi.initGenomeBigsiHits(genomeSeq)
-//
-//    const result = await queryBigsi.queryGenomeBigsis(genomeBigsi, queryBloomFilter, genomeBigsiHits)
-//    console.log(result)
-//    expect(result[0]['0']['hits']).toBeGreaterThan(0)
-//})

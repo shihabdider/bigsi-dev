@@ -146,21 +146,11 @@ async function splitSeqIntoBuckets(seq, seqName, numBuckets, bucketOverhang=150_
     return buckets
 }
 
-function makeBucketsBloomFilters(bucketSequences, totalNumBuckets){
+function makeBucketsBloomFilters(maxNumElementsInserted, bucketSequences, totalNumBuckets){
 
     const bucketsMinimizers = []
-    let maxNumElementsInserted = 0
-    for (let idx=0; idx < bucketSequences.length; idx++){
-        const bucketSequence = bucketSequences[idx]
-        const bucketMinimizers = helper.extractMinimizers(bucketSequence)
-        bucketsMinimizers.push(bucketMinimizers)
-        console.log(`inserting ${bucketMinimizers.length} minimizers into bloom filter for bucket ${idx}`)
-        if (bucketMinimizers.length > maxNumElementsInserted) {
-            maxNumElementsInserted = bucketMinimizers.length
-        }
-    }
 
-    console.log(`Max num elemenst inserted: ${maxNumElementsInserted}`)
+    console.log(`Max num elements inserted: ${maxNumElementsInserted}`)
 
     const containmentScoreThresh = 0.80
     const bloomFilterSize = helper.computeBloomFilterSize(
@@ -182,14 +172,12 @@ function makeBucketsBloomFilters(bucketSequences, totalNumBuckets){
     return bucketsBloomFilters
 }
 
-async function buildBigsi(bucketSequences){
+async function buildBigsi(bucketSequences, maxNumElementsInserted){
 
     const totalNumBuckets = bucketSequences.length
-    const bucketsBloomFilters = makeBucketsBloomFilters(bucketSequences, totalNumBuckets)
+    const bucketsBloomFilters = makeBucketsBloomFilters(bucketSequences, totalNumBuckets, maxNumElementsInserted)
     const bigsiMatrix = matrix(bucketsBloomFilters.map(bloomFilterObj => bloomFilterObj._filter))
     const bigsi = matrix(bigsiMatrix.trans())
-
-    bucketSequences = null
 
     return bigsi
 
@@ -205,11 +193,17 @@ async function makeGenomeBigsis(genome, numBuckets, seqSizeThreshold=3*10**7){
     const seqNames = await helper.getFilteredGenomeSeqs(genome, seqSizeThreshold)
     console.log('seqNames: ', seqNames)
 
+    // use estimate of minimizer count (for computing bloom filter size) based 
+    // on longest sequence
+    const seqSizes = await Object.values(genome.getSequenceSizes())
+    const maxSeqLength = Math.max(seqSizes)
+    const maxNumElementsInserted = helper.computeNumMinimizers(maxSeqLength)
+
     const genomeBigsis = []
     for (let i=0; i < seqNames.length; i++){
         let seqBuckets = await splitSeqIntoBuckets(genome, seqNames[i], numBuckets) 
         console.log(`Split ${seqNames[i]} into buckets, building bigsi...`)
-        const seqBigsi = await buildBigsi(seqBuckets)
+        const seqBigsi = await buildBigsi(seqBuckets, maxNumElementsInserted)
         console.log(`Bigsi of ${seqNames[i]} built, pushing into array...`)
         genomeBigsis.push(seqBigsi)
         const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
@@ -222,8 +216,10 @@ async function makeGenomeBigsis(genome, numBuckets, seqSizeThreshold=3*10**7){
 
 function mergeBigsis(bigsis){
     let mergedBigsi = bigsis[0]
-    for (let i=1; i < bigsis.length; i++){
-        mergedBigsi = matrix(mergedBigsi.merge.right(bigsis[i]()))
+    if (bigsis.length > 1){
+        for (let i=1; i < bigsis.length; i++){
+            mergedBigsi = matrix(mergedBigsi.merge.right(bigsis[i]()))
+        }
     }
 
     return mergedBigsi
@@ -232,7 +228,7 @@ function mergeBigsis(bigsis){
 
 /** Converts bigsi into a flat array of ints
  */
-function bigsiToInts(bigsi, intSize){
+function bigsiToInts(bigsi, intSize=16){
     console.log(`bigsi dimensions: ${bigsi.size()} [rows, cols]`)
     const flatRows = bigsi().flat()
 
@@ -316,7 +312,7 @@ function writeBigsiToJSON(bigsi, outputPath){
 
 }
 
-async function main(seq, numBuckets, seqSizeThreshold){
+async function main(seq, numBuckets, seqSizeThreshold, isHexBigsi=false){
     const bigsis = await makeGenomeBigsis(seq, numBuckets, seqSizeThreshold)
     console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
     const bigsi = await mergeBigsis(bigsis)
@@ -325,10 +321,15 @@ async function main(seq, numBuckets, seqSizeThreshold){
     const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
     console.log(`Process uses ${memoryUsed}`)
 
-    const u16IntRows = bigsiToInts(bigsi, 16)
-    const binaryBigsi = makeBinaryBigsi(u16IntRows)
+    if (isHexBigsi) {
+        const hexBigsi = makeHexBigsi(bigsi)
+        return hexBigsi
+    } else {
+        const u16IntRows = bigsiToInts(bigsi)
+        const binaryBigsi = makeBinaryBigsi(u16IntRows)
 
-    return binaryBigsi
+        return binaryBigsi
+    }
 }
 
 module.exports = {

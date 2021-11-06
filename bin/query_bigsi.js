@@ -30,10 +30,9 @@ async function winnowQueryFragments(querySeq, fragmentSize=5000){
 
     const queryFragmentsMinimizers = []
 
-    // for non-frag queries
-    if (fragmentSize == 0){
+    if (fragmentSize == 0){ //for non-frag queries
         const queryMinimizers = helper.extractMinimizers(querySeq)
-        queryMinimizers.push(queryFragmentMinimizers)
+        queryFragmentsMinimizers.push(queryMinimizers)
     } else {
 
         if (querySize <= 300_000 && querySize >= fragmentSize){
@@ -51,15 +50,15 @@ async function winnowQueryFragments(querySeq, fragmentSize=5000){
     return queryFragmentsMinimizers
 }
 
-function makeFragmentsBloomFilters(queryFragmentsMinimizers){
+function makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize){
 
-    const queryFragmentsBloomFilters = []
+    const fragmentsBloomFilters = []
     for (let fragmentMinimizerSet of queryFragmentsMinimizers){
-        const bf = helper.makeMinimizersBloomFilter(fragmentMinimizerSet)
+        const bf = helper.makeMinimizersBloomFilter(fragmentMinimizerSet, bloomFilterSize)
         fragmentsBloomFilters.push(bf)
     }
 
-    return queryFragmentsBloomFilters
+    return fragmentsBloomFilters
 }
 
 function getBloomFilterSetBitsIndices(queryBF){
@@ -67,8 +66,6 @@ function getBloomFilterSetBitsIndices(queryBF){
         if (number != 0) indices.push(index)
         return indices
     }, [])
-
-
 }
 
 /**
@@ -78,30 +75,41 @@ function getBloomFilterSetBitsIndices(queryBF){
  *
  * @returns { matrix } submatrix - query rows submatrix
  */
-async function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
+function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
     const submatrixRows = []
 
-    try {
-        const numSeqs = numCols/16
+    const numSeqs = numCols/16
 
-        for (const rowNum of rowFilter){
+    for (const rowNum of rowFilter){
 
-            const offsetStart = rowNum*numSeqs
-            const offsetEnd = offsetStart + numSeqs
-            //console.log('offsets: ', offsetStart, offsetEnd)
-            //console.log('ints: ', bigsi.slice(offsetStart, offsetEnd))
+        const offsetStart = rowNum*numSeqs
+        const offsetEnd = offsetStart + numSeqs
 
-            const rowBitString = Array.from(bigsi.slice(offsetStart, offsetEnd))
-                .map((num) => helper.zeroPadBitstring(num.toString(2), 16))
-                .join('')
+        const rowInts = Array.from(bigsi.subarray(offsetStart, offsetEnd))
+        const rowBitStrings = rowInts.map((num) => helper.zeroPadBitstring(num.toString(2), 16))
+        const rowBitString = rowBitStrings.join('')
 
-            // Front padding ensures all columns are accounted for
-            //console.log('final padded bitstring: ', rowBitString)
-            const row = rowBitstring.split('').map(Number)
-            submatrixRows.push(row)
-        }
-    } catch(err) {
-        console.log(err)
+        // Front padding ensures all columns are accounted for
+        const row = rowBitString.split('').map(Number)
+        submatrixRows.push(row)
+    }
+
+    const submatrix = matrix(submatrixRows)
+
+    return submatrix
+}
+
+// hexBigsi is an array of hexstrings
+function getHexBigsiSubmatrix(hexBigsi, rowFilter){
+    const submatrixRows = []
+
+    for (const rowNum of rowFilter){
+
+        const rowHex = hexBigsi[rowNum]
+        const rowBitString = parseInt(rowHex, 16).toString(2).padStart(16, '0')
+        // Front padding ensures all columns are accounted for
+        const row = rowBitString.split('').map(Number)
+        submatrixRows.push(row)
     }
 
     const submatrix = matrix(submatrixRows)
@@ -116,17 +124,19 @@ async function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
  *
  * @returns - bigsiHits with updated hits attributes 
  */
-function computeSubmatrixHits(submatrix, bigsiHits){
+function computeSubmatrixHits(submatrix, bigsiHits, numBuckets){
     let bucketHits = (new BitSet).flip() // init bitset to all 1s for bitwise AND
-    for (let i = 0; i < submatrix.length; i++){
-        const rowBS = new BitSet(submatrix(i).join(''))
+    const numRows = submatrix.size()[0]
+    for (let row = 0; row < numRows; row++) {
+        const rowBitString = submatrix(row).join('')
+        const rowBS = new BitSet(rowBitString)
         bucketHits = bucketHits.and(rowBS)
     }
 
     // Use bigsiHits to compute the total number of buckets instead of bitset 
     // length because the latter truncates leading zeros when converted to 
     // a string
-    const numBuckets = Object.keys(bigsiHits).length
+    //const numBuckets = Object.keys(bigsiHits).length
     
     // bitset.toArray returns an array of indices (i) corresponding to the set bits
     // to convert this to bucket numbers (B - 1) - i, where B is 
@@ -149,7 +159,7 @@ function computeSubmatrixHits(submatrix, bigsiHits){
 // number of minimizers inserted into query Bloom Filter
 function computeQueryContainmentScores(submatrix, bigsiHits) {
     const queryMinimizerCount = submatrix.size()[0]
-    submatrix_T = submatrix.trans()
+    const submatrix_T = submatrix.trans()
     const hammingWeights = []
     for (const row of submatrix_T){
         const bs = new BitSet(row.join(''))
@@ -157,13 +167,38 @@ function computeQueryContainmentScores(submatrix, bigsiHits) {
         hammingWeights.push(weight)
     }
 
-    for (let bucketNum = 0; bucketNum < counts.length; i++){
-        const containmentScore = counts[bucketNum]/queryMinimizerCount
+    for (let bucketNum = 0; bucketNum < hammingWeights.length; bucketNum++){
+        const containmentScore = hammingWeights[bucketNum]/queryMinimizerCount
         if (containmentScore > 0) {
-            bigsiHits[bucketNum]['containment'] = containmentScore
+            bigsiHits[bucketNum] = {'containment': containmentScore}
         }
     }
 
+}
+
+function queryHexBigsi(hexBigsi, queryFragmentsBloomFilters){
+    const bigsiHits = {}
+
+    const numFragments = queryFragmentsBloomFilters.length
+    console.log('number of query fragments: ', numFragments)
+
+    for (const bloomFilter of queryFragmentsBloomFilters){
+        const queryBFSetBitsIndices = getBloomFilterSetBitsIndices(bloomFilter._filter)
+        
+        const querySubmatrix = getHexBigsiSubmatrix(hexBigsi, queryBFSetBitsIndices)
+
+        if (numFragments == 1){
+            computeQueryContainmentScores(querySubmatrix, bigsiHits)
+        } else {
+            computeSubmatrixHits(querySubmatrix, bigsiHits, numCols)
+        }
+    }
+
+    for (const bucketId in bigsiHits) {
+        bigsiHits[bucketId]['score'] = `${bigsiHits[bucketId]['hits']}/${numFragments}`;
+    }
+
+    return bigsiHits
 }
 
 /** 
@@ -173,16 +208,9 @@ function computeQueryContainmentScores(submatrix, bigsiHits) {
  *
  * @return { object } filteredBigsiHits - object containing fragment hits in the bigsi buckets
  */
-async function queryBinaryBigsi(bigsiPath, queryFragmentsBloomFilters, numCols){
+async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols){
 
     const bigsiHits = {}
-
-    const response = await fetch(bigsiPath)
-    const bigsiBuffer = await response.arrayBuffer()
-    console.log('num bytes in the bigsi buffer:', bigsiBuffer.byteLength)
-
-    const bigsiArray = new Uint16Array(bigsiBuffer);
-    console.log('bigsiArray size: ', bigsiArray.length)
 
     const numFragments = queryFragmentsBloomFilters.length
     console.log('number of query fragments: ', numFragments)
@@ -195,7 +223,7 @@ async function queryBinaryBigsi(bigsiPath, queryFragmentsBloomFilters, numCols){
         if (numFragments == 1){
             computeQueryContainmentScores(querySubmatrix, bigsiHits)
         } else {
-            computeSubmatrixHits(querySubmatrix, bigsiHits)
+            computeSubmatrixHits(querySubmatrix, bigsiHits, numCols)
         }
     }
 
@@ -207,15 +235,23 @@ async function queryBinaryBigsi(bigsiPath, queryFragmentsBloomFilters, numCols){
 }
 
 async function main(querySeq) {
+    const bigsiPath = 'http://localhost:3001/public/hg38_chr1.bin'
+    const response = await fetch(bigsiPath)
+    const bigsiBuffer = await response.arrayBuffer()
+    console.log('num bytes in the bigsi buffer:', bigsiBuffer.byteLength)
+
+    let bigsiArray = new Uint16Array(bigsiBuffer.buffer, bigsiBuffer.byteOffset, bigsiBuffer.length / 2);
+    console.log('bigsiArray size: ', bigsiArray.length)
+    
+    const numCols = 16
+    const bloomFilterSize = bigsiArray.length*16/numCols
     //const queryFragmentsMinimizers = await winnowQueryFragments(querySeq)
     // Test: non-frag query
     const fragmentSizeZero = 0
     const queryFragmentsMinimizers = await winnowQueryFragments(querySeq, fragmentSizeZero)
-    const queryMask = await makeFragmentsBloomFilters(queryFragmentsMinimizers)
+    const queryMask = await makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
 
-    const bigsiPath = 'http://localhost:3001/public/hg38_16int_bdump.bin'
-    const numCols = 32
-    const filteredBigsiHits = await queryBinaryBigsi(bigsiPath, queryMask, numCols)
+    const filteredBigsiHits = await queryBinaryBigsi(bigsiArray, queryMask, numCols)
 
     return filteredBigsiHits
 }
@@ -225,7 +261,10 @@ module.exports = {
     makeFragmentsBloomFilters: makeFragmentsBloomFilters,
     getBloomFilterSetBitsIndices: getBloomFilterSetBitsIndices,
     getBinaryBigsiSubmatrix: getBinaryBigsiSubmatrix,
+    getHexBigsiSubmatrix: getHexBigsiSubmatrix,
     computeSubmatrixHits: computeSubmatrixHits,
+    computeQueryContainmentScores: computeQueryContainmentScores, 
     queryBinaryBigsi: queryBinaryBigsi,
+    queryHexBigsi: queryHexBigsi,
     main: main
 }

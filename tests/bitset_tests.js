@@ -1,5 +1,6 @@
 //const hexBigsi = require('./test_data/hg38_hex.json')
 const BitSet = require('bitset')
+const matrix = require('matrix-js')
 
 function zeroPadBitstring(bitstring, places){
     const paddedString = bitstring.padStart(places, '0')
@@ -80,11 +81,34 @@ function u16IntToBitArrayTest(){
     const row = bitstring.split('').map(Number)
     // compare the two bitarrays
     console.log(rowArray, '\n', row)
+}
 
+function testBigsiToInts(){
+    const bigsiArray = [
+        [0, 0, 1, 0, 0, 1, 1, 0],
+        [1, 0, 1, 0, 0, 0, 1, 0]
+    ]
+    const bigsi = matrix(bigsiArray)
+    const flatRows = bigsi().flat()
+    console.log(flatRows)
+
+    const intSize = 4
+    const intRows = []
+    for (let i=0; i < flatRows.length/intSize; i++){
+        const start = i*intSize
+        const end = start + intSize
+        const row = flatRows.slice(start, end)
+        const bitstring = row.join('')
+        const rowInt = parseInt(bitstring, 2)
+        intRows.push(rowInt)
+    }
+
+    console.log(intRows)
 }
 
 function main(){
-    u16IntToBitArrayTest()
+    //u16IntToBitArrayTest()
+    testBigsiToInts()
 }
 
 main()

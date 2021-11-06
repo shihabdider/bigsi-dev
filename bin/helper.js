@@ -9,15 +9,10 @@ function zeroPadBitstring(bitstring, places){
 }
 
 function reverseComplement(sequence){
-    let reverseSeq = sequence.split('').reverse().join('')
+    var reverseSeq=sequence.split('').reverse().join('')
 
-    const COMPLEMENT_BASES = {
-        'A': 'T', 
-        'T': 'A', 
-        'G': 'C', 
-        'C': 'G'
-    }
-    const re = /[ATCG]/g;
+    let COMPLEMENT_BASES = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'},
+        re = /[ATCG]/g;
 
     var revComplementSeq = reverseSeq.replace(re, function (sequence) {
         return COMPLEMENT_BASES[sequence]
@@ -68,7 +63,7 @@ function extractMinimizers(seq){
     let minimizers = []
     let deque = [] // array of {hash, offset}
     let revSequence = reverseComplement(seq)
-    for (i = 0; i < (seq.length - kmerSize + 1); i++){
+    for (let i = 0; i < (seq.length - kmerSize + 1); i++){
         let currentWindowIndex = i - windowSize + 1
         let kmerHashFwd = murmur.murmur3(seq.slice(i,i+kmerSize), seed)
         let kmerHashBwd = murmur.murmur3(revSequence.slice(-(i+kmerSize), -i), seed)
@@ -111,6 +106,10 @@ function computeFalseHitProb(falsePosRate, minQueryMinimizers, containmentScoreT
     return falseHitProb
 }
 
+function computeNumMinimizers(seqLength, windowSize=100):
+    const numMinimizers = seqLength/windowSize * 2
+    return numMinimizers
+
 function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, totalNumBuckets){
     // initialize set parameters
     const minQueryMinimizers = 100  // 5Kbp min query = 100 minimizers
@@ -134,10 +133,11 @@ function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, 
     }
 }
 
-function makeMinimizersBloomFilter( minimizers, bloomFilterSize) {
+function makeMinimizersBloomFilter(minimizers, bloomFilterSize) {
     // adjust filter size based on number of inserted elements and desired false pos 
     // rate
-    const minimizersBloomFilter = new BloomFilter(bloomFilterSize, nbHashes=1)
+    const numHashes = 1
+    const minimizersBloomFilter = new BloomFilter(bloomFilterSize, numHashes)
     for (const minimizer of minimizers){
         minimizersBloomFilter.add(minimizer.toString())
     }
@@ -152,6 +152,7 @@ module.exports = {
     extractMinimizers: extractMinimizers,
     computeBloomFilterFalsePosRate: computeBloomFilterFalsePosRate,
     computeFalseHitProb: computeFalseHitProb,
+    computeNumMinimizers: computeNumMinimizers,
     computeBloomFilterSize: computeBloomFilterSize,
     makeMinimizersBloomFilter: makeMinimizersBloomFilter,
 }

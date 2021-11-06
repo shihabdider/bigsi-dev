@@ -3,19 +3,7 @@
 import math
 from scipy.stats import binom
 
-# BIGSI
-
-BIGSI_parameters = {
-    'BLOOM_FILTER_FALSE_POSITIVE': 0,
-    'MAX_NUM_KMERS': 0,
-    'KMER_SIZE': 0,
-    'REF_SIZE': 0,
-    'NUM_BUCKETS': 0,
-    'NUM_UNIQ_QUERY_KMERS': 0,
-}
-
 # Bloom Filter
-
 
 def compute_num_hash_funcs(bf_size, num_inserted):
     '''Computes optimal number of hash functions for a bloom filter'''
@@ -46,11 +34,18 @@ def compute_bf_size(false_prob_rate, num_inserted_elements):
 def bits_to_mb(bits):
     return bits/(8*10**6)
 
+def compute_num_minimizers(seq_length, window_size):
+    num_minimizers = seq_length/window_size * 2
+    return num_minimizers
+
 def print_bf_stats():
-    num_inserted = 300_000
+    max_seq_length = 15e6
+    window_size = 100
+    num_inserted = compute_num_minimizers(max_seq_length, window_size)
     num_minimizers_query = 100
-    perc_identity = 0.8
+    perc_identity = 0.6
     false_hit_thresh = 1e-2
+    num_seqs = 22
     for bf_size_bits in range(1, 10**9, 10**3):
         bf_size_mb = bits_to_mb(bf_size_bits)
         num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
@@ -59,19 +54,22 @@ def print_bf_stats():
         false_hit = compute_false_hit(false_pos_rate,
                                       num_minimizers_query,
                                       perc_identity)
-        false_hit_total = false_hit*22*16
-        bf_stats = 'bf size (in bits): {0} \n \t(in Mb) {1} \n optimal number hashes\
-            {2} \n false positive rate: {3} \n false hit rate: {4}\n false hit total: {5}'.format(
-                bf_size_bits, bf_size_mb*22*16, num_hashes, 
+        false_hit_total = false_hit*16
+        bf_stats = 'bf size (in bits): {0} \n \
+                \t(in Mb) {1} \n \
+                optimal number hashes {2} \n \
+                false positive rate: {3} \n \
+                false hit rate: {4}\n \
+                false hit total: {5}'.format(
+                bf_size_bits, bf_size_mb*num_seqs*16, num_hashes, 
                 false_pos_rate, false_hit, false_hit_total)
         if false_hit_total <= false_hit_thresh:
             print('optimal params found!')
             print(bf_stats)
             break
 
-
 print_bf_stats()
-
+ 
 
 # Minimizers
 
@@ -79,14 +77,6 @@ ALPHABET_SIZE = 4
 KMER_SIZE = 15
 MIN_MATCH_LENGTH = 5*10**3
 REF_LENGTH = 3*10**9
-
-minimizer_global_parameters = {
-    'ALPHABET_SIZE': 4,  # DNA
-    'KMER_SIZE': 15,
-    'MIN_MATCH_LENGTH': 5*10**3,
-    'REF_LENGTH': 3*10**9,
-}
-
 
 def compute_prob_random_kmer_in_set(seq_length):
     '''Computes the probability of a random k-mer appearing in a k-mer set at
