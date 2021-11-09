@@ -147,9 +147,6 @@ async function splitSeqIntoBuckets(seq, seqName, numBuckets, bucketOverhang=150_
 }
 
 function makeBucketsBloomFilters(maxNumElementsInserted, bucketSequences, totalNumBuckets){
-
-    const bucketsMinimizers = []
-
     console.log(`Max num elements inserted: ${maxNumElementsInserted}`)
 
     const containmentScoreThresh = 0.80
@@ -160,7 +157,8 @@ function makeBucketsBloomFilters(maxNumElementsInserted, bucketSequences, totalN
     )
 
     const bucketsBloomFilters = []
-    for (bucketMinimizers of bucketsMinimizers){
+    for (bucketSequence of bucketSequences){
+        const bucketMinimizers = helper.extractMinimizers(bucketSequence)
         const bucketBloomFilter = helper.makeMinimizersBloomFilter(
                 bucketMinimizers, 
                 bloomFilterSize
@@ -175,7 +173,7 @@ function makeBucketsBloomFilters(maxNumElementsInserted, bucketSequences, totalN
 async function buildBigsi(bucketSequences, maxNumElementsInserted){
 
     const totalNumBuckets = bucketSequences.length
-    const bucketsBloomFilters = makeBucketsBloomFilters(bucketSequences, totalNumBuckets, maxNumElementsInserted)
+    const bucketsBloomFilters = makeBucketsBloomFilters(maxNumElementsInserted, bucketSequences, totalNumBuckets)
     const bigsiMatrix = matrix(bucketsBloomFilters.map(bloomFilterObj => bloomFilterObj._filter))
     const bigsi = matrix(bigsiMatrix.trans())
 
@@ -194,9 +192,11 @@ async function makeGenomeBigsis(genome, numBuckets, seqSizeThreshold=3*10**7){
     console.log('seqNames: ', seqNames)
 
     // use estimate of minimizer count (for computing bloom filter size) based 
-    // on longest sequence
-    const seqSizes = await Object.values(genome.getSequenceSizes())
-    const maxSeqLength = Math.max(seqSizes)
+    // on longest sequence bucket size + bucket overhang
+    const bucketOverhang = 150_000
+    const seqSizes = Object.values(await genome.getSequenceSizes())
+    const maxSeqLength = Math.max(...seqSizes)/numBuckets + bucketOverhang
+    console.log('maxSeqLength', maxSeqLength)
     const maxNumElementsInserted = helper.computeNumMinimizers(maxSeqLength)
 
     const genomeBigsis = []

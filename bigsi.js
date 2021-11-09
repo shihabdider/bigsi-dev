@@ -34,11 +34,11 @@ async function main(){
     const seqSizeThreshold = 2e7    // >seqSizeThreshold sequences only
     console.log(`Filtering sequences smaller than ${seqSizeThreshold}...`)
     
+    const isHexBigsi = false
     const numBuckets = (argv.buckets%8 ? 0 : argv.buckets)
     if (numBuckets == 0){
         console.log("Number of buckets should be a multiple of 8!")
     } else {
-        const isHexBigsi = true
         if (isHexBigsi) {
             const hexBigsi = await makeBigsi.main(seq, numBuckets, seqSizeThreshold, isHexBigsi)
             console.log(`Converted bigsi matrix to hex format, writing to file...`)

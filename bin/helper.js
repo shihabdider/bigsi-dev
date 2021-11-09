@@ -106,9 +106,10 @@ function computeFalseHitProb(falsePosRate, minQueryMinimizers, containmentScoreT
     return falseHitProb
 }
 
-function computeNumMinimizers(seqLength, windowSize=100):
-    const numMinimizers = seqLength/windowSize * 2
+function computeNumMinimizers(seqLength, windowSize=100){
+    const numMinimizers = Math.ceil(seqLength/windowSize * 2)
     return numMinimizers
+}
 
 function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, totalNumBuckets){
     // initialize set parameters
