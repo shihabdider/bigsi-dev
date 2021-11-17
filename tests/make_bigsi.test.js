@@ -110,4 +110,10 @@ describe('Bigsi', () => {
         const result = makeBigsi.makeHexBigsi(bigsi)
         expect(typeof result[0]).toBe('string')
     }, TIMEOUT)
+
+    test('if makeFastaBigsis returns an array of bigsis', () => {
+        const result = makeBigsi.makeFastaBigsis(fasta, numBuckets)
+        expect(typeof result[0].toBe('function'))
+    })
 })
+

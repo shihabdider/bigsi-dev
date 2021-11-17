@@ -25,7 +25,7 @@ async function loadFasta(fastaPath, faiPath){
     const seq = new IndexedFasta({
         path: fastaPath,
         faiPath: faiPath,
-        chunkSizeLimit: 5e7
+        chunkSizeLimit: 5e8
     });
 
     return seq
@@ -145,6 +145,18 @@ function makeMinimizersBloomFilter(minimizers, bloomFilterSize) {
     return minimizersBloomFilter
 }
 
+function writeToJSON(object, filename){
+    const json = JSON.stringify(object, null, 4);
+
+    fs.writeFile(filename, json, function(err){
+        if(err) {
+            console.log(err)
+        } else {
+            console.log(`File written to: ${filename}`);
+        }
+    });
+}
+
 module.exports = {
     zeroPadBitstring: zeroPadBitstring,
     reverseComplement: reverseComplement,
@@ -156,5 +168,6 @@ module.exports = {
     computeNumMinimizers: computeNumMinimizers,
     computeBloomFilterSize: computeBloomFilterSize,
     makeMinimizersBloomFilter: makeMinimizersBloomFilter,
+    writeToJSON: writeToJSON,
 }
 

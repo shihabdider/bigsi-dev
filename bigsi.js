@@ -28,30 +28,15 @@ async function main(){
         })
 
     const fai = `${argv.ref}.fai`
-    const seq = await helper.loadFasta(argv.ref, fai)
+    const fasta = await helper.loadFasta(argv.ref, fai)
     console.log('Sequence loaded...')
 
-    const seqSizeThreshold = 2e7    // >seqSizeThreshold sequences only
-    console.log(`Filtering sequences smaller than ${seqSizeThreshold}...`)
-    
-    const isHexBigsi = false
-    const numBuckets = (argv.buckets%8 ? 0 : argv.buckets)
-    if (numBuckets == 0){
-        console.log("Number of buckets should be a multiple of 8!")
-    } else {
-        if (isHexBigsi) {
-            const hexBigsi = await makeBigsi.main(seq, numBuckets, seqSizeThreshold, isHexBigsi)
-            console.log(`Converted bigsi matrix to hex format, writing to file...`)
-            makeBigsi.writeBigsiToJSON(hexBigsi, `${argv.output}.json`)
-        } else {
-            const binaryBigsi = await makeBigsi.main(seq, numBuckets, seqSizeThreshold)
-            console.log(`Converted bigsi matrix to binary TypedArray format, writing to file...`)
-            makeBigsi.writeBinaryBigsi(binaryBigsi, `${argv.output}.bin`)
-        }
+    const bigsi = await makeBigsi.main(fasta, argv.buckets)
+    //console.log(`Converted bigsi matrix to binary TypedArray format, writing to file...`)
+    //makeBigsi.writeBinaryBigsi(binaryBigsi, `${argv.output}.bin`)
             
-        const bucketToPosition = await makeBigsi.makeBucketToPositionMap(seq, seqSizeThreshold)
-        makeBigsi.writeBucketMapToJSON(bucketToPosition, `${argv.output}_bucket_map.json`)
-    }
+    //const bucketToPosition = await makeBigsi.makeBucketToPositionMap(seq, seqSizeThreshold)
+    //makeBigsi.writeBucketMapToJSON(bucketToPosition, `${argv.output}_bucket_map.json`)
 
 }
 

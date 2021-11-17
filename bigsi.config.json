@@ -1,0 +1,5 @@
+{
+    "bucketOverhang": 150_000,
+    "numBuckets": 16,
+    "intBits": 16
+}
