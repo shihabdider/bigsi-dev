@@ -1,9 +1,45 @@
-'''Complexity calculations for BIGSI and Mashmap'''
+'''
+Complexity calculations for BIGSI and Mashmap
+
+Questions:
+    - What are all the parameters involved in constructing the sketch bigsi?
+        - Reference size
+        - Containment threshold
+        - Sensitivity threshold
+        - Bloom filter length
+        - Number of elements inserted into Bloom filter
+        - Number of bins
+        - Length of sequence for each bin
+        - Window size for sketching
+        - Min fragment size for fragment search
+    - Which of those parameters are exposed?
+        - Reference size
+        - Containment threshold
+        - Sensitivity threshold
+        - Window size
+        - Min fragment size
+        - Number of bins
+    - What is the relationship between the internal parameters and the those 
+      exposed to the user?
+    - How do you compute the sensitivity of a query?
+    - How do you interpret a query? In terms of the size of the sequences?
+    - What are some possible irl queries?
+        - Anti-biotic resistance genes
+        - Viruses in human genomes
+        - Gene fusions
+        - Segmental duplications
+        - Cancer copy number variants
+        - HIV integration sites
+    - What are the sizes of possible irl queries?
+        - Anti-biotic resistance genes: {'average': 957.2272230718811,
+        'minimum': 162, 'maximum': 4359, 'std': 319.67748306799336}
+'''
 
 import math
 from scipy.stats import binom
 
-# Bloom Filter
+# Sketch BIGSI
+
 
 def compute_num_hash_funcs(bf_size, num_inserted):
     '''Computes optimal number of hash functions for a bloom filter'''
@@ -20,8 +56,10 @@ def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
 
 def compute_false_hit(false_pos, num_minimizers, perc_identity):
     '''Computes the probability of a false bucket hit for a query'''
-    num_matches = num_minimizers*perc_identity
-    false_hit_prob = binom.sf(num_matches, num_minimizers, false_pos)
+    false_hit_prob = false_pos**num_minimizers
+    if (perc_identity != 1.0):
+        num_matches = num_minimizers*perc_identity
+        false_hit_prob = binom.sf(num_matches, num_minimizers, false_pos)
     return false_hit_prob
 
 
@@ -39,13 +77,13 @@ def compute_num_minimizers(seq_length, window_size):
     return num_minimizers
 
 def print_bf_stats():
-    max_seq_length = 15e6
-    window_size = 100
+    max_seq_length = 30e6
+    window_size = 13
     num_inserted = compute_num_minimizers(max_seq_length, window_size)
-    num_minimizers_query = 100
-    perc_identity = 0.6
+    num_minimizers_query = 15
+    perc_identity = 1.0
     false_hit_thresh = 1e-2
-    num_seqs = 22
+    num_cols = 100
     for bf_size_bits in range(1, 10**9, 10**3):
         bf_size_mb = bits_to_mb(bf_size_bits)
         num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
@@ -54,22 +92,52 @@ def print_bf_stats():
         false_hit = compute_false_hit(false_pos_rate,
                                       num_minimizers_query,
                                       perc_identity)
-        false_hit_total = false_hit*16
+        false_hit_total = false_hit*1
         bf_stats = 'bf size (in bits): {0} \n \
                 \t(in Mb) {1} \n \
                 optimal number hashes {2} \n \
                 false positive rate: {3} \n \
                 false hit rate: {4}\n \
                 false hit total: {5}'.format(
-                bf_size_bits, bf_size_mb*num_seqs*16, num_hashes, 
+                bf_size_bits, bf_size_mb*num_cols, num_hashes, 
                 false_pos_rate, false_hit, false_hit_total)
         if false_hit_total <= false_hit_thresh:
             print('optimal params found!')
             print(bf_stats)
             break
 
-print_bf_stats()
+
+parameters = {
+    'ref_len': 3e8,
+    'containment_thresh': 1.0,
+    'senstivity_thresh': 0.99,
+    'window_size': 0,
+    'min_fragment_len': 100,
+    'num_bins': 128,
+    'kmer_len': 16,
+}
+
+
+
+
+def print_bigsi_benchmark(parameters):
+    # frag query
+    false_pos_rate = 0.4
+    num_minimizers = 14
+    perc_identity = 1.0
+    false_hit_rate = compute_false_hit(false_pos_rate, num_minimizers, perc_identity)
+    num_seqs = 24
+    num_bigsi_cols = 128*num_seqs
+    bigsi_false_hit_rate = 1 - (1 - false_hit_rate)**num_bigsi_cols
+
+    print(false_hit_rate, bigsi_false_hit_rate)
+
+
+def main():
+    print_bf_stats()
+    #print_bigsi_benchmark(parameters)
  
+main()
 
 # Minimizers
 
