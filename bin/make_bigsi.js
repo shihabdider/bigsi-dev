@@ -149,6 +149,16 @@ async function makeFastaBigsis(fasta){
     return fastaBigsis
 }
 
+/**
+ * @param { string } dir - directory where fasta files are located
+ *
+ * @returns { matrix[] } multiGenomeBigsis - bigsi matrix for each fasta file
+ */
+async function makeMultiGenomeBigsi(dir){
+    // iterate through all fasta files in directory
+
+}
+
 function mergeBigsis(bigsis){
     let mergedBigsi = bigsis[0]
     if (bigsis.length > 1){

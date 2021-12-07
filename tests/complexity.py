@@ -19,7 +19,7 @@ Questions:
         - Window size
         - Min fragment size
         - Number of bins
-    - What is the relationship between the internal parameters and the those 
+    - What is the relationship between the internal parameters and those
       exposed to the user?
     - How do you compute the sensitivity of a query?
     - How do you interpret a query? In terms of the size of the sequences?
@@ -31,8 +31,42 @@ Questions:
         - Cancer copy number variants
         - HIV integration sites
     - What are the sizes of possible irl queries?
-        - Anti-biotic resistance genes: {'average': 957.2272230718811,
-        'minimum': 162, 'maximum': 4359, 'std': 319.67748306799336}
+        - For antibiotic resistance genes:
+            - Source: CARD
+            - Range: 162-4359bp
+            - Average (std): 957 (320)
+            - Number of genomes: 586
+            - Number of representative bacterial sequences in RefSeq: 14,906
+            - Bigsi sizes (linear in both resolution and number of genomes; the 
+            following assumes fixed 30mb bin sizes and exact matches):
+                - 100bp resolution, 1000 genomes: 101Mb
+                - 500bp resolution, 1000 genomes: 20Mb
+                - 100bp resolution, 15k genomes: 1.5Gb
+                - 500bp resolution, 15k genomes: 300Mb
+        - For viruses:
+            - Source: NCBI
+            - Range: 162-4359bp
+            - Average (std): 957 (320)
+            - Number of genomes: 586
+            - Number of representative bacterial sequences in RefSeq: 14,906
+            - Bigsi sizes (linear in both resolution and number of genomes; the 
+            following assumes fixed 30mb bin sizes and exact matches):
+                - 100bp resolution, 1000 genomes: 101Mb
+                - 500bp resolution, 1000 genomes: 20Mb
+                - 100bp resolution, 15k genomes: 1.5Gb
+                - 500bp resolution, 15k genomes: 300Mb
+        - For gene fusions:
+            - Source: FusionGDB
+            - Range: 162-4359bp
+            - Average (std): 957 (320)
+            - Number of genomes: 586
+            - Number of representative bacterial sequences in RefSeq: 14,906
+            - Bigsi sizes (linear in both resolution and number of genomes; the 
+            following assumes fixed 30mb bin sizes and exact matches):
+                - 100bp resolution, 1000 genomes: 101Mb
+                - 500bp resolution, 1000 genomes: 20Mb
+                - 100bp resolution, 15k genomes: 1.5Gb
+                - 500bp resolution, 15k genomes: 300Mb
 '''
 
 import math
@@ -73,17 +107,18 @@ def bits_to_mb(bits):
     return bits/(8*10**6)
 
 def compute_num_minimizers(seq_length, window_size):
-    num_minimizers = seq_length/window_size * 2
+    num_minimizers = math.ceil(2*seq_length/window_size)
     return num_minimizers
 
-def print_bf_stats():
-    max_seq_length = 30e6
-    window_size = 13
+def print_bigsi_stats(parameters):
+    max_seq_length = parameters['bin_seq_len']
+    window_size = parameters['window_size']
     num_inserted = compute_num_minimizers(max_seq_length, window_size)
-    num_minimizers_query = 15
-    perc_identity = 1.0
-    false_hit_thresh = 1e-2
-    num_cols = 100
+    num_minimizers_query = compute_num_minimizers(parameters['min_query_len'], 
+                                                 window_size)
+    perc_identity = parameters['containment_thresh']
+    false_hit_thresh = parameters['false_hit_thresh']
+    num_cols = parameters['num_cols']
     for bf_size_bits in range(1, 10**9, 10**3):
         bf_size_mb = bits_to_mb(bf_size_bits)
         num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
@@ -92,52 +127,53 @@ def print_bf_stats():
         false_hit = compute_false_hit(false_pos_rate,
                                       num_minimizers_query,
                                       perc_identity)
-        false_hit_total = false_hit*1
-        bf_stats = 'bf size (in bits): {0} \n \
-                \t(in Mb) {1} \n \
-                optimal number hashes {2} \n \
-                false positive rate: {3} \n \
-                false hit rate: {4}\n \
-                false hit total: {5}'.format(
-                bf_size_bits, bf_size_mb*num_cols, num_hashes, 
-                false_pos_rate, false_hit, false_hit_total)
+        false_hit_total = false_hit*num_cols
+        bf_stats = {
+            'bf size': bf_size_bits,
+            'bigsi size mb': bf_size_mb*num_cols,
+            'optimal number hashes': num_hashes,
+            'false positive rate': false_pos_rate,
+            'false hit rate': false_hit,
+            'false hit total': false_hit_total,
+        }
         if false_hit_total <= false_hit_thresh:
             print('optimal params found!')
             print(bf_stats)
             break
 
 
-parameters = {
-    'ref_len': 3e8,
+ar_genes_parameters = {
+    'bin_seq_len': 30e6,
+    'window_size': 25,
+    'min_query_len': 500,
     'containment_thresh': 1.0,
-    'senstivity_thresh': 0.99,
-    'window_size': 0,
-    'min_fragment_len': 100,
-    'num_bins': 128,
+    'false_hit_thresh': 1e-2,
+    'num_cols': 100,
+    'kmer_len': 16,
+}
+
+gene_fusion_parameters = {
+    'bin_seq_len': 15e6,
+    'window_size': 50,
+    'min_query_len': 500,
+    'containment_thresh': 0.8,
+    'false_hit_thresh': 1e-2,
+    'num_cols': 16*24,
+    'kmer_len': 16,
+}
+
+human_viruses_parameters = {
+    'bin_seq_len': 15e6,
+    'window_size': 50,
+    'min_query_len': 500,
+    'containment_thresh': 1.0,
+    'false_hit_thresh': 1e-2,
+    'num_cols': 16*24,
     'kmer_len': 16,
 }
 
 
 
-
-def print_bigsi_benchmark(parameters):
-    # frag query
-    false_pos_rate = 0.4
-    num_minimizers = 14
-    perc_identity = 1.0
-    false_hit_rate = compute_false_hit(false_pos_rate, num_minimizers, perc_identity)
-    num_seqs = 24
-    num_bigsi_cols = 128*num_seqs
-    bigsi_false_hit_rate = 1 - (1 - false_hit_rate)**num_bigsi_cols
-
-    print(false_hit_rate, bigsi_false_hit_rate)
-
-
-def main():
-    print_bf_stats()
-    #print_bigsi_benchmark(parameters)
- 
-main()
 
 # Minimizers
 
@@ -145,6 +181,15 @@ ALPHABET_SIZE = 4
 KMER_SIZE = 15
 MIN_MATCH_LENGTH = 5*10**3
 REF_LENGTH = 3*10**9
+
+
+def compute_minimizer_index_size(seq_length, window_size):
+    '''Minimizer index size in mb'''
+    minimizer_size = 32 + 16 + 16 + 32  # bits
+    num_minimizers = 2*seq_length/window_size
+    minimizer_index_size = minimizer_size*num_minimizers/(8*1024*1024)  # mb
+    return minimizer_index_size
+
 
 def compute_prob_random_kmer_in_set(seq_length):
     '''Computes the probability of a random k-mer appearing in a k-mer set at
@@ -298,3 +343,17 @@ def test_estimates_random_kmer():
     print('real - jain approx', pX-pY)
     print('real - exp approx', pX-pZ)
     print('real - binom approx', pX-pA)
+
+
+def main():
+    #print('ar genes')
+    #print_bigsi_stats(ar_genes_parameters)
+    #print('gene fusions')
+    #print_bigsi_stats(gene_fusion_parameters)
+    #print('viruses')
+    #print_bigsi_stats(human_viruses_parameters)
+    print(compute_minimizer_index_size(3e9, 100), 'mb')
+ 
+
+main()
+
