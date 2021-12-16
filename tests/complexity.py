@@ -97,7 +97,7 @@ def compute_false_hit(false_pos, num_minimizers, perc_identity):
     return false_hit_prob
 
 
-def compute_bf_size(false_prob_rate, num_inserted_elements):
+def compute_bf_size(num_inserted_elements, false_prob_rate):
     '''Computes the array size of the bloom filter given false positive rate
     and number of elements inserted'''
     num_bits = -num_inserted_elements/math.log((1 - false_prob_rate))
@@ -110,7 +110,14 @@ def compute_num_minimizers(seq_length, window_size):
     num_minimizers = math.ceil(2*seq_length/window_size)
     return num_minimizers
 
+def compute_column_size(seq_length, window_size, false_prob_rate):
+    num_inserted = compute_num_minimizers(seq_length, window_size)
+    bf_size = compute_bf_size(num_inserted, false_prob_rate)
+
+    return bf_size
+
 def print_bigsi_stats(parameters):
+
     max_seq_length = parameters['bin_seq_len']
     window_size = parameters['window_size']
     num_inserted = compute_num_minimizers(max_seq_length, window_size)
@@ -143,12 +150,12 @@ def print_bigsi_stats(parameters):
 
 
 ar_genes_parameters = {
-    'bin_seq_len': 30e6,
+    'bin_seq_len': 7e6,
     'window_size': 25,
     'min_query_len': 500,
     'containment_thresh': 1.0,
     'false_hit_thresh': 1e-2,
-    'num_cols': 100,
+    'num_cols': 1000,
     'kmer_len': 16,
 }
 
@@ -172,8 +179,50 @@ human_viruses_parameters = {
     'kmer_len': 16,
 }
 
+worm = {
+    'bin_seq_len': 7e6,
+    'window_size': 50,
+    'min_query_len': 500,
+    'containment_thresh': 1.0,
+    'false_hit_thresh': 1e-2,
+    'num_cols': 16*100,
+    'kmer_len': 16,
+}
+
+hg38 = {
+    'bin_seq_len': 16e6,
+    'window_size': 100,
+    'min_query_len': 5000,
+    'containment_thresh': 0.8,
+    'false_hit_thresh': 1e-2,
+    'num_cols': 16*24,
+    'kmer_len': 16,
+}
+
+bacterial_ref_sizes = [5682322, 3862530, 4411532, 2821361, 5594605, 4215606, 
+                       1042519, 2944528, 4042929, 4951383, 4828820, 1641481, 
+                       4641652, 6264404, 2032807]
 
 
+def main():
+    print('ar genes')
+    print_bigsi_stats(ar_genes_parameters)
+    #print('gene fusions')
+    #print_bigsi_stats(gene_fusion_parameters)
+    print('viruses')
+    print_bigsi_stats(human_viruses_parameters)
+    print('Worm')
+    print_bigsi_stats(worm)
+    print('hg38')
+    print_bigsi_stats(hg38)
+    #print(compute_minimizer_index_size(3e9, 100), 'mb')
+    #optimal_bigsi_size = 0
+    #for size in bacterial_ref_sizes:
+    #    optimal_bigsi_size += compute_column_size(size, 25, 0.83)
+
+    #print(optimal_bigsi_size/(8*1024*1024))
+ 
+main()
 
 # Minimizers
 
@@ -344,16 +393,4 @@ def test_estimates_random_kmer():
     print('real - exp approx', pX-pZ)
     print('real - binom approx', pX-pA)
 
-
-def main():
-    #print('ar genes')
-    #print_bigsi_stats(ar_genes_parameters)
-    #print('gene fusions')
-    #print_bigsi_stats(gene_fusion_parameters)
-    #print('viruses')
-    #print_bigsi_stats(human_viruses_parameters)
-    print(compute_minimizer_index_size(3e9, 100), 'mb')
- 
-
-main()
 

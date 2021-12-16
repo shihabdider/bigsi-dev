@@ -39,15 +39,19 @@ async function buildBigsi(sequence, bloomFilterSize, bucketCoords){
 
 }
 
-function estimateNumMinimizers(seqLength, windowSize=100){
-    const numMinimizers = Math.ceil(seqLength/windowSize * 2)
+function estimateNumMinimizers(seqLength){
+    const numMinimizers = Math.ceil(seqLength/config.windowSize * 2)
     return numMinimizers
 }
 
 function computeFalseHitProb(falsePosRate, minQueryMinimizers, containmentScoreThresh){
     const numMatching = minQueryMinimizers*containmentScoreThresh
-    const falseHitProb = 1 - cdf(numMatching, minQueryMinimizers, falsePosRate)
-    return falseHitProb
+    if (containmentScoreThresh < 1){
+        const falseHitProb = 1 - cdf(numMatching, minQueryMinimizers, falsePosRate)
+        return falseHitProb
+    } else {
+        return falsePosRate**minQueryMinimizers
+    }
 }
 
 function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize){
@@ -61,7 +65,7 @@ function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize){
 
 function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, totalNumBuckets){
     // initialize set parameters
-    const minQueryMinimizers = 100  // 5Kbp min query = 100 minimizers
+    const minQueryMinimizers = 2*config.minQuerySize/config.windowSize
     const falseHitThresh = 1e-2
     // iterate over a array size range...
     for ( let bloomFilterSize = 0; bloomFilterSize <= 1e6; bloomFilterSize += 1e3 ){
@@ -90,8 +94,8 @@ function estimateBloomFilterSize(seqSizes){
     const maxSeqLength = Math.max(...seqSizesArr)/config.numBuckets + config.bucketOverhang
     console.log('maximum sequence length: ', maxSeqLength)
     const maxNumElementsInserted = estimateNumMinimizers(maxSeqLength)
-    const containmentScoreThresh = 0.80
-    const totalNumBuckets = seqSizes.length*config.numBuckets
+    const containmentScoreThresh = config.containmentScoreThreshold
+    const totalNumBuckets = seqSizesArr.length*config.numBuckets
 
     const bloomFilterSize = computeBloomFilterSize(
         maxNumElementsInserted, 
@@ -149,16 +153,6 @@ async function makeFastaBigsis(fasta){
     return fastaBigsis
 }
 
-/**
- * @param { string } dir - directory where fasta files are located
- *
- * @returns { matrix[] } multiGenomeBigsis - bigsi matrix for each fasta file
- */
-async function makeMultiGenomeBigsi(dir){
-    // iterate through all fasta files in directory
-
-}
-
 function mergeBigsis(bigsis){
     let mergedBigsi = bigsis[0]
     if (bigsis.length > 1){
@@ -171,7 +165,7 @@ function mergeBigsis(bigsis){
 }
 
 async function main(fasta) {
-    const minSeqLength = 30e6
+    const minSeqLength = 1e6
     const seqSizes = Object.values(await fasta.getSequenceSizes())
     const areFastaSeqsValidSize = Math.min(...seqSizes) > minSeqLength 
 

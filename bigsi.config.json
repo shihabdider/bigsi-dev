@@ -1,5 +1,8 @@
 {
-    "bucketOverhang": 150_000,
+    "bucketOverhang": 150000,
     "numBuckets": 16,
-    "intBits": 16
+    "intBits": 16,
+    "containmentScoreThreshold": 1.0,
+    "windowSize": 50,
+    "minQuerySize": 500
 }

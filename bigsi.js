@@ -1,4 +1,5 @@
 const makeBigsi = require('./bin/make_bigsi.js')
+const writeBigsi = require('./bin/write_bigsi.js')
 const helper = require('./bin/helper.js')
 
 async function main(){
@@ -10,13 +11,6 @@ async function main(){
             describe: 'Fasta file of reference sequence',
             demandOption: 'Fasta file is required',
             type: 'string',
-            nargs: 1,
-        })
-        .option('buckets', {
-            alias: 'b',
-            describe: 'Number of buckets per sequence (should be a multiple of 8)',
-            default: 16,
-            type: 'number',
             nargs: 1,
         })
         .option('output', {
@@ -31,12 +25,14 @@ async function main(){
     const fasta = await helper.loadFasta(argv.ref, fai)
     console.log('Sequence loaded...')
 
-    const bigsi = await makeBigsi.main(fasta, argv.buckets)
-    //console.log(`Converted bigsi matrix to binary TypedArray format, writing to file...`)
-    //makeBigsi.writeBinaryBigsi(binaryBigsi, `${argv.output}.bin`)
+    const bigsi = await makeBigsi.main(fasta)
+    const bigsiInts = writeBigsi.bigsiToInts(bigsi)
+    const binaryBigsi = writeBigsi.makeBinaryBigsi(bigsiInts)
+    console.log(`Converted bigsi matrix to binary TypedArray format, writing to file...`)
+    writeBigsi.writeBinaryBigsi(binaryBigsi, `${argv.output}.bin`)
             
-    //const bucketToPosition = await makeBigsi.makeBucketToPositionMap(seq, seqSizeThreshold)
-    //makeBigsi.writeBucketMapToJSON(bucketToPosition, `${argv.output}_bucket_map.json`)
+    const bucketToPosition = await writeBigsi.makeBucketToPositionMap(fasta, 1e6)
+    writeBigsi.writeBucketMapToJSON(bucketToPosition, `${argv.output}_bucket_map.json`)
 
 }
 

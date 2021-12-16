@@ -2,6 +2,7 @@
  */
 const config = require('../bigsi.config.json')
 const helper = require('./helper.js')
+const fs = require('fs')
 
 function makeBucketMap(seqName, seqSize, seqIdx){
     const bucketStart = seqIdx*config.numBuckets
@@ -51,6 +52,18 @@ async function makeBucketToPositionMap(fasta){
     return bucketToPositionMap
  }
 
+function writeBucketMapToJSON(bucketMap, output){
+    // convert JSON object to string
+    const json = JSON.stringify(bucketMap);
+
+    // write JSON string to a file
+    fs.writeFile(output, json, (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log("Saved JSON of bucket map.");
+    });
+}
 
 // Write BIGSI to binary file
 // --------------------------
@@ -123,3 +136,12 @@ function makeHexBigsi(bigsi){
     return hexBigsi
 }
 
+module.exports = {
+    makeBucketMap: makeBucketMap,
+    makeBucketToPositionMap: makeBucketToPositionMap,
+    writeBucketMapToJSON: writeBucketMapToJSON,
+    bigsiToInts: bigsiToInts,
+    writeBinaryBigsi: writeBinaryBigsi,
+    makeBinaryBigsi: makeBinaryBigsi,
+    makeHexBigsi: makeHexBigsi,
+}
