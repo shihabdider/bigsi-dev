@@ -174,6 +174,7 @@ async function main(fasta) {
         console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
         const bigsi = await mergeBigsis(bigsis)
         console.log(`Bigsis merged!`)
+        console.log('Number of (rows, cols):', bigsi.size())
 
         const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`Process uses ${memoryUsed}`)

@@ -72,8 +72,6 @@ Questions:
 import math
 from scipy.stats import binom
 
-# Sketch BIGSI
-
 
 def compute_num_hash_funcs(bf_size, num_inserted):
     '''Computes optimal number of hash functions for a bloom filter'''
@@ -92,7 +90,7 @@ def compute_false_hit(false_pos, num_minimizers, perc_identity):
     '''Computes the probability of a false bucket hit for a query'''
     false_hit_prob = false_pos**num_minimizers
     if (perc_identity != 1.0):
-        num_matches = num_minimizers*perc_identity
+        num_matches = math.ceil(num_minimizers*perc_identity)
         false_hit_prob = binom.sf(num_matches, num_minimizers, false_pos)
     return false_hit_prob
 
@@ -121,8 +119,8 @@ def print_bigsi_stats(parameters):
     max_seq_length = parameters['bin_seq_len']
     window_size = parameters['window_size']
     num_inserted = compute_num_minimizers(max_seq_length, window_size)
-    num_minimizers_query = compute_num_minimizers(parameters['min_query_len'], 
-                                                 window_size)
+    num_minimizers_query = compute_num_minimizers(parameters['min_query_len'],
+                                                  window_size)
     perc_identity = parameters['containment_thresh']
     false_hit_thresh = parameters['false_hit_thresh']
     num_cols = parameters['num_cols']
@@ -170,7 +168,7 @@ gene_fusion_parameters = {
 }
 
 human_viruses_parameters = {
-    'bin_seq_len': 15e6,
+    'bin_seq_len': 16e6,
     'window_size': 50,
     'min_query_len': 500,
     'containment_thresh': 1.0,

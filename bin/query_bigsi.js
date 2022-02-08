@@ -169,7 +169,7 @@ function computeQueryContainmentScores(submatrix, bigsiHits) {
 
     for (let bucketNum = 0; bucketNum < hammingWeights.length; bucketNum++){
         const containmentScore = hammingWeights[bucketNum]/queryMinimizerCount
-        if (containmentScore > 0) {
+        if (containmentScore >= 0.8) {
             bigsiHits[bucketNum] = {'containment': containmentScore}
         }
     }
@@ -234,20 +234,18 @@ async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols)
     return bigsiHits
 }
 
-async function main(querySeq) {
-    const bigsiPath = 'http://localhost:3001/public/hg38_chr1.bin'
-    const response = await fetch(bigsiPath)
-    const bigsiBuffer = await response.arrayBuffer()
-    console.log('num bytes in the bigsi buffer:', bigsiBuffer.byteLength)
-
+async function main(querySeq, bigsiPath, bigsiConfigPath) {
+    const bigsiBuffer = fs.readFileSync(bigsiPath)
     let bigsiArray = new Uint16Array(bigsiBuffer.buffer, bigsiBuffer.byteOffset, bigsiBuffer.length / 2);
     console.log('bigsiArray size: ', bigsiArray.length)
-    
-    const numCols = 16
-    const bloomFilterSize = bigsiArray.length*16/numCols
+
+    const bigsiDims = require(bigsiConfigPath)
+    const numCols = bigsiDims.cols
+    const bloomFilterSize = bigsiDims.rows
     //const queryFragmentsMinimizers = await winnowQueryFragments(querySeq)
     // Test: non-frag query
     const fragmentSizeZero = 0
+    console.log(querySeq.slice(0,100))
     const queryFragmentsMinimizers = await winnowQueryFragments(querySeq, fragmentSizeZero)
     const queryMask = await makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
 
@@ -255,6 +253,48 @@ async function main(querySeq) {
 
     return filteredBigsiHits
 }
+
+async function run() {
+    if (require.main === module) {
+        const { argv } = require('yargs')
+            .scriptName('query_bigsi')
+            .usage('Usage: $0 --query (path to query fasta) --bigsi (path to BIGSI file) --config (path to bigsi config)')
+            .option('query', {
+                alias: 'q',
+                describe: 'Path to fasta file of query sequence',
+                demandOption: 'Fasta file is required',
+                type: 'string',
+                nargs: 1,
+            })
+            .option('bigsi', {
+                alias: 'b',
+                describe: 'Path to BIGSI file',
+                demandOption: 'BIGSI file is required',
+                type: 'string',
+                nargs: 1,
+            })
+            .option('config', {
+                alias: 'c',
+                describe: 'Path to BIGSI config file',
+                demandOption: 'BIGSI config file is required',
+                type: 'string',
+                nargs: 1,
+            })
+
+        const fai = `${argv.query}.fai`
+        const query = await helper.loadFasta(argv.query, fai)
+        console.log('Query sequence loaded...', query)
+        const seqNames = await query.getSequenceList()
+        console.log('Sequence name: ', seqNames)
+        const querySeq = await query.getSequence(seqNames[0])
+        const bigsiPath = argv.bigsi
+        const bigsiConfigPath = argv.config
+        const hits = await main(querySeq, bigsiPath, bigsiConfigPath);
+        console.log(hits)
+    }
+}
+
+run()
 
 module.exports = {
     winnowQueryFragments: winnowQueryFragments,
