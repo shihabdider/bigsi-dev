@@ -6,3 +6,4 @@ bigsis/
 node_modules/
 logs/
 tests/test_data/
+tests/random_seqs/

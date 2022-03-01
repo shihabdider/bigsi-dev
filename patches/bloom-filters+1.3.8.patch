@@ -1,0 +1,27 @@
+diff --git a/node_modules/bloom-filters/src/bloom/.bloom-filter.ts.swp b/node_modules/bloom-filters/src/bloom/.bloom-filter.ts.swp
+new file mode 100644
+index 0000000..c9a4d5c
+Binary files /dev/null and b/node_modules/bloom-filters/src/bloom/.bloom-filter.ts.swp differ
+diff --git a/node_modules/bloom-filters/src/bloom/bloom-filter.ts b/node_modules/bloom-filters/src/bloom/bloom-filter.ts
+index f4068e2..f07fff6 100644
+--- a/node_modules/bloom-filters/src/bloom/bloom-filter.ts
++++ b/node_modules/bloom-filters/src/bloom/bloom-filter.ts
+@@ -120,12 +120,16 @@ export default class BloomFilter extends BaseFilter implements ClassicFilter<Has
+    * const filter = new BloomFilter(15, 0.1);
+    * filter.add('foo');
+    */
+-  add (element: HashableInput): void {
++  add (element: HashableInput): number[] {
+     const indexes = getDistinctIndices(element, this._size, this._nbHashes, this.seed)
+     for (let i = 0; i < indexes.length; i++) {
+       this._filter[indexes[i]] = 1
+     }
+-    this._length++
++    this._length++;
++
++    console.log('inside add', indexes)
++        
++    return indexes
+   }
+ 
+   /**

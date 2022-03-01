@@ -1,0 +1,9 @@
+{
+    "bucketOverhang": 0,
+    "numBuckets": 16,
+    "intBits": 16,
+    "errorRate": 0.05,
+    "windowSize": 100,
+    "minQuerySize": 5000,
+    "kmer": 16
+}

@@ -1,5 +1,5 @@
 const murmur = require('murmurhash-js')
-const { BloomFilter } = require('bloom-filters')
+const { BloomFilter, getDistinctIndices } = require('bloom-filters')
 const { IndexedFasta } = require('@gmod/indexedfasta')
 const cdf = require('binomial-cdf');
 
@@ -53,11 +53,10 @@ async function getFilteredGenomeSeqs(genome, seqSizeThreshold=10**7){
 }
 
 // Based on MashMap's winnowing algorithm
-function extractMinimizers(seq){
+function extractMinimizers(seq, windowSize){
     seq = seq.toUpperCase()
 
     const kmerSize = 16
-    const windowSize = 100
     const seed = 42
 
     let minimizers = []
@@ -134,6 +133,17 @@ function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, 
     }
 }
 
+function makeQueryRowFilters(minimizers, bloomFilterSize, numHashes) {
+    const queryRowFilters = []
+//    const seed = 78187493520
+    for (const minimizer of minimizers){
+        const indexes = getDistinctIndices(minimizer.toString(), bloomFilterSize, numHashes)
+        queryRowFilters.push(indexes)
+    }
+    console.log(queryRowFilters)
+    return queryRowFilters
+}
+
 function makeMinimizersBloomFilter(minimizers, bloomFilterSize) {
     // adjust filter size based on number of inserted elements and desired false pos 
     // rate
@@ -142,6 +152,7 @@ function makeMinimizersBloomFilter(minimizers, bloomFilterSize) {
     for (const minimizer of minimizers){
         minimizersBloomFilter.add(minimizer.toString())
     }
+
     return minimizersBloomFilter
 }
 
@@ -168,6 +179,7 @@ module.exports = {
     computeNumMinimizers: computeNumMinimizers,
     computeBloomFilterSize: computeBloomFilterSize,
     makeMinimizersBloomFilter: makeMinimizersBloomFilter,
+    makeQueryRowFilters: makeQueryRowFilters,
     writeToJSON: writeToJSON,
 }
 

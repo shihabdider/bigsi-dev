@@ -2,7 +2,8 @@
     "bucketOverhang": 150000,
     "numBuckets": 16,
     "intBits": 16,
-    "containmentScoreThreshold": 1.0,
-    "windowSize": 50,
-    "minQuerySize": 500
+    "containmentScoreThreshold": 0.2,
+    "windowSize": 1000,
+    "minQuerySize": 5000,
+    "kmer":16
 }

@@ -83,14 +83,16 @@ def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
     false_pos = (1 - math.exp(
         -1*num_hashes*num_inserted_elements/bf_size
     ))**num_hashes
+
     return false_pos
 
 
-def compute_false_hit(false_pos, num_minimizers, perc_identity):
+def compute_false_hit(false_pos, num_minimizers, error_rate, kmer_length):
     '''Computes the probability of a false bucket hit for a query'''
     false_hit_prob = false_pos**num_minimizers
-    if (perc_identity != 1.0):
-        num_matches = math.ceil(num_minimizers*perc_identity)
+    if (error_rate != 0):
+        containment = math.exp(-1*error_rate*kmer_length)
+        num_matches = math.ceil(num_minimizers*containment)
         false_hit_prob = binom.sf(num_matches, num_minimizers, false_pos)
     return false_hit_prob
 
@@ -114,24 +116,31 @@ def compute_column_size(seq_length, window_size, false_prob_rate):
 
     return bf_size
 
+
+def error_to_containment(error_rate, kmer_length):
+    containment_score = math.exp(-1*error_rate*kmer_length)
+    return containment_score
+
 def print_bigsi_stats(parameters):
 
+    kmer_length = parameters['kmer_len']
     max_seq_length = parameters['bin_seq_len']
     window_size = parameters['window_size']
     num_inserted = compute_num_minimizers(max_seq_length, window_size)
     num_minimizers_query = compute_num_minimizers(parameters['min_query_len'],
                                                   window_size)
-    perc_identity = parameters['containment_thresh']
+    error_rate = parameters['error_rate']
     false_hit_thresh = parameters['false_hit_thresh']
     num_cols = parameters['num_cols']
-    for bf_size_bits in range(1, 10**9, 10**3):
+    for bf_size_bits in range(1, 10**8, 10**3):
         bf_size_mb = bits_to_mb(bf_size_bits)
-        num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
+        #num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
+        num_hashes = 1
         false_pos_rate = compute_bf_false_pos(num_hashes, num_inserted,
                                               bf_size_bits)
         false_hit = compute_false_hit(false_pos_rate,
                                       num_minimizers_query,
-                                      perc_identity)
+                                      error_rate, kmer_length)
         false_hit_total = false_hit*num_cols
         bf_stats = {
             'bf size': bf_size_bits,
@@ -151,7 +160,7 @@ ar_genes_parameters = {
     'bin_seq_len': 7e6,
     'window_size': 25,
     'min_query_len': 500,
-    'containment_thresh': 1.0,
+    'error_rate': 0.0,
     'false_hit_thresh': 1e-2,
     'num_cols': 1000,
     'kmer_len': 16,
@@ -161,7 +170,7 @@ gene_fusion_parameters = {
     'bin_seq_len': 15e6,
     'window_size': 50,
     'min_query_len': 500,
-    'containment_thresh': 0.8,
+    'error_rate': 0.15,
     'false_hit_thresh': 1e-2,
     'num_cols': 16*24,
     'kmer_len': 16,
@@ -171,7 +180,7 @@ human_viruses_parameters = {
     'bin_seq_len': 16e6,
     'window_size': 50,
     'min_query_len': 500,
-    'containment_thresh': 1.0,
+    'error_rate': 0,
     'false_hit_thresh': 1e-2,
     'num_cols': 16*24,
     'kmer_len': 16,
@@ -181,7 +190,7 @@ worm = {
     'bin_seq_len': 7e6,
     'window_size': 50,
     'min_query_len': 500,
-    'containment_thresh': 1.0,
+    'error_rate': 0.0,
     'false_hit_thresh': 1e-2,
     'num_cols': 16*100,
     'kmer_len': 16,
@@ -191,18 +200,38 @@ hg38 = {
     'bin_seq_len': 16e6,
     'window_size': 100,
     'min_query_len': 5000,
-    'containment_thresh': 0.8,
+    'error_rate': 0.05,
     'false_hit_thresh': 1e-2,
     'num_cols': 16*24,
     'kmer_len': 16,
 }
+
+hg38_chr1 = {
+    'bin_seq_len': 16e6,
+    'window_size': 100,
+    'min_query_len': 5000,
+    'error_rate': 0.15,
+    'false_hit_thresh': 1e-2,
+    'num_cols': 16*1,
+    'kmer_len': 16,
+}
+
 
 bacterial_ref_sizes = [5682322, 3862530, 4411532, 2821361, 5594605, 4215606, 
                        1042519, 2944528, 4042929, 4951383, 4828820, 1641481, 
                        4641652, 6264404, 2032807]
 
 
+def compute_minimizer_index_size(seq_length, window_size):
+    '''Minimizer index size in mb'''
+    minimizer_size = 32 + 16 + 16 + 32  # bits
+    num_minimizers = 2*seq_length/window_size
+    minimizer_index_size = minimizer_size*num_minimizers/(8*1024*1024)  # mb
+    return minimizer_index_size
+
 def main():
+    #print(error_to_containment(0.15, 8))
+
     print('ar genes')
     print_bigsi_stats(ar_genes_parameters)
     #print('gene fusions')
@@ -213,15 +242,18 @@ def main():
     print_bigsi_stats(worm)
     print('hg38')
     print_bigsi_stats(hg38)
+    print('hg38_chr1')
+    print_bigsi_stats(hg38_chr1)
     #print(compute_minimizer_index_size(3e9, 100), 'mb')
     #optimal_bigsi_size = 0
     #for size in bacterial_ref_sizes:
     #    optimal_bigsi_size += compute_column_size(size, 25, 0.83)
 
-    #print(optimal_bigsi_size/(8*1024*1024))
+    ##print(optimal_bigsi_size/(8*1024*1024))
+    print(compute_minimizer_index_size(3e8, 100))
+    
  
 main()
-
 # Minimizers
 
 ALPHABET_SIZE = 4
@@ -230,20 +262,12 @@ MIN_MATCH_LENGTH = 5*10**3
 REF_LENGTH = 3*10**9
 
 
-def compute_minimizer_index_size(seq_length, window_size):
-    '''Minimizer index size in mb'''
-    minimizer_size = 32 + 16 + 16 + 32  # bits
-    num_minimizers = 2*seq_length/window_size
-    minimizer_index_size = minimizer_size*num_minimizers/(8*1024*1024)  # mb
-    return minimizer_index_size
 
-
-def compute_prob_random_kmer_in_set(seq_length):
+def compute_prob_random_kmer_in_set(kmer_length, kmer_set_size):
     '''Computes the probability of a random k-mer appearing in a k-mer set at
-    least once, assuming the k-mers are independent (i.e the apperance of one 
-    k-mer does not bias the appearence of another)'''
+    least once, assuming the k-mers are independent'''
     alphabet_size = 4   # for DNA
-    random_kmer_match = 1 - (1 - alphabet_size**(-KMER_SIZE))**(seq_length)
+    random_kmer_match = 1 - (1 - alphabet_size**(-kmer_length))**(kmer_set_size)
     return random_kmer_match
 
 
@@ -391,4 +415,16 @@ def test_estimates_random_kmer():
     print('real - exp approx', pX-pZ)
     print('real - binom approx', pX-pA)
 
+def containment_false_pos():
+    ref_sketch_size = int(1e4)
+    query_sketch_size = int(1e2)
+    error_rate = 0.2
+    kmer_length = 8
+    containment_ratio = math.exp(-kmer_length*error_rate)
+    min_num_matches = math.ceil(containment_ratio*query_sketch_size)
+    print(min_num_matches)
+
+    r = compute_prob_random_kmer_in_set(kmer_length, ref_sketch_size)
+    false_pos_rate = binom.sf(min_num_matches, query_sketch_size, r)
+    print(false_pos_rate)
 

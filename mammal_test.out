@@ -1,0 +1,655 @@
+Sequence name:  [ '0chimp_chr1:138674974_138679974:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+81
+{ '10': { 'error rate': 0.018556170472294062, score: 'undefined/1' } }
+Sequence name:  [ '0chimp_chr1:214807150_215107150:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4518
+{ '15': { 'error rate': 0.014787402728024555, score: 'undefined/1' } }
+Sequence name:  [ '0cow_chr1:95498276_95798276:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '0gorilla_chr1:71213932_71513932:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4592
+{ '4': { 'error rate': 0.014369687394898474, score: 'undefined/1' } }
+Sequence name:  [ '0mouse_chr1:140013889_140313889:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '0pig_chr1:24303953_24603953:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '10chimp_chr1:31154579_31454579:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+3997
+{ '1': { 'error rate': 0.018116801351777928, score: 'undefined/1' } }
+Sequence name:  [ '10chimp_chr1:91139934_91144934:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+31
+{ '5': { 'error rate': 0.015930765601799377, score: 'undefined/1' } }
+Sequence name:  [ '10cow_chr1:75250858_75550858:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '10gorilla_chr1:33610219_33910219:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4319
+{ '2': { 'error rate': 0.0134612639325162, score: 'undefined/1' } }
+Sequence name:  [ '10mouse_chr1:97401625_97701625:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '10pig_chr1:195979072_196279072:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '11chimp_chr1:110401447_110701447:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4329
+{ '7': { 'error rate': 0.015854561275221737, score: 'undefined/1' } }
+Sequence name:  [ '11chimp_chr1:228958685_228963685:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '11cow_chr1:68722094_69022094:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '11gorilla_chr1:124565598_124865598:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+3954
+{ '9': { 'error rate': 0.014079108053604721, score: 'undefined/1' } }
+Sequence name:  [ '11mouse_chr1:41103159_41403159:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '11pig_chr1:221419212_221719212:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '12chimp_chr1:29105704_29110704:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+52
+72
+53
+48
+48
+45
+48
+50
+45
+51
+51
+48
+56
+52
+50
+{
+  '0': { 'error rate': 0.03831902955540056, score: 'undefined/1' },
+  '1': { 'error rate': 0.017980129528236306, score: 'undefined/1' },
+  '2': { 'error rate': 0.03712851736973215, score: 'undefined/1' },
+  '3': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '4': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '5': { 'error rate': 0.04735535635609478, score: 'undefined/1' },
+  '6': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '7': { 'error rate': 0.040770324127480634, score: 'undefined/1' },
+  '9': { 'error rate': 0.04735535635609478, score: 'undefined/1' },
+  '10': { 'error rate': 0.039532659921469405, score: 'undefined/1' },
+  '11': { 'error rate': 0.039532659921469405, score: 'undefined/1' },
+  '12': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '13': { 'error rate': 0.03368728129579293, score: 'undefined/1' },
+  '14': { 'error rate': 0.03831902955540056, score: 'undefined/1' },
+  '15': { 'error rate': 0.040770324127480634, score: 'undefined/1' }
+}
+Sequence name:  [ '12chimp_chr1:4946000_5246000:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+3441
+{ '0': { 'error rate': 0.019805860719985788, score: 'undefined/1' } }
+Sequence name:  [ '12cow_chr1:2700071_3000071:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '12gorilla_chr1:72186776_72486776:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4460
+{ '4': { 'error rate': 0.015409045345162397, score: 'undefined/1' } }
+Sequence name:  [ '12mouse_chr1:148442750_148742750:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '12pig_chr1:243657590_243957590:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '13chimp_chr1:159944444_160244444:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4267
+{ '11': { 'error rate': 0.012503290941045986, score: 'undefined/1' } }
+Sequence name:  [ '13chimp_chr1:71863113_71868113:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+71
+{ '4': { 'error rate': 0.02014297510182853, score: 'undefined/1' } }
+Sequence name:  [ '13cow_chr1:144343514_144643514:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '13gorilla_chr1:159923989_160223989:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4174
+{ '12': { 'error rate': 0.018912733105507253, score: 'undefined/1' } }
+Sequence name:  [ '13mouse_chr1:150308115_150608115:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '13pig_chr1:14331054_14631054:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '14chimp_chr1:205838536_205843536:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+81
+{ '14': { 'error rate': 0.007275646990275709, score: 'undefined/1' } }
+Sequence name:  [ '14chimp_chr1:62526355_62826355:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4610
+{ '4': { 'error rate': 0.013669285538198551, score: 'undefined/1' } }
+Sequence name:  [ '14cow_chr1:73986178_74286178:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '14gorilla_chr1:187170167_187470167:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4352
+{ '15': { 'error rate': 0.017421140198623477, score: 'undefined/1' } }
+Sequence name:  [ '14mouse_chr1:14470140_14770140:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '14pig_chr1:88651808_88951808:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '15chimp_chr1:193880078_194180078:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4580
+{ '13': { 'error rate': 0.014500775216526967, score: 'undefined/1' } }
+Sequence name:  [ '15chimp_chr1:216212692_216217692:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+50
+45
+53
+46
+53
+50
+45
+46
+50
+51
+47
+46
+45
+88
+{
+  '0': { 'error rate': 0.04205902957765161, score: 'undefined/1' },
+  '1': { 'error rate': 0.04864406180626576, score: 'undefined/1' },
+  '2': { 'error rate': 0.038417222819903125, score: 'undefined/1' },
+  '3': { 'error rate': 0.047270380136342306, score: 'undefined/1' },
+  '4': { 'error rate': 0.038417222819903125, score: 'undefined/1' },
+  '5': { 'error rate': 0.04205902957765161, score: 'undefined/1' },
+  '6': { 'error rate': 0.04864406180626576, score: 'undefined/1' },
+  '7': { 'error rate': 0.047270380136342306, score: 'undefined/1' },
+  '10': { 'error rate': 0.04205902957765161, score: 'undefined/1' },
+  '11': { 'error rate': 0.040821365371640383, score: 'undefined/1' },
+  '12': { 'error rate': 0.04592624231003209, score: 'undefined/1' },
+  '13': { 'error rate': 0.047270380136342306, score: 'undefined/1' },
+  '14': { 'error rate': 0.04864406180626576, score: 'undefined/1' },
+  '15': { 'error rate': 0.00672691651202284, score: 'undefined/1' }
+}
+Sequence name:  [ '15cow_chr1:34795293_35095293:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '15gorilla_chr1:43887945_44187945:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4603
+{ '3': { 'error rate': 0.013392755458706088, score: 'undefined/1' } }
+Sequence name:  [ '15mouse_chr1:170612308_170912308:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '15pig_chr1:185399365_185699365:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '16chimp_chr1:138723655_138728655:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+87
+{ '10': { 'error rate': 0.012932544737957656, score: 'undefined/1' } }
+Sequence name:  [ '16chimp_chr1:41196703_41496703:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4354
+{ '2': { 'error rate': 0.012264651752345144, score: 'undefined/1' } }
+Sequence name:  [ '16cow_chr1:75537532_75837532:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '16gorilla_chr1:27524775_27824775:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4303
+{ '2': { 'error rate': 0.014100244984596461, score: 'undefined/1' } }
+Sequence name:  [ '16mouse_chr1:121589962_121889962:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '16pig_chr1:219178291_219478291:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '17chimp_chr1:113819550_114119550:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+3063
+{ '7': { 'error rate': 0.011622536922743778, score: 'undefined/1' } }
+Sequence name:  [ '17chimp_chr1:202345207_202350207:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+91
+{ '14': { 'error rate': 0.007132081672963812, score: 'undefined/1' } }
+Sequence name:  [ '17cow_chr1:87285099_87585099:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '17gorilla_chr1:144927076_145227076:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4466
+{ '11': { 'error rate': 0.014164407713746918, score: 'undefined/1' } }
+Sequence name:  [ '17mouse_chr1:185403043_185703043:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '17pig_chr1:16709924_17009924:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '18chimp_chr1:145874150_146174150:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4021
+{ '10': { 'error rate': 0.01399308476228193, score: 'undefined/1' } }
+Sequence name:  [ '18chimp_chr1:26402650_26407650:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+85
+{ '1': { 'error rate': 0.008894763886265969, score: 'undefined/1' } }
+Sequence name:  [ '18cow_chr1:102764286_103064286:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '18gorilla_chr1:42633380_42933380:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4506
+{ '3': { 'error rate': 0.016708543002254477, score: 'undefined/1' } }
+Sequence name:  [ '18mouse_chr1:108349259_108649259:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '18pig_chr1:194770943_195070943:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '19chimp_chr1:148817776_148822776:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+49
+82
+{
+  '5': { 'error rate': 0.04395622200149771, score: 'undefined/1' },
+  '10': { 'error rate': 0.01177503767939605, score: 'undefined/1' }
+}
+Sequence name:  [ '19chimp_chr1:210428813_210728813:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4307
+{ '14': { 'error rate': 0.014745269366996933, score: 'undefined/1' } }
+Sequence name:  [ '19cow_chr1:6038061_6338061:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '19gorilla_chr1:113042439_113342439:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4453
+{ '7': { 'error rate': 0.01596549376884928, score: 'undefined/1' } }
+Sequence name:  [ '19mouse_chr1:123616092_123916092:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '19pig_chr1:4111936_4411936:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '1chimp_chr1:113124503_113424503:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+355
+{ '7': { 'error rate': 0.01255792153906182, score: 'undefined/1' } }
+Sequence name:  [ '1chimp_chr1:91691988_91696988:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+80
+{ '5': { 'error rate': 0.010079259224757641, score: 'undefined/1' } }
+Sequence name:  [ '1cow_chr1:85779326_86079326:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '1gorilla_chr1:159261011_159561011:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4141
+{ '12': { 'error rate': 0.021272684823744763, score: 'undefined/1' } }
+Sequence name:  [ '1mouse_chr1:157492307_157792307:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '1pig_chr1:153048217_153348217:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '2chimp_chr1:172399371_172404371:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+79
+{ '12': { 'error rate': 0.010865433112686397, score: 'undefined/1' } }
+Sequence name:  [ '2chimp_chr1:186971296_187271296:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4694
+{ '13': { 'error rate': 0.012333374779455519, score: 'undefined/1' } }
+Sequence name:  [ '2cow_chr1:119810750_120110750:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '2gorilla_chr1:191368862_191668862:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4344
+{ '15': { 'error rate': 0.016781731300022612, score: 'undefined/1' } }
+Sequence name:  [ '2mouse_chr1:38422548_38722548:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '2pig_chr1:86101624_86401624:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '3chimp_chr1:135738487_136038487:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4109
+{ '10': { 'error rate': 0.012615162551670518, score: 'undefined/1' } }
+Sequence name:  [ '3chimp_chr1:141783348_141788348:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+72
+{ '10': { 'error rate': 0.01599583588357504, score: 'undefined/1' } }
+Sequence name:  [ '3cow_chr1:124658017_124958017:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '3gorilla_chr1:131914863_132214863:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+2741
+{ '10': { 'error rate': 0.014196790879041144, score: 'undefined/1' } }
+Sequence name:  [ '3mouse_chr1:77333164_77633164:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '3pig_chr1:133538585_133838585:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '4chimp_chr1:123881067_124181067:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+629
+{ '7': { 'error rate': 0.017481324007548, score: 'undefined/1' } }
+Sequence name:  [ '4chimp_chr1:98961793_98966793:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+92
+{ '6': { 'error rate': 0.01002141562969871, score: 'undefined/1' } }
+Sequence name:  [ '4cow_chr1:120266678_120566678:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '4gorilla_chr1:211186725_211486725:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4490
+{ '14': { 'error rate': 0.016440582081500586, score: 'undefined/1' } }
+Sequence name:  [ '4mouse_chr1:169535251_169835251:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '4pig_chr1:39335224_39635224:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '5chimp_chr1:28237870_28242870:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+87
+{ '1': { 'error rate': 0.008703879208344228, score: 'undefined/1' } }
+Sequence name:  [ '5chimp_chr1:63090766_63390766:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4667
+{ '4': { 'error rate': 0.012144990928797214, score: 'undefined/1' } }
+Sequence name:  [ '5cow_chr1:81787660_82087660:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '5gorilla_chr1:91618067_91918067:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4436
+{ '6': { 'error rate': 0.016063064613074912, score: 'undefined/1' } }
+Sequence name:  [ '5mouse_chr1:61329308_61629308:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '5pig_chr1:183775848_184075848:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '6chimp_chr1:183620679_183920679:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4434
+{ '13': { 'error rate': 0.013032056991087093, score: 'undefined/1' } }
+Sequence name:  [ '6chimp_chr1:64553046_64558046:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+45
+45
+47
+53
+74
+53
+45
+50
+43
+50
+55
+49
+55
+59
+54
+{
+  '0': { 'error rate': 0.04537106271143351, score: 'undefined/1' },
+  '1': { 'error rate': 0.04537106271143351, score: 'undefined/1' },
+  '2': { 'error rate': 0.04265324321519984, score: 'undefined/1' },
+  '3': { 'error rate': 0.035144223725070874, score: 'undefined/1' },
+  '4': { 'error rate': 0.014283399996817889, score: 'undefined/1' },
+  '5': { 'error rate': 0.035144223725070874, score: 'undefined/1' },
+  '6': { 'error rate': 0.04537106271143351, score: 'undefined/1' },
+  '7': { 'error rate': 0.038786030482819374, score: 'undefined/1' },
+  '9': { 'error rate': 0.04821246109123085, score: 'undefined/1' },
+  '10': { 'error rate': 0.038786030482819374, score: 'undefined/1' },
+  '11': { 'error rate': 0.03282914424504906, score: 'undefined/1' },
+  '12': { 'error rate': 0.040048699690164336, score: 'undefined/1' },
+  '13': { 'error rate': 0.03282914424504906, score: 'undefined/1' },
+  '14': { 'error rate': 0.028441378077971032, score: 'undefined/1' },
+  '15': { 'error rate': 0.033975965411811346, score: 'undefined/1' }
+}
+Sequence name:  [ '6cow_chr1:131258921_131558921:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '6gorilla_chr1:215809885_216109885:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4388
+{ '15': { 'error rate': 0.015299094631946215, score: 'undefined/1' } }
+Sequence name:  [ '6mouse_chr1:191232183_191532183:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '6pig_chr1:260802224_261102224:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '7chimp_chr1:117697907_117702907:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+77
+{ '7': { 'error rate': 0.010440880291447888, score: 'undefined/1' } }
+Sequence name:  [ '7chimp_chr1:7322797_7622797:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+3958
+{ '0': { 'error rate': 0.016380758734684014, score: 'undefined/1' } }
+Sequence name:  [ '7cow_chr1:132258919_132558919:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '7gorilla_chr1:433093_733093:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+3510
+{ '0': { 'error rate': 0.021712581697087698, score: 'undefined/1' } }
+Sequence name:  [ '7mouse_chr1:6295938_6595938:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '7pig_chr1:36156911_36456911:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '8chimp_chr1:219369464_219669464:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4439
+{ '15': { 'error rate': 0.01569307043371313, score: 'undefined/1' } }
+Sequence name:  [ '8chimp_chr1:220770886_220775886:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+52
+62
+83
+{
+  '1': { 'error rate': 0.047392905170681676, score: 'undefined/1' },
+  '2': { 'error rate': 0.03639973851670267, score: 'undefined/1' },
+  '15': { 'error rate': 0.018168099594733512, score: 'undefined/1' }
+}
+Sequence name:  [ '8cow_chr1:20578943_20878943:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '8gorilla_chr1:5758364_6058364:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+3155
+{ '0': { 'error rate': 0.015823700892687767, score: 'undefined/1' } }
+Sequence name:  [ '8mouse_chr1:99501586_99801586:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '8pig_chr1:63485109_63785109:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '9chimp_chr1:227160429_227165429:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+2
+1
+1
+2
+1
+2
+1
+1
+1
+{
+  '0': { 'error rate': -0, score: 'undefined/1' },
+  '1': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '2': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '7': { 'error rate': -0, score: 'undefined/1' },
+  '8': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '9': { 'error rate': -0, score: 'undefined/1' },
+  '13': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '14': { 'error rate': 0.04332169878499658, score: 'undefined/1' },
+  '15': { 'error rate': 0.04332169878499658, score: 'undefined/1' }
+}
+Sequence name:  [ '9chimp_chr1:53502421_53802421:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4420
+{ '3': { 'error rate': 0.014419788319485247, score: 'undefined/1' } }
+Sequence name:  [ '9cow_chr1:47556697_47856697:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '9gorilla_chr1:14712305_15012305:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+4450
+{ '1': { 'error rate': 0.01514281384759449, score: 'undefined/1' } }
+Sequence name:  [ '9mouse_chr1:104017411_104317411:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}
+Sequence name:  [ '9pig_chr1:213274537_213574537:0.0' ]
+bigsiArray size:  866000
+number of query fragments:  1
+{}

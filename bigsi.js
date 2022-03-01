@@ -1,3 +1,6 @@
+/* Command line tool for building bigsi matrix of a fasta sequence
+ */
+
 const makeBigsi = require('./bin/make_bigsi.js')
 const writeBigsi = require('./bin/write_bigsi.js')
 const helper = require('./bin/helper.js')

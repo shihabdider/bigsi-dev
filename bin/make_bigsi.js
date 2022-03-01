@@ -11,10 +11,10 @@
 const helper = require('./helper.js')
 const matrix = require('matrix-js')
 const cdf = require('binomial-cdf');
-const config = require('../bigsi.config.json')
+const config = require('../bigsi.chr1.config.json')
 
 function makeBucketBloomFilter(sequence, bloomFilterSize){
-    const bucketMinimizers = helper.extractMinimizers(sequence)
+    const bucketMinimizers = helper.extractMinimizers(sequence, config.windowSize)
     const bucketBloomFilter = helper.makeMinimizersBloomFilter(
             bucketMinimizers, 
             bloomFilterSize
@@ -44,9 +44,10 @@ function estimateNumMinimizers(seqLength){
     return numMinimizers
 }
 
-function computeFalseHitProb(falsePosRate, minQueryMinimizers, containmentScoreThresh){
-    const numMatching = minQueryMinimizers*containmentScoreThresh
-    if (containmentScoreThresh < 1){
+function computeFalseHitProb(falsePosRate, minQueryMinimizers, errorRate){
+    if (errorRate < 1){
+        const containmentScoreThresh = Math.exp(-1*errorRate*config.kmer)
+        const numMatching = Math.ceil(minQueryMinimizers*containmentScoreThresh)
         const falseHitProb = 1 - cdf(numMatching, minQueryMinimizers, falsePosRate)
         return falseHitProb
     } else {
@@ -54,33 +55,37 @@ function computeFalseHitProb(falsePosRate, minQueryMinimizers, containmentScoreT
     }
 }
 
-function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize){
-    const numHashes = 1
+function computeNumHashes(bloomFilterSize, numElementsInserted) {
+    const numHashes = Math.ceil((bloomFilterSize/numElementsInserted)*Math.log(2))
+    return numHashes
+}
 
+function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize, numHashes){
     const falsePos = (1 - Math.exp(
         -1*numHashes*numElementsInserted/bloomFilterSize
     ))**numHashes
     return falsePos
 }
 
-function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, totalNumBuckets){
+function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBuckets){
     // initialize set parameters
     const minQueryMinimizers = 2*config.minQuerySize/config.windowSize
     const falseHitThresh = 1e-2
     // iterate over a array size range...
-    for ( let bloomFilterSize = 0; bloomFilterSize <= 1e6; bloomFilterSize += 1e3 ){
-        const falsePosRate = computeBloomFilterFalsePosRate(maxNumElementsInserted, bloomFilterSize)
+    for ( let bloomFilterSize = 0; bloomFilterSize <= 5e7; bloomFilterSize += 1e3 ){
+        const numHashes = 1
+        const falsePosRate = computeBloomFilterFalsePosRate(maxNumElementsInserted, bloomFilterSize, numHashes)
         const falseHitProb = computeFalseHitProb(
             falsePosRate, 
             minQueryMinimizers, 
-            containmentScoreThresh
+            errorRate
         )
 
         // accounting for all buckets in bigsi
         const falseHitProbUpper = falseHitProb*totalNumBuckets
         // break if false hit rate less than threshold and return
         if ( falseHitProbUpper <= falseHitThresh ) {
-            console.log(`optimal bloom filter size: ${bloomFilterSize}`)
+            console.log('num hashes:', numHashes)
             return bloomFilterSize
         }
     }
@@ -91,17 +96,21 @@ function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, 
 */ 
 function estimateBloomFilterSize(seqSizes){
     const seqSizesArr = Object.values(seqSizes)
-    const maxSeqLength = Math.max(...seqSizesArr)/config.numBuckets + config.bucketOverhang
+    const maxSeqLength = Math.ceil(Math.max(...seqSizesArr)/config.numBuckets + config.bucketOverhang)
     console.log('maximum sequence length: ', maxSeqLength)
     const maxNumElementsInserted = estimateNumMinimizers(maxSeqLength)
-    const containmentScoreThresh = config.containmentScoreThreshold
+    console.log('max number of minimizers: ', maxNumElementsInserted)
+    const errorRate = config.errorRate
+    console.log('max error rate:', errorRate)
     const totalNumBuckets = seqSizesArr.length*config.numBuckets
+    console.log('total number of buckets:', totalNumBuckets)
 
     const bloomFilterSize = computeBloomFilterSize(
         maxNumElementsInserted, 
-        containmentScoreThresh, 
+        errorRate,
         totalNumBuckets
     )
+    console.log(`optimal bloom filter size: ${bloomFilterSize}`)
 
     return bloomFilterSize
 }
