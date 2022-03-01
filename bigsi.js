@@ -3,7 +3,7 @@
 
 const makeBigsi = require('./bin/make_bigsi.js')
 const writeBigsi = require('./bin/write_bigsi.js')
-const helper = require('./bin/helper.js')
+const utils = require('./bin/utils.js')
 
 async function main(){
     const { argv } = require('yargs')
@@ -25,7 +25,7 @@ async function main(){
         })
 
     const fai = `${argv.ref}.fai`
-    const fasta = await helper.loadFasta(argv.ref, fai)
+    const fasta = await utils.loadFasta(argv.ref, fai)
     console.log('Sequence loaded...')
 
     const bigsi = await makeBigsi.main(fasta)

@@ -1,5 +1,6 @@
 const { BloomFilter } = require('bloom-filters')
 
+// Returns an array representing the Bloom filter
 function makeMinimizersBloomFilter(minimizers, bloomFilterSize, numHashes) {
     // adjust filter size based on number of inserted elements and desired false pos 
     // rate
@@ -7,7 +8,10 @@ function makeMinimizersBloomFilter(minimizers, bloomFilterSize, numHashes) {
     for (const minimizer of minimizers){
         minimizersBloomFilter.add(minimizer.toString())
     }
-    return minimizersBloomFilter
+
+    const minimizersBFArray = minimizersBloomFilter._filter
+    delete minimizersBloomFilter
+    return minimizersBFArray
 }
 
 function getBFlength(numBitsSet, numHashes, bfSize) {

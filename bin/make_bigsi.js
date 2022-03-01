@@ -8,14 +8,14 @@
  *  bigsi: (matrix)
  *
  */
-const helper = require('./helper.js')
+const utils = require('./utils.js')
 const matrix = require('matrix-js')
 const cdf = require('binomial-cdf');
-const config = require('../bigsi.chr1.config.json')
+const config = require('../bigsi.config.json')
 
 function makeBucketBloomFilter(sequence, bloomFilterSize){
-    const bucketMinimizers = helper.extractMinimizers(sequence, config.windowSize)
-    const bucketBloomFilter = helper.makeMinimizersBloomFilter(
+    const bucketMinimizers = utils.extractMinimizers(sequence, config.windowSize)
+    const bucketBloomFilter = utils.makeMinimizersBloomFilter(
             bucketMinimizers, 
             bloomFilterSize
         )
@@ -24,7 +24,7 @@ function makeBucketBloomFilter(sequence, bloomFilterSize){
 }
 
 async function buildBigsi(sequence, bloomFilterSize, bucketCoords){
-    const seqBloomFilters = []
+    const seqBloomFilters = [] // Bloom filters as arrays
     for (const coord of bucketCoords){
         const ithBucketSequence = sequence.slice(coord.bucketStart, coord.bucketEnd);
         console.log(coord['bucketStart'], coord['bucketEnd'], ithBucketSequence.length)
@@ -32,7 +32,7 @@ async function buildBigsi(sequence, bloomFilterSize, bucketCoords){
         seqBloomFilters.push(bucketBloomFilter)
     }
 
-    let bigsi = matrix(seqBloomFilters.map(bloomFilterObj => bloomFilterObj._filter))
+    let bigsi = matrix(seqBloomFilters)
     bigsi = matrix(bigsi.trans()) // transpose to make bloom filters into columns of matrix
 
     return bigsi
@@ -169,12 +169,14 @@ function mergeBigsis(bigsis){
             mergedBigsi = matrix(mergedBigsi.merge.right(bigsis[i]()))
         }
     }
+    const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
+    console.log(`Process used ${memoryUsed} MB`)
 
     return mergedBigsi
 }
 
 async function main(fasta) {
-    const minSeqLength = 1e6
+    const minSeqLength = 30e6
     const seqSizes = Object.values(await fasta.getSequenceSizes())
     const areFastaSeqsValidSize = Math.min(...seqSizes) > minSeqLength 
 

@@ -1,9 +1,10 @@
 /* Write bigsi and bucket map to file
  */
 const config = require('../bigsi.config.json')
-const helper = require('./helper.js')
 const fs = require('fs')
 
+/** Makes the bucket map to retrieve sequence intervals from bucket number
+ */
 function makeBucketMap(seqName, seqSize, seqIdx){
     const bucketStart = seqIdx*config.numBuckets
     const bucketEnd = bucketStart + config.numBuckets - 1
