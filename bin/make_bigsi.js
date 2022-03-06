@@ -12,6 +12,7 @@ const utils = require('./utils.js')
 const matrix = require('matrix-js')
 const cdf = require('binomial-cdf');
 const config = require('../bigsi.config.json')
+const writeBigsi = require('./write_bigsi.js')
 
 function makeBucketBloomFilter(sequence, bloomFilterSize){
     const bucketMinimizers = utils.extractMinimizers(sequence, config.windowSize)
@@ -136,7 +137,9 @@ function computeBucketCoords(seqLength, bucketSize) {
 /**
  * @param { IndexedFasta } fasta - indexedFasta object
  *
- * @returns { matrix[] } fastaBigsis - bigsi matrix for each seq in fasta
+ * @returns { matrix[] } fastaBigsis - bigsi matrix for each seq in fasta in 
+ * compressed format (each column is a vector of 16bit ints corresponding to 
+ * a 16-column row)
  */
 async function makeFastaBigsis(fasta){
     const seqNames = await fasta.getSequenceList()
@@ -153,9 +156,11 @@ async function makeFastaBigsis(fasta){
         )
         const bucketCoords = computeBucketCoords(sequence.length, bucketSize)
         const seqBigsi = await buildBigsi(sequence, bloomFilterSize, bucketCoords)
+        const seqBigsiInts = writeBigsi.bigsiToInts(seqBigsi)
+        const seqBigsiVector = matrix(seqBigsiInts).trans()
         console.log(`Bigsi of ${seqName} built...`)
         fastaBigsis.push(seqBigsi)
-        const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
+        const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process used ${memoryUsed} MB`)
     }
 
@@ -169,7 +174,7 @@ function mergeBigsis(bigsis){
             mergedBigsi = matrix(mergedBigsi.merge.right(bigsis[i]()))
         }
     }
-    const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
+    const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
     console.log(`Process used ${memoryUsed} MB`)
 
     return mergedBigsi
@@ -187,7 +192,7 @@ async function main(fasta) {
         console.log(`Bigsis merged!`)
         console.log('Number of (rows, cols):', bigsi.size())
 
-        const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
+        const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process uses ${memoryUsed}`)
 
         return bigsi

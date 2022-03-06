@@ -6,7 +6,7 @@ REF="../../seqs/human/hg38/ncbi-genomes-2021-11-16/hg38.fna"
 OUTPUT=bigsis/hg38_whole_genome_005.bin
 ###
 #### Make the bigsi
-#node bigsi.js -r $REF -o $OUTPUT
+node bigsi.js -r $REF -o $OUTPUT
 #
 # Paths must be absolute or relative to query_bigsi.js
 #QUERY="../../seqs/human/brca1.fasta"
@@ -32,4 +32,4 @@ QUERY="../../seqs/human/nanopore_lr.fasta"
 #done
 
 # Query the bigsi
-node bin/query_bigsi.js -q $QUERY -b $BIGSI -c $CONFIG
+#node bin/query_bigsi.js -q $QUERY -b $BIGSI -c $CONFIG

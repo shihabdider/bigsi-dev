@@ -153,7 +153,9 @@ function makeMinimizersBloomFilter(minimizers, bloomFilterSize) {
         minimizersBloomFilter.add(minimizer.toString())
     }
 
-    return minimizersBloomFilter
+    const minimizersBloomFilterArray = minimizersBloomFilter._filter
+
+    return minimizersBloomFilterArray
 }
 
 function writeToJSON(object, filename){

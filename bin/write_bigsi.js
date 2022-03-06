@@ -90,6 +90,11 @@ function bigsiToInts(bigsi){
     return bigsiInts
 }
 
+function flattenBigsi(bigsi) {
+    const bigsiArr = bigsi()
+    return bigsiArr.flat()
+}
+
 /**
  * @param { array } bigsiInts - bigsi matrix as a flat array of 16-bit ints
  *
