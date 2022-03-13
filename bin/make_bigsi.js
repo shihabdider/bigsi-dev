@@ -156,10 +156,13 @@ async function makeFastaBigsis(fasta){
         )
         const bucketCoords = computeBucketCoords(sequence.length, bucketSize)
         const seqBigsi = await buildBigsi(sequence, bloomFilterSize, bucketCoords)
+        console.log('seqBigsi', seqBigsi)
         const seqBigsiInts = writeBigsi.bigsiToInts(seqBigsi)
-        const seqBigsiVector = matrix(seqBigsiInts).trans()
+        console.log('seqBigsiInts', seqBigsiInts)
+        const seqBigsiVector = seqBigsiInts.map((elem) => [elem])
+        console.log('seqBigsiVector', seqBigsiVector)
         console.log(`Bigsi of ${seqName} built...`)
-        fastaBigsis.push(seqBigsi)
+        fastaBigsis.push(matrix(seqBigsiVector))
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process used ${memoryUsed} MB`)
     }

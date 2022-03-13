@@ -147,6 +147,7 @@ module.exports = {
     makeBucketToPositionMap: makeBucketToPositionMap,
     writeBucketMapToJSON: writeBucketMapToJSON,
     bigsiToInts: bigsiToInts,
+    flattenBigsi: flattenBigsi,
     writeBinaryBigsi: writeBinaryBigsi,
     makeBinaryBigsi: makeBinaryBigsi,
     makeHexBigsi: makeHexBigsi,

@@ -1,7 +1,7 @@
 const BitSet = require('bitset')
 const fs = require('fs')
 const Uint1Array = require('uint1array').default;
-const commonFunc = require('../bin/utils.js')
+const commonFunc = require('../common_func.js')
 const matrix = require('matrix-js')
 
 
@@ -270,12 +270,10 @@ async function testTwoBinaryBigsi(root){
 }
 
 async function main(){
-    const A = [0, 1, 0]
+    const A = [[0], [1], [0]]
     const matrixA = matrix(A)
     const transA = matrixA.trans()
-    const mapTransA = A.map((elem) => [elem])
     console.log(matrixA(), transA)
-    console.log(mapTransA)
 }
 
 

@@ -7,3 +7,4 @@ node_modules/
 logs/
 tests/test_data/
 tests/random_seqs/
+mutation_rate_ci_calculator/
