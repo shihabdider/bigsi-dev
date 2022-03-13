@@ -29,10 +29,10 @@ BIGSI="bigsis/hg38_whole_genome_005.bin"
 CONFIG="../bigsi.random.query.config.json"
 #QUERY="../../seqs/mammals/mouse_align.fasta"
 #QUERY="../../seqs/human/nanopore_lr.fasta"
-for QUERY in tests/random_seqs/0.0/*.fasta; do
-# Query the bigsi
-    node bin/query_bigsi.js -q $QUERY -b $BIGSI -c $CONFIG
-done
+#for QUERY in tests/random_seqs/0.0/*.fasta; do
+## Query the bigsi
+#    node bin/query_bigsi.js -q $QUERY -b $BIGSI -c $CONFIG
+#done
 
 # Query the bigsi
-#node bin/query_bigsi.js -q $QUERY -b $BIGSI -c $CONFIG
+node bin/query_bigsi.js -q $QUERY -b $BIGSI -c $CONFIG

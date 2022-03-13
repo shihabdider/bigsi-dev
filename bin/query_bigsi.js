@@ -127,7 +127,7 @@ function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
         const bs = new BitSet(row.join(''))
         const weight = bs.cardinality()
         if (weight == numRows) {
-            console.log('row num', weight)
+            //console.log('row num', weight)
             if (rowNum in bigsiHits){
                 bigsiHits[rowNum]['hits'] += 1
             } else {
@@ -157,7 +157,7 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize) {
         const containmentScore = numIntersections/queryNumBitsSet
         const errorRate = -1/kmerLength * Math.log(containmentScore)
         if (errorRate < 0.05) {
-            console.log(hammingWeights[bucketNum])
+            //console.log(hammingWeights[bucketNum])
             const percentMatch = 100*(1 - errorRate)
             bigsiHits[bucketNum] = {'percent match': percentMatch}
         }
@@ -168,7 +168,7 @@ function queryHexBigsi(hexBigsi, queryFragmentsBloomFilters, bloomFilterSize){
     const bigsiHits = {}
 
     const numFragments = queryFragmentsBloomFilters.length
-    console.log('number of query fragments: ', numFragments)
+    //console.log('number of query fragments: ', numFragments)
 
     for (const bloomFilter of queryFragmentsBloomFilters){
         const queryBFSetBitsIndices = getBloomFilterSetBitsIndices(bloomFilter._filter)
@@ -201,7 +201,7 @@ async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols,
     const bigsiHits = {}
 
     const numFragments = queryFragmentsBloomFilters.length
-    console.log('number of query fragments: ', numFragments)
+    //console.log('number of query fragments: ', numFragments)
 
     for (const bloomFilter of queryFragmentsBloomFilters){
         const queryBFSetBitsIndices = getBloomFilterSetBitsIndices(bloomFilter)
@@ -225,7 +225,7 @@ async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols,
 async function main(querySeq, bigsiPath, bigsiConfigPath) {
     const bigsiBuffer = fs.readFileSync(bigsiPath)
     let bigsiArray = new Uint16Array(bigsiBuffer.buffer, bigsiBuffer.byteOffset, bigsiBuffer.length / 2);
-    console.log('bigsiArray size: ', bigsiArray.length)
+    //console.log('bigsiArray size: ', bigsiArray.length)
 
     const bigsiDims = require(bigsiConfigPath)
     const numCols = bigsiDims.cols
@@ -242,6 +242,17 @@ async function main(querySeq, bigsiPath, bigsiConfigPath) {
     const filteredBigsiHits = await queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize)
 
     return filteredBigsiHits
+}
+
+function printResults(filteredBigsiHits, binMapPath) {
+    // import the associated map json file as dictionary
+    const binMap = require(binMapPath)
+    // iterate through filtered hits keys
+    for (key in filteredBigsiHits) {
+        const {refName, bucketStart, bucketEnd}  = binMap[key]
+        const outputString = `${refName}\t${bucketStart}\t${bucketEnd}`
+        console.log(outputString) 
+    }
 }
 
 async function run() {
@@ -274,13 +285,14 @@ async function run() {
         const fai = `${argv.query}.fai`
         const query = await utils.loadFasta(argv.query, fai)
         const seqNames = await query.getSequenceList()
-        console.log('Query sequence name: ', seqNames)
+        //console.log('Query sequence name: ', seqNames)
         for (seqName of seqNames) {
             const querySeq = await query.getSequence(seqName)
             const bigsiPath = argv.bigsi
             const bigsiConfigPath = argv.config
+            const binMapPath = '../bigsis/hg38_whole_genome_005.bin_bucket_map.json'
             const hits = await main(querySeq, bigsiPath, bigsiConfigPath);
-            console.log(hits)
+            printResults(hits, binMapPath)
         }
     }
 }
