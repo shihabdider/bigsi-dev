@@ -2,6 +2,7 @@
 *.swp
 *.fa
 *.fai
+*.bai
 bigsis/
 node_modules/
 logs/

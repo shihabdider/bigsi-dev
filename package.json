@@ -4,6 +4,7 @@
     "@babel/preset-env": "^7.15.8",
     "@gmod/indexedfasta": "^1.1.0",
     "binomial-cdf": "^1.0.4",
+    "bionode-ncbi": "^2.0.1",
     "bitset": "^5.1.1",
     "bloom-filters": "^1.3.9",
     "bluebird": "^3.7.2",

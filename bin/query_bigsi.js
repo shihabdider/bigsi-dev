@@ -232,16 +232,21 @@ async function main(querySeq, bigsiPath, bigsiConfigPath) {
     const bloomFilterSize = bigsiDims.rows
     //const queryFragmentsMinimizers = await winnowQueryFragments(querySeq)
     // Test: non-frag query
-    const fragmentSizeZero = 0
-    const queryFragmentsMinimizers = await winnowQueryFragments(querySeq, fragmentSizeZero)
-    const queryFragmentsBloomFilters = await makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
-    //const queryMinimizers = queryFragmentsMinimizers[0]
-    //const numHashes = 5
-    //const queryRowFilters = await utils.makeQueryRowFilters(queryMinimizers, bloomFilterSize, numHashes)
+    const isQuerySeqRightSize = querySeq.length >= 5000 && querySeq.length <= 300000
+    if (isQuerySeqRightSize) {
+        const fragmentSizeZero = 0
+        const queryFragmentsMinimizers = await winnowQueryFragments(querySeq, fragmentSizeZero)
+        const queryFragmentsBloomFilters = await makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
+        //const queryMinimizers = queryFragmentsMinimizers[0]
+        //const numHashes = 5
+        //const queryRowFilters = await utils.makeQueryRowFilters(queryMinimizers, bloomFilterSize, numHashes)
 
-    const filteredBigsiHits = await queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize)
+        const filteredBigsiHits = await queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize)
 
-    return filteredBigsiHits
+        return filteredBigsiHits
+    } else {
+        console.log('Query must be of length between 5Kb and 300Kb')
+    }
 }
 
 function printResults(filteredBigsiHits, binMapPath) {
@@ -250,7 +255,7 @@ function printResults(filteredBigsiHits, binMapPath) {
     // iterate through filtered hits keys
     for (key in filteredBigsiHits) {
         const {refName, bucketStart, bucketEnd}  = binMap[key]
-        const outputString = `${refName}\t${bucketStart}\t${bucketEnd}`
+        const outputString = `${refName} ${bucketStart} ${bucketEnd}`
         console.log(outputString) 
     }
 }
@@ -259,11 +264,16 @@ async function run() {
     if (require.main === module) {
         const { argv } = require('yargs')
             .scriptName('query_bigsi')
-            .usage('Usage: $0 --query (path to query fasta) --bigsi (path to BIGSI file) --config (path to bigsi config)')
+            .usage('Usage: $0 --query (path to query fasta) OR --querySeq --bigsi (path to BIGSI file) --config (path to bigsi config)')
+            .option('querySeq', {
+                alias: 's',
+                describe: 'Query sequence',
+                type: 'string',
+                nargs: 1,
+            })
             .option('query', {
                 alias: 'q',
                 describe: 'Path to fasta file of query sequence',
-                demandOption: 'Fasta file is required',
                 type: 'string',
                 nargs: 1,
             })
@@ -282,17 +292,22 @@ async function run() {
                 nargs: 1,
             })
 
-        const fai = `${argv.query}.fai`
-        const query = await utils.loadFasta(argv.query, fai)
-        const seqNames = await query.getSequenceList()
-        //console.log('Query sequence name: ', seqNames)
-        for (seqName of seqNames) {
-            const querySeq = await query.getSequence(seqName)
-            const bigsiPath = argv.bigsi
-            const bigsiConfigPath = argv.config
-            const binMapPath = '../bigsis/hg38_whole_genome_005.bin_bucket_map.json'
-            const hits = await main(querySeq, bigsiPath, bigsiConfigPath);
+        const bigsiPath = argv.bigsi
+        const bigsiConfigPath = argv.config
+        const binMapPath = '../bigsis/hg38_whole_genome_005_bucket_map.json'
+        if (argv.querySeq) { // passing query as string
+            const hits = await main(argv.querySeq, bigsiPath, bigsiConfigPath);
             printResults(hits, binMapPath)
+        } else { // ...or else as a file
+            const fai = `${argv.query}.fai`
+            const query = await utils.loadFasta(argv.query, fai)
+            const seqNames = await query.getSequenceList()
+            //console.log('Query sequence name: ', seqNames)
+            for (seqName of seqNames) {
+                const querySeq = await query.getSequence(seqName)
+                const hits = await main(querySeq, bigsiPath, bigsiConfigPath);
+                printResults(hits, binMapPath)
+            }
         }
     }
 }

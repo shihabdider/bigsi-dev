@@ -35,4 +35,4 @@ CONFIG="../bigsi.random.query.config.json"
 #done
 
 # Query the bigsi
-node bin/query_bigsi.js -q $QUERY -b $BIGSI -c $CONFIG
+node bin/query_bigsi.js -s AAACTG -b $BIGSI -c $CONFIG
