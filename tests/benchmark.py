@@ -142,9 +142,10 @@ def run_species_benchmark(benchmark_params):
                         benchmark_params['bigsi_config_path'])
 
 
-def get_random_bigsi_bin(bigsi_bin_mapping):
-    '''Uses the bigsi bin mapping to retrieve the start and end of a random 
-    bin'''
+def get_random_bigsi_bin():
+    '''Uses the bigsi bin mapping to retrieve the bounds of a random bin'''
+
+    bigsi_bin_mapping = "../bigsis/hg38_whole_genome_005_bucket_map.json"
 
     with open(bigsi_bin_mapping, "r") as read_file:
         bin_mapping = json.load(read_file)
@@ -152,18 +153,30 @@ def get_random_bigsi_bin(bigsi_bin_mapping):
         return random_bin, bin_mapping[random_bin]
 
 
+def get_bigsi_bin(bin_num: int) -> dict:
+    '''
+        Uses the bigsi bin mapping file to retrieve the bounds of a given bin
+
+        args:
+            bin_num - the bin to retrieve (ranges from 0 to 383)
+    '''
+    bigsi_bin_mapping = "../bigsis/hg38_whole_genome_005_bucket_map.json"
+
+    with open(bigsi_bin_mapping, "r") as read_file:
+        bin_mapping = json.load(read_file)
+        return bin_mapping[bin_num]
+
 def run_nanopore_benchmark():
     '''Runs bigsi queries on Ultralong Nanopore long reads aligned to GRCh38
     reference.'''
 
     nanopore_longreads = (
-        "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/PacBio_SequelII_CCS_11kb/HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam"
-        #"ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/"
-        #"NA12878/Ultralong_OxfordNanopore/NA12878-minion-ul_GRCh38.bam"
+        #"https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/PacBio_SequelII_CCS_11kb/HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam"
+        "ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/"
+        "NA12878/Ultralong_OxfordNanopore/NA12878-minion-ul_GRCh38.bam"
     )
 
-    bigsi_bin_mapping = "../bigsis/hg38_whole_genome_005_bucket_map.json"
-    bin_num, random_bin = get_random_bigsi_bin(bigsi_bin_mapping)
+    bin_num, random_bin = get_random_bigsi_bin()
     gap_width = 10000
     rand_start = random.randint(0, random_bin['bucketEnd'] - gap_width)
     rand_end = rand_start + gap_width - 1
@@ -184,8 +197,7 @@ def run_nanopore_benchmark():
     total = 0
     if len(reads) > 0:
         for read in reads:
-            query_output = run_bigsi_query(read.query_alignment_sequence,
-                                        bigsi_path, bigsi_config_path)
+            query_output = run_bigsi_query(read.query_alignment_sequence)
             if query_output:
                 mappings = query_output.strip().split('\n')
                 for mapping in mappings:
