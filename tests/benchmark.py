@@ -166,7 +166,7 @@ def get_bigsi_bin(bin_num: int) -> dict:
         bin_mapping = json.load(read_file)
         return bin_mapping[bin_num]
 
-def run_nanopore_benchmark():
+def run_nanopore_benchmark() -> list:
     '''Runs bigsi queries on Ultralong Nanopore long reads aligned to GRCh38
     reference.'''
 
@@ -183,16 +183,33 @@ def run_nanopore_benchmark():
 
     acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
                                  header=0)
-    refName = acn_convert_df[
+    ref_name = acn_convert_df[
         acn_convert_df['RefSeq-Accn'].str.contains(
             random_bin['refName'])]['UCSC-style-name'].values[0]
 
+    rand_loc = {
+        'ref': ref_name,
+        'start': rand_start,
+        'end': rand_end,
+    }
 
-    reads = get_aligned_reads(nanopore_longreads,
-                              '11',
-                              rand_start,
-                              rand_end)
+    reads = get_aligned_reads(nanopore_longreads, rand_loc)
 
+    mappings = []
+    if len(reads) > 0:
+        for read in reads:
+            query_output = run_bigsi_query(read.query_alignment_sequence)
+            mapping = ''.join(
+                [read.reference_name, read.reference_start, read.reference_end,
+                 read.query_alignment_length, query_output.replace('\n', ',')])
+            mappings.append(mapping)
+    else:
+        print('No reads in region', ref_name, rand_start, rand_end)
+
+    return mappings
+
+
+def compute_sensitivity(mappings):
     true_positives = 0
     total = 0
     if len(reads) > 0:
@@ -202,12 +219,12 @@ def run_nanopore_benchmark():
                 mappings = query_output.strip().split('\n')
                 for mapping in mappings:
                     bigsi_map = mapping.split(' ')
-                    refName = acn_convert_df[
+                    mapped_ref_name = acn_convert_df[
                         acn_convert_df['RefSeq-Accn'].str.contains(
                             bigsi_map[0])]['UCSC-style-name'].values[0]
                     bin_start = int(bigsi_map[1])
                     bin_end = int(bigsi_map[2])
-                    is_positive = (read.reference_name == '11' and
+                    is_positive = (read.reference_name == mapped_ref_name and
                                    read.reference_start >= bin_start and
                                    read.reference_end <= bin_end)
 
