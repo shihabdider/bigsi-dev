@@ -199,7 +199,7 @@ def run_nanopore_benchmark() -> list:
     if len(reads) > 0:
         for read in reads:
             query_output = run_bigsi_query(read.query_alignment_sequence)
-            mapping = ''.join(
+            mapping = '\t'.join(
                 [read.reference_name, read.reference_start, read.reference_end,
                  read.query_alignment_length, query_output.replace('\n', ',')])
             mappings.append(mapping)
@@ -210,34 +210,36 @@ def run_nanopore_benchmark() -> list:
 
 
 def compute_sensitivity(mappings):
+    '''Given a list of mappings computes the sensitivity of bigsi search'''
     true_positives = 0
     total = 0
-    if len(reads) > 0:
-        for read in reads:
-            query_output = run_bigsi_query(read.query_alignment_sequence)
-            if query_output:
-                mappings = query_output.strip().split('\n')
-                for mapping in mappings:
-                    bigsi_map = mapping.split(' ')
-                    mapped_ref_name = acn_convert_df[
-                        acn_convert_df['RefSeq-Accn'].str.contains(
-                            bigsi_map[0])]['UCSC-style-name'].values[0]
-                    bin_start = int(bigsi_map[1])
-                    bin_end = int(bigsi_map[2])
-                    is_positive = (read.reference_name == mapped_ref_name and
-                                   read.reference_start >= bin_start and
-                                   read.reference_end <= bin_end)
+    acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
+                                 header=0)
+    for mapping in mappings:
+        mapping_list = mapping.split('\t')
+        read_ref = mapping_list[0]
+        read_start = mapping_list[1]
+        read_end = mapping_list[2]
+        bigsi_output = mapping_list[-1]
+        if bigsi_output:
+            bigsi_mappings = bigsi_output.split(',')
+            for bigsi_map in bigsi_mappings:
+                bigsi_map_list = bigsi_map.split(' ')
+                mapped_ref_name = acn_convert_df[
+                    acn_convert_df['RefSeq-Accn'].str.contains(
+                        bigsi_map_list[0])]['UCSC-style-name'].values[0]
+                bin_start = int(bigsi_map_list[1])
+                bin_end = int(bigsi_map_list[2])
+                is_positive = (read_ref == mapped_ref_name and
+                                read_start >= bin_start and
+                                read_end <= bin_end)
 
-                    if is_positive:
-                        true_positives += 1
+                if is_positive:
+                    true_positives += 1
 
-            print(read.reference_name, read.reference_start, read.reference_end,
-                read.query_alignment_length, query_output.replace('\n', ','))
-            total += 1
+        total += 1
 
-        print(true_positives/total)
-    else:
-        print('No reads in region', refName, rand_start, rand_end)
+    print(true_positives/total)
 
 
 def main():
