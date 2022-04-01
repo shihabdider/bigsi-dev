@@ -104,8 +104,11 @@ def load_query_file(query_path):
     return str(query_record.seq)
 
 
-def run_bigsi_query(query_seq, bigsi_path, bigsi_config_path):
+def run_bigsi_query(query_seq):
     '''Runs the bigsi query for a specified bigsi matrix'''
+
+    bigsi_path = '../bigsis/hg38_whole_genome_005.bin'
+    bigsi_config_path = '../bigsi.random.query.config.json'
 
     query_bigsi_cmd = (
         r"node ../bin/query_bigsi.js"
@@ -158,8 +161,6 @@ def run_nanopore_benchmark():
         #"ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/"
         #"NA12878/Ultralong_OxfordNanopore/NA12878-minion-ul_GRCh38.bam"
     )
-    bigsi_path = '../bigsis/hg38_whole_genome_005.bin'
-    bigsi_config_path = '../bigsi.random.query.config.json'
 
     bigsi_bin_mapping = "../bigsis/hg38_whole_genome_005_bucket_map.json"
     bin_num, random_bin = get_random_bigsi_bin(bigsi_bin_mapping)
