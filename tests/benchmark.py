@@ -8,25 +8,29 @@ import json
 import pandas as pd
 
 
-def get_aligned_reads(bam, ref_name, start, end):
+def get_aligned_reads(
+    bam: str, loc: dict, identity_threshold: int = 0.95
+) -> list:
     '''
         Fetches read sequences from a bam alignment (local or remote) that
-        align to reference between start and end.
+        align to reference at loc with identity higher than threshold.
 
         args:
             bam - path to local or remote (e.g ftp) bam/sam/cram file
             ref
-            ref_name, start, end - location in reference within which read
-            aligns
+            loc - location in reference within which read aligns, consists of 
+            ref_name, start and end
+            identity_threshold - BLAST-like identity score between read and 
+            reference
 
         returns:
-            reads - array of read objects 
+            reads - array of read objects
 
     '''
 
     reads = []
     with pysam.AlignmentFile(bam, "rb") as samfile:
-        for read in samfile.fetch(ref_name, start, end):
+        for read in samfile.fetch(loc['ref'], loc['start'], loc['end']):
             is_query_right_size = (read.query_alignment_length > 5000 and
                                    read.query_alignment_length < 300000)
             is_mapped = not read.is_unmapped
@@ -34,11 +38,11 @@ def get_aligned_reads(bam, ref_name, start, end):
                                read.mapping_quality != 255)
             num_matches = len(read.get_aligned_pairs(matches_only=True))
             total_seq = len(read.get_aligned_pairs())
-            is_95_identity = (num_matches/total_seq) < 0.95
+            is_identity = (num_matches/total_seq) > identity_threshold
             print(num_matches/total_seq)
             if (read.query_alignment_sequence 
                     and is_query_right_size and is_mapped and is_good_quality 
-                    and is_95_identity):
+                    and is_identity):
                 reads.append(read)
 
     return reads
