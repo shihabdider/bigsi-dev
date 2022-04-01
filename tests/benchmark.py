@@ -39,7 +39,6 @@ def get_aligned_reads(
             num_matches = len(read.get_aligned_pairs(matches_only=True))
             total_seq = len(read.get_aligned_pairs())
             is_identity = (num_matches/total_seq) > identity_threshold
-            print(num_matches/total_seq)
             if (read.query_alignment_sequence 
                     and is_query_right_size and is_mapped and is_good_quality 
                     and is_identity):
@@ -164,7 +163,7 @@ def get_bigsi_bin(bin_num: int) -> dict:
 
     with open(bigsi_bin_mapping, "r") as read_file:
         bin_mapping = json.load(read_file)
-        return bin_mapping[bin_num]
+        return bin_mapping[str(bin_num)]
 
 def run_nanopore_benchmark() -> list:
     '''Runs bigsi queries on Ultralong Nanopore long reads aligned to GRCh38
@@ -176,7 +175,8 @@ def run_nanopore_benchmark() -> list:
         "NA12878/Ultralong_OxfordNanopore/NA12878-minion-ul_GRCh38.bam"
     )
 
-    bin_num, random_bin = get_random_bigsi_bin()
+    #random_bin = get_bigsi_bin(6)
+    #bin_num, random_bin = get_random_bigsi_bin()
     gap_width = 10000
     rand_start = random.randint(0, random_bin['bucketEnd'] - gap_width)
     rand_end = rand_start + gap_width - 1
@@ -200,13 +200,17 @@ def run_nanopore_benchmark() -> list:
         for read in reads:
             query_output = run_bigsi_query(read.query_alignment_sequence)
             mapping = '\t'.join(
-                [read.reference_name, read.reference_start, read.reference_end,
-                 read.query_alignment_length, query_output.replace('\n', ',')])
+                [read.reference_name, 
+                 str(read.reference_start), 
+                 str(read.reference_end),
+                 str(read.query_alignment_length), 
+                 query_output.replace('\n', ',')])
             mappings.append(mapping)
+            print(mapping)
+
+        return mappings
     else:
         print('No reads in region', ref_name, rand_start, rand_end)
-
-    return mappings
 
 
 def compute_sensitivity(mappings):
@@ -218,13 +222,14 @@ def compute_sensitivity(mappings):
     for mapping in mappings:
         mapping_list = mapping.split('\t')
         read_ref = mapping_list[0]
-        read_start = mapping_list[1]
-        read_end = mapping_list[2]
+        read_start = int(mapping_list[1])
+        read_end = int(mapping_list[2])
         bigsi_output = mapping_list[-1]
         if bigsi_output:
-            bigsi_mappings = bigsi_output.split(',')
+            bigsi_mappings = bigsi_output.split(',')[0:-1]
             for bigsi_map in bigsi_mappings:
                 bigsi_map_list = bigsi_map.split(' ')
+                print(bigsi_map_list)
                 mapped_ref_name = acn_convert_df[
                     acn_convert_df['RefSeq-Accn'].str.contains(
                         bigsi_map_list[0])]['UCSC-style-name'].values[0]
@@ -239,7 +244,8 @@ def compute_sensitivity(mappings):
 
         total += 1
 
-    print(true_positives/total)
+    sensitivity = true_positives/total
+    return sensitivity
 
 
 def main():
@@ -250,8 +256,6 @@ def main():
         'record_id': 'NC_036884.1',
         'query_len': 300000,
         'num_queries': 20,
-        'bigsi_path': './bigsis/hg38_whole_genome_005.bin',
-        'bigsi_config_path': '../bigsi.random.query.config.json',
     }
 
 
@@ -262,7 +266,9 @@ def main():
     #dog_gene = get_sequence('NC_051813.1', 19428782, 19464638)
     #gene = get_sequence('NC_000086.8', 162922338, 162971414)
     #run_bigsi_query(gene, bigsi_path, bigsi_config_path)
-    run_nanopore_benchmark()
+    mappings = run_nanopore_benchmark()
+    if mappings:
+        print(compute_sensitivity(mappings))
     #print(get_random_bigsi_bin('../bigsis/hg38_whole_genome_005_bucket_map.json'))
     #acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
     #                             header=0)
