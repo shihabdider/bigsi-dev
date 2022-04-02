@@ -176,24 +176,28 @@ def run_nanopore_benchmark() -> list:
     )
 
     #random_bin = get_bigsi_bin(6)
-    #bin_num, random_bin = get_random_bigsi_bin()
-    gap_width = 10000
-    rand_start = random.randint(0, random_bin['bucketEnd'] - gap_width)
-    rand_end = rand_start + gap_width - 1
+    reads = []
+    for i in range(383):
+        bigsi_bin = get_bigsi_bin(i)
+        gap_width = 10000
+        rand_start = random.randint(0, bigsi_bin['bucketEnd'] - gap_width)
+        rand_end = rand_start + gap_width - 1
 
-    acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
-                                 header=0)
-    ref_name = acn_convert_df[
-        acn_convert_df['RefSeq-Accn'].str.contains(
-            random_bin['refName'])]['UCSC-style-name'].values[0]
+        acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
+                                    header=0)
+        ref_name = acn_convert_df[
+            acn_convert_df['RefSeq-Accn'].str.contains(
+                bigsi_bin['refName'])]['UCSC-style-name'].values[0]
 
-    rand_loc = {
-        'ref': ref_name,
-        'start': rand_start,
-        'end': rand_end,
-    }
+        rand_loc = {
+            'ref': ref_name,
+            'start': rand_start,
+            'end': rand_end,
+        }
 
-    reads = get_aligned_reads(nanopore_longreads, rand_loc)
+        reads += get_aligned_reads(nanopore_longreads, rand_loc)
+
+    print('total num reads: ', len(reads))
 
     mappings = []
     if len(reads) > 0:
@@ -205,8 +209,8 @@ def run_nanopore_benchmark() -> list:
                  str(read.reference_end),
                  str(read.query_alignment_length), 
                  query_output.replace('\n', ',')])
-            mappings.append(mapping)
             print(mapping)
+            mappings.append(mapping)
 
         return mappings
     else:
@@ -220,6 +224,7 @@ def compute_sensitivity(mappings):
     acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
                                  header=0)
     for mapping in mappings:
+        is_true_positive = False
         mapping_list = mapping.split('\t')
         read_ref = mapping_list[0]
         read_start = int(mapping_list[1])
@@ -229,7 +234,6 @@ def compute_sensitivity(mappings):
             bigsi_mappings = bigsi_output.split(',')[0:-1]
             for bigsi_map in bigsi_mappings:
                 bigsi_map_list = bigsi_map.split(' ')
-                print(bigsi_map_list)
                 mapped_ref_name = acn_convert_df[
                     acn_convert_df['RefSeq-Accn'].str.contains(
                         bigsi_map_list[0])]['UCSC-style-name'].values[0]
@@ -240,7 +244,10 @@ def compute_sensitivity(mappings):
                                 read_end <= bin_end)
 
                 if is_positive:
-                    true_positives += 1
+                    is_true_positive = True
+
+        if is_true_positive:
+            true_positives += 1
 
         total += 1
 
