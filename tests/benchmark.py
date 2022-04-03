@@ -242,9 +242,9 @@ def compute_sensitivity(mappings):
     for mapping in mappings:
         is_true_positive = False
         mapping_list = mapping.split('\t')
-        read_ref = mapping_list[0]
-        read_start = int(mapping_list[1])
-        read_end = int(mapping_list[2])
+        read_ref = mapping_list[1]
+        read_start = int(mapping_list[2])
+        read_end = int(mapping_list[3])
         bigsi_output = mapping_list[-1]
         if bigsi_output:
             bigsi_mappings = bigsi_output.split(',')[0:-1]
@@ -348,6 +348,7 @@ def main():
     )
     mappings = run_nanopore_benchmark()
     if mappings:
+        compute_sensitivity(mappings)
         multibin_reads = get_multibin_reads(nanopore_longreads, mappings)
         reads_to_fasta(multibin_reads, 'multibin_reads.fasta')
     #print(get_random_bigsi_bin('../bigsis/hg38_whole_genome_005_bucket_map.json'))
