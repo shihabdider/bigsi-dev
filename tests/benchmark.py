@@ -8,6 +8,8 @@ import json
 import pandas as pd
 
 
+
+
 def get_aligned_reads(
     bam: str, loc: dict, identity_threshold: int = 0.95
 ) -> list:
@@ -45,6 +47,16 @@ def get_aligned_reads(
                 reads.append(read)
 
     return reads
+
+
+def get_read_by_name(bam: str, read_name: str, loc: dict):
+    '''Gets a read filtered by its name and location'''
+
+    with pysam.AlignmentFile(bam, "rb") as samfile:
+        for read in samfile.fetch(loc['ref'], loc['start'], loc['end']):
+            if read.query_name == read_name:
+                return read
+
 
 
 def get_sequence(identifier, start, end):
@@ -177,7 +189,7 @@ def run_nanopore_benchmark() -> list:
 
     #random_bin = get_bigsi_bin(6)
     reads = []
-    for i in range(383):
+    for i in range(16):
         bigsi_bin = get_bigsi_bin(i)
         gap_width = 10000
         rand_start = random.randint(0, bigsi_bin['bucketEnd'] - gap_width)
@@ -204,7 +216,8 @@ def run_nanopore_benchmark() -> list:
         for read in reads:
             query_output = run_bigsi_query(read.query_alignment_sequence)
             mapping = '\t'.join(
-                [read.reference_name, 
+                [read.query_name,
+                 read.reference_name, 
                  str(read.reference_start), 
                  str(read.reference_end),
                  str(read.query_alignment_length), 
@@ -223,6 +236,7 @@ def compute_sensitivity(mappings):
     total = 0
     acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
                                  header=0)
+    num_buckets_hit = []
     for mapping in mappings:
         is_true_positive = False
         mapping_list = mapping.split('\t')
@@ -232,6 +246,7 @@ def compute_sensitivity(mappings):
         bigsi_output = mapping_list[-1]
         if bigsi_output:
             bigsi_mappings = bigsi_output.split(',')[0:-1]
+            num_buckets_hit.append(len(bigsi_mappings))
             for bigsi_map in bigsi_mappings:
                 bigsi_map_list = bigsi_map.split(' ')
                 mapped_ref_name = acn_convert_df[
@@ -252,7 +267,38 @@ def compute_sensitivity(mappings):
         total += 1
 
     sensitivity = true_positives/total
+    print(num_buckets_hit)
     return sensitivity
+
+
+def get_multibin_reads(bamfile, mappings):
+    '''
+        Retrieves the reads which were found in multiple bins after doing the 
+        BIGSI query
+    '''
+
+    multibin_read_data = []
+    for mapping in mappings:
+        mapping_list = mapping.split('\t')
+        read_info = mapping_list[0:4]
+        bigsi_output = mapping_list[-1]
+        if bigsi_output:
+            bigsi_mappings = bigsi_output.split(',')[0:-1]
+            if len(bigsi_mappings) > 1:
+                multibin_read_data.append(read_info)
+
+    multibin_reads = []
+    for read_info in multibin_read_data:
+        read_name = read_info[0]
+        read_loc = {
+            'ref': read_info[1],
+            'start': int(read_info[2]),
+            'end': int(read_info[3]),
+        }
+        read = get_read_by_name(bamfile, read_name, read_loc)
+        multibin_reads.append(read)
+
+    return multibin_reads
 
 
 def main():
@@ -273,9 +319,17 @@ def main():
     #dog_gene = get_sequence('NC_051813.1', 19428782, 19464638)
     #gene = get_sequence('NC_000086.8', 162922338, 162971414)
     #run_bigsi_query(gene, bigsi_path, bigsi_config_path)
+    nanopore_longreads = (
+        #"https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/PacBio_SequelII_CCS_11kb/HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam"
+        "ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/"
+        "NA12878/Ultralong_OxfordNanopore/NA12878-minion-ul_GRCh38.bam"
+    )
     mappings = run_nanopore_benchmark()
     if mappings:
-        print(compute_sensitivity(mappings))
+        multibin_reads = get_multibin_reads(nanopore_longreads, mappings)
+        for read in multibin_reads:
+            print(read.query_name, read.query_alignment_length)
+            print(read.query_alignment_sequence)
     #print(get_random_bigsi_bin('../bigsis/hg38_whole_genome_005_bucket_map.json'))
     #acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
     #                             header=0)
