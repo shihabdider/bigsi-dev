@@ -1,6 +1,8 @@
-import Bio
 from Bio import Entrez
 from Bio import SeqIO
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+
 import random
 import subprocess
 import pysam
@@ -299,6 +301,26 @@ def get_multibin_reads(bamfile, mappings):
         multibin_reads.append(read)
 
     return multibin_reads
+
+
+def reads_to_fasta(reads, output):
+    '''Saves reads to FASTA file'''
+
+    records = []
+    for read in reads:
+        record = SeqRecord(
+                    Seq(read.query_alignment_sequence),
+                    id=read.query_name,
+                    name='{0} {1} {2}'.format(
+                        read.reference_name,
+                        read.reference_start,
+                        read.reference_end),
+                )
+        records.append(record)
+
+    with open(output, 'w') as handle:
+        SeqIO.write(records, handle, 'FASTA')
+
 
 
 def main():
