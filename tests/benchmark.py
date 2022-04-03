@@ -319,8 +319,8 @@ def reads_to_fasta(reads, output):
         records.append(record)
 
     with open(output, 'w') as handle:
-        SeqIO.write(records, handle, 'FASTA')
-
+        SeqIO.write(records, handle, 'fasta')
+        print('{} reads saved to {}'.format(len(records), output))
 
 
 def main():
@@ -349,9 +349,7 @@ def main():
     mappings = run_nanopore_benchmark()
     if mappings:
         multibin_reads = get_multibin_reads(nanopore_longreads, mappings)
-        for read in multibin_reads:
-            print(read.query_name, read.query_alignment_length)
-            print(read.query_alignment_sequence)
+        reads_to_fasta(multibin_reads, 'multibin_reads.fasta')
     #print(get_random_bigsi_bin('../bigsis/hg38_whole_genome_005_bucket_map.json'))
     #acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
     #                             header=0)
