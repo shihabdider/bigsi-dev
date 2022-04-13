@@ -233,7 +233,7 @@ async function main(querySeq, bigsiPath, bigsiConfigPath) {
     //const queryFragmentsMinimizers = await winnowQueryFragments(querySeq)
     // Test: non-frag query
     const isQuerySeqRightSize = querySeq.length >= 5000 && querySeq.length <= 300000
-    if (isQuerySeqRightSize) {
+    if (true) {
         const fragmentSizeZero = 0
         const queryFragmentsMinimizers = await winnowQueryFragments(querySeq, fragmentSizeZero)
         const queryFragmentsBloomFilters = await makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)

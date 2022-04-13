@@ -158,9 +158,9 @@ def print_bigsi_stats(parameters):
 
 ar_genes_parameters = {
     'bin_seq_len': 7e6,
-    'window_size': 25,
-    'min_query_len': 500,
-    'error_rate': 0.0,
+    'window_size': 100,
+    'min_query_len': 5000,
+    'error_rate': 0.05,
     'false_hit_thresh': 1e-2,
     'num_cols': 1000,
     'kmer_len': 16,
@@ -188,11 +188,11 @@ human_viruses_parameters = {
 
 worm = {
     'bin_seq_len': 7e6,
-    'window_size': 50,
-    'min_query_len': 500,
-    'error_rate': 0.0,
+    'window_size': 100,
+    'min_query_len': 5000,
+    'error_rate': 0.05,
     'false_hit_thresh': 1e-2,
-    'num_cols': 16*100,
+    'num_cols': 16*50,
     'kmer_len': 16,
 }
 
@@ -236,21 +236,21 @@ def main():
     print_bigsi_stats(ar_genes_parameters)
     #print('gene fusions')
     #print_bigsi_stats(gene_fusion_parameters)
-    print('viruses')
-    print_bigsi_stats(human_viruses_parameters)
+    #print('viruses')
+    #print_bigsi_stats(human_viruses_parameters)
     print('Worm')
     print_bigsi_stats(worm)
-    print('hg38')
-    print_bigsi_stats(hg38)
-    print('hg38_chr1')
-    print_bigsi_stats(hg38_chr1)
-    #print(compute_minimizer_index_size(3e9, 100), 'mb')
+    #print('hg38')
+    #print_bigsi_stats(hg38)
+    #print('hg38_chr1')
+    #print_bigsi_stats(hg38_chr1)
+    #print(compute_minimizer_index_size(2e7, 100), 'mb')
     #optimal_bigsi_size = 0
     #for size in bacterial_ref_sizes:
     #    optimal_bigsi_size += compute_column_size(size, 25, 0.83)
 
     ##print(optimal_bigsi_size/(8*1024*1024))
-    print(compute_minimizer_index_size(3e8, 100))
+    #print(compute_minimizer_index_size(3e8, 100))
     
  
 main()
