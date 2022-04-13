@@ -8,6 +8,8 @@ import subprocess
 import pysam
 import json
 import pandas as pd
+import argparse
+import logging
 
 
 def get_aligned_reads(
@@ -521,11 +523,10 @@ def gorilla_benchmark():
         print('gorilla sensitivity: ', gorilla_sensitivity)
 
 
-def chimp_benchmark()
+def chimp_benchmark():
     hg38 = '../../../seqs/human/hg38/ncbi-genomes-2021-11-16/hg38.fna'
 
     chimp_ids = ['NC_036{0}.1'.format(num) for num in range(879, 903)]
-    chimp_ids.append('NC_006492.4')
 
     chimp_benchmark = {
         'species_name': 'pan trog',
@@ -543,52 +544,59 @@ def chimp_benchmark()
                                                         chimp_mapping_dict)
         print('chimp sensitivity: ', chimp_sensitivity)
 
-def main():
-    #random.seed(1)
+
+def nanopore_benchmark():
+    nanopore_mappings = run_nanopore_benchmark()
+    if nanopore_mappings:
+        nanopore_sensitivity = compute_sensitivity(nanopore_mappings,
+                                                   'UCSC-style-name')
+        print('nanopore sensitivity: ', nanopore_sensitivity)
+        #nanopore_multibin_reads = get_multibin_reads(nanopore_longreads,
+        #                                             nanopore_mappings)
+        #reads_to_fasta(nanopore_multibin_reads,
+        #               'multibin_reads_nanopore.fasta')
 
 
-    #random_sequence = get_random_sequence('NC_036883.1', 300000)
-    #get_gene_sequence('454734')
-    #chimp_gene = get_sequence('NC_036896.1', 10480693, 10531554)
-    #dog_gene = get_sequence('NC_051813.1', 19428782, 19464638)
-    #gene = get_sequence('NC_000086.8', 162922338, 162971414)
-    #run_bigsi_query(gene, bigsi_path, bigsi_config_path)
-
-    #nanopore_longreads = (
-    #    "ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/"
-    #    "giab/data/NA12878/Ultralong_OxfordNanopore/"
-    #    "NA12878-minion-ul_GRCh38.bam"
-    #)
-
-    #nanopore_mappings = run_nanopore_benchmark()
-    #if nanopore_mappings:
-    #    nanopore_sensitivity = compute_sensitivity(nanopore_mappings,
-    #                                               'UCSC-style-name')
-    #    print('nanopore sensitivity: ', nanopore_sensitivity)
-    #    #nanopore_multibin_reads = get_multibin_reads(nanopore_longreads,
-    #    #                                             nanopore_mappings)
-    #    #reads_to_fasta(nanopore_multibin_reads,
-    #    #               'multibin_reads_nanopore.fasta')
-
-    # Pacbio
-    #pacbio_longreads = (
-    #    "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/"
-    #    "NA12878/PacBio_SequelII_CCS_11kb/"
-    #    "HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam"
-    #)
-    #pacbio_mappings = run_pacbio_benchmark()
-    #if pacbio_mappings:
-    #    pacbio_sensitivity = compute_sensitivity(pacbio_mappings,
-    #                                             '# Sequence-Name')
-    #    print('pacbio sensitivity: ', pacbio_sensitivity)
+def pacbio_benchmark():
+    pacbio_mappings = run_pacbio_benchmark()
+    if pacbio_mappings:
+        pacbio_sensitivity = compute_sensitivity(pacbio_mappings,
+                                                 '# Sequence-Name')
+        print('pacbio sensitivity: ', pacbio_sensitivity)
         #pacbio_multibin_reads = get_multibin_reads(pacbio_longreads,
         #                                           pacbio_mappings)
         #reads_to_fasta(pacbio_multibin_reads,
         #               'multibin_reads_pacbio.fasta')
-    #print(get_random_bigsi_bin('../bigsis/hg38_whole_genome_005_bucket_map.json'))
-    #acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', sep='\t', 
-    #                             header=0)
-    #contain_values = acn_convert_df[acn_convert_df['UCSC-style-name'].str.contains('chr1')]
-    #print(contain_values)
 
-main()
+
+def main():
+    benchmarks = ['chimp', 'gorilla', 'nanopore', 'pacbio']
+    parser = argparse.ArgumentParser(description="Run Flashmap benchmarks.")
+    parser.add_argument(
+        "-n", "--name", type=str, 
+        help="benchmark to run (chimp, gorilla, nanopore, pacbio)", 
+        required=True
+    )
+    args = parser.parse_args()
+    if args.name not in benchmarks:
+        logging.error(
+            "Benchmark not found, please select from:"
+            "chimp, gorilla, nanopore or pacbio"
+        )
+        exit(1)
+
+    if args.name == 'chimp':
+        chimp_benchmark()
+    elif args.name == 'gorilla':
+        gorilla_benchmark()
+    elif args.name == 'nanopore':
+        nanopore_benchmark()
+    elif args.name == 'pacbio':
+        pacbio_benchmark()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        logging.exception(e)
