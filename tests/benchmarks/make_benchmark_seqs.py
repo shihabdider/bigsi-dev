@@ -43,36 +43,6 @@ def make_random_interval(identifier, interval_length):
     return interval_start, interval_end
 
 
-def mutate_sequence(sequence, mutation_rate):
-    '''Adds random base substitutions to a sequence'''
-
-    seq_length = len(sequence)
-
-    mutated_seq_arr = []
-    num_subs = 0
-    for pos in range(seq_length):
-        if random.random() < mutation_rate:
-            num_subs += 1
-            random_nuc = random.choice(['A', 'C', 'G', 'T'])
-            mutated_seq_arr.append(random_nuc)
-        else:
-            mutated_seq_arr.append(sequence[pos])
-
-    mutated_seq = ''.join(mutated_seq_arr)
-
-    return mutated_seq
-
-
-def mutate_records(records, mutation_rate):
-    mutated_records = []
-    for record in records:
-        mutated_seq = mutate_sequence(record.seq, mutation_rate)
-        mutated_record = SeqRecord(Seq(mutated_seq), id=record.id)
-        mutated_records.append(mutated_record)
-
-    return mutated_records
-
-
 def records_to_fasta(records, output):
     with open(output, 'w') as handle:
         SeqIO.write(records, handle, 'fasta')
@@ -89,20 +59,13 @@ def main():
         required=True
     )
     parser.add_argument(
-        "-m", "--mutation", type=float, 
-        help=("rate to mutate sequence (from 0.01 to 0.05)"),
-        required=False
-    )
-    parser.add_argument(
         "-l", "--length", type=float, 
         help=("length of the sequences"),
-        required=True,
         default=10000
     )
     parser.add_argument(
         "-n", "--num", type=int, 
         help="number of sequences to generate per identifier", 
-        required=True,
         default=1
     )
     parser.add_argument(
@@ -111,11 +74,6 @@ def main():
         required=True
     )
     args = parser.parse_args()
-    if args.mutation < 0.01 or args.mutation > 0.05:
-        logging.error(
-            "Mutation rate must be between 0.01 and 0.05"
-        )
-        exit(1)
 
     identifiers = []
     with open(args.identifiers, 'r') as handle:
@@ -124,17 +82,13 @@ def main():
 
     print('Retrieving random records...')
     output_records = []
-    for identifier in range(identifiers):
+    for identifier in identifiers:
         for i in range(args.num):
             rand_start, rand_end = make_random_interval(identifier,
                                                         args.length)
             random_record = get_ncbi_record(identifier, rand_start, rand_end)
-            print(random_record)
+            print(identifier, i, random_record)
             output_records.append(random_record)
-
-    if args.mutation:
-        print('Mutating records...')
-        output_records = mutate_records(output_records, args.mutation)
 
     records_to_fasta(output_records, args.output)
 
