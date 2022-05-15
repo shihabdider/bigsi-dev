@@ -205,14 +205,15 @@ def records_to_fasta(records, output):
         print('{} reads saved to {}'.format(len(records), output))
 
 
-def run_mashmap(query, ref, output):
+def run_mashmap(query, ref, seq_length=5000, error_rate=95,
+                output='mashmap.out'):
     '''Runs mashmap on a set of query seqs vs. ref'''
 
     mashmap_cmd = (
         r"../../MashMap/mashmap"
         " -q {0} -r {1} -o {2}"
-        " -s 5000 --pi 95"
-    ).format(query, ref, output)
+        " -s {3} --pi {4}"
+    ).format(query, ref, output, seq_length, error_rate)
 
     p = subprocess.Popen(mashmap_cmd, shell=True)
     p.communicate()
@@ -501,6 +502,57 @@ def mappings_to_dict(map_file):
     return mapping_dict
 
 
+def simulation_benchmark():
+    hg38 = '../../../seqs/human/hg38/ncbi-genomes-2021-11-16/hg38.fna'
+
+    hg38_ids = [
+        'NC_000001.11',
+        'NC_000002.12',
+        'NC_000003.12',
+        'NC_000004.12',
+        'NC_000005.10',
+        'NC_000006.12',
+        'NC_000007.14',
+        'NC_000008.11',
+        'NC_000009.12',
+        'NC_000010.11',
+        'NC_000011.10',
+        'NC_000012.12',
+        'NC_000013.11',
+        'NC_000014.9',
+        'NC_000015.10',
+        'NC_000016.10',
+        'NC_000017.11',
+        'NC_000018.10',
+        'NC_000019.10',
+        'NC_000020.11',
+        'NC_000021.9',
+        'NC_000022.11',
+        'NC_000023.11',
+        'NC_000024.10',
+    ]
+
+    hg38_benchmark = {
+        'species_name': 'homo sapiens',
+        'seq_ids': hg38_ids,
+        'query_len': 10000,
+        'num_queries': 1,
+    }
+
+    hg38_mappings, hg38_records = run_species_benchmark(
+        hg38_benchmark
+    )
+
+    if hg38_mappings and hg38_records:
+        records_to_fasta(hg38_records, 'hg38_random_seqs.fasta')
+        run_mashmap('hg38_random_seqs.fasta', hg38, 'human_human.out', 
+                    error_rate=100)
+        hg38_mapping_dict = mappings_to_dict('human_human.out')
+        hg38_sensitivity = compute_sensitivity_species(hg38_mappings,
+                                                       hg38_mapping_dict)
+        print('human sensitivity: ', hg38_sensitivity)
+
+
 def gorilla_benchmark():
     hg38 = '../../../seqs/human/hg38/ncbi-genomes-2021-11-16/hg38.fna'
 
@@ -571,18 +623,18 @@ def pacbio_benchmark():
 
 
 def main():
-    benchmarks = ['chimp', 'gorilla', 'nanopore', 'pacbio']
+    benchmarks = ['chimp', 'gorilla', 'nanopore', 'pacbio', 'simulation']
     parser = argparse.ArgumentParser(description="Run Flashmap benchmarks.")
     parser.add_argument(
         "-n", "--name", type=str, 
-        help="benchmark to run (chimp, gorilla, nanopore, pacbio)", 
+        help="benchmark to run (chimp, gorilla, nanopore, pacbio, simulation)", 
         required=True
     )
     args = parser.parse_args()
     if args.name not in benchmarks:
         logging.error(
             "Benchmark not found, please select from:"
-            "chimp, gorilla, nanopore or pacbio"
+            "chimp, gorilla, nanopore, pacbio or simulation"
         )
         exit(1)
 
@@ -594,6 +646,8 @@ def main():
         nanopore_benchmark()
     elif args.name == 'pacbio':
         pacbio_benchmark()
+    elif args.name == 'simulation':
+        simulation_benchmark()
 
 
 if __name__ == "__main__":
