@@ -12,13 +12,53 @@ import argparse
 import logging
 
 
+def get_aligned_reads_records(
+    bam: str, loc: dict, identity_threshold: int = 0.95
+) -> list:
+    '''
+        Fetches read sequences from a bam alignment (local or remote) that
+        align to reference at loc with identity higher than threshold.
+
+        args:
+            bam - path to local or remote (e.g ftp) bam/sam/cram file
+            ref
+            loc - location in reference within which read aligns, consists of 
+            ref, start and end
+            identity_threshold - BLAST-like identity score between read and 
+            reference
+
+        returns:
+            reads - array of SeqRecords
+
+    '''
+
+    reads_records = []
+    with pysam.AlignmentFile(bam, "rb") as samfile:
+        for read in samfile.fetch(loc['ref'], loc['start'], loc['end']):
+            is_query_right_size = (read.query_alignment_length > 5000 and
+                                   read.query_alignment_length < 300000)
+            is_mapped = not read.is_unmapped
+            is_good_quality = (read.mapping_quality >= 20 and 
+                               read.mapping_quality != 255)
+            num_matches = len(read.get_aligned_pairs(matches_only=True))
+            total_seq = len(read.get_aligned_pairs())
+            is_identity = (num_matches/total_seq) > identity_threshold
+            if (read.query_alignment_sequence 
+                and is_query_right_size and is_mapped and is_good_quality 
+                and is_identity):
+                read_record = SeqRecord(Seq(read.query_sequence), 
+                                        read.query_name)
+                reads_records.append(read_record)
+
+    return reads_records
+
+
 def get_pysam_record(fasta_path, identifier, start, end):
     ref = pysam.FastaFile(fasta_path)
     seq = ref.fetch(identifier, start, end)
     record_id = '{0}:{1}-{2}'.format(identifier, start, end)
     fasta_record = SeqRecord(Seq(seq.upper()), record_id)
     return fasta_record
-
 
 
 def get_fasta_record(fasta_handle, identifier, start, end):
@@ -85,12 +125,22 @@ def records_to_fasta(records, output):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Create sequence FASTA for running benchmark.s"
+        description="Create sequence FASTA for running benchmarks"
+    )
+    parser.add_argument(
+        "-b", "--bam", type=str, 
+        help="path or url to bam alignment file", 
+        required=False
+    )
+    parser.add_argument(
+        "-x", "--faidx", type=str, 
+        help="path reference faidx (to get ref lengths)", 
+        required=True
     )
     parser.add_argument(
         "-f", "--fasta", type=str, 
         help="path to fasta file", 
-        required=True
+        required=False
     )
     parser.add_argument(
         "-i", "--identifiers", type=str, 
@@ -113,24 +163,48 @@ def main():
         required=True
     )
     args = parser.parse_args()
-    faidx = args.fasta + '.fai'
 
     identifiers = []
     with open(args.identifiers, 'r') as handle:
         for line in handle:
             identifiers.append(line.rstrip())
 
-    print('Retrieving random records...')
     output_records = []
-    with open(args.fasta, 'r') as handle:
+    if args.fasta:
+        print('Retrieving random records from FASTA...')
+        with open(args.fasta, 'r') as handle:
+            for identifier in identifiers:
+                for i in range(args.num):
+                    rand_start, rand_end = make_random_fasta_interval(
+                        args.faidx, identifier, args.length)
+                    random_record = get_pysam_record(args.fasta, identifier,
+                                                    rand_start, rand_end)
+                    print(identifier, i, random_record)
+                    output_records.append(random_record)
+
+    elif args.bam:
         for identifier in identifiers:
             for i in range(args.num):
                 rand_start, rand_end = make_random_fasta_interval(
-                    faidx, identifier, args.length)
-                random_record = get_pysam_record(args.fasta, identifier,
-                                                 rand_start, rand_end)
-                print(identifier, i, random_record)
-                output_records.append(random_record)
+                    args.faidx, identifier, args.length)
+                acn_convert_df = pd.read_csv('./hg38_acn_conversion.txt', 
+                                             sep='\t', header=0)
+                #ref_name = acn_convert_df[
+                #    acn_convert_df['RefSeq-Accn'].str.contains(identifier)
+                #]['# Sequence-Name'].values[0]
+
+                ref_name = acn_convert_df[
+                    acn_convert_df['RefSeq-Accn'].str.contains(
+                        identifier)]['UCSC-style-name'].values[0]
+
+                rand_loc = {
+                    'ref': ref_name,
+                    'start': rand_start,
+                    'end': rand_end
+                }
+                output_records += get_aligned_reads_records(args.bam, rand_loc)
+    else:
+        print('Please provide a FASTA or BAM file')
 
     records_to_fasta(output_records, args.output)
 

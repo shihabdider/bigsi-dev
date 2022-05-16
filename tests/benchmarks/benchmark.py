@@ -13,45 +13,6 @@ import logging
 import importlib
 
 
-def get_aligned_reads(
-    bam: str, loc: dict, identity_threshold: int = 0.95
-) -> list:
-    '''
-        Fetches read sequences from a bam alignment (local or remote) that
-        align to reference at loc with identity higher than threshold.
-
-        args:
-            bam - path to local or remote (e.g ftp) bam/sam/cram file
-            ref
-            loc - location in reference within which read aligns, consists of 
-            ref_name, start and end
-            identity_threshold - BLAST-like identity score between read and 
-            reference
-
-        returns:
-            reads - array of read objects
-
-    '''
-
-    reads = []
-    with pysam.AlignmentFile(bam, "rb") as samfile:
-        for read in samfile.fetch(loc['ref'], loc['start'], loc['end']):
-            is_query_right_size = (read.query_alignment_length > 5000 and
-                                   read.query_alignment_length < 300000)
-            is_mapped = not read.is_unmapped
-            is_good_quality = (read.mapping_quality >= 20 and 
-                               read.mapping_quality != 255)
-            num_matches = len(read.get_aligned_pairs(matches_only=True))
-            total_seq = len(read.get_aligned_pairs())
-            is_identity = (num_matches/total_seq) > identity_threshold
-            if (read.query_alignment_sequence 
-                    and is_query_right_size and is_mapped and is_good_quality 
-                    and is_identity):
-                reads.append(read)
-
-    return reads
-
-
 def get_read_by_name(bam: str, read_name: str, loc: dict):
     '''Gets a read filtered by its name and location'''
 
@@ -59,7 +20,6 @@ def get_read_by_name(bam: str, read_name: str, loc: dict):
         for read in samfile.fetch(loc['ref'], loc['start'], loc['end']):
             if read.query_name == read_name:
                 return read
-
 
 
 def get_sequence(identifier, start, end):
@@ -121,19 +81,17 @@ def load_query_file(query_path):
 def run_bigsi_query(query_seq, config):
     '''Runs the bigsi query for a specified bigsi matrix'''
 
-    bigsi = config['bigsi']
     bigsi_path = config['bigsi_path']
     bigsi_config = config['bigsi_config_path']
 
     query_bigsi_cmd = (
-        r"node {0}"
-        " -s {1} -b {2} -c {3}").format(
-            bigsi, query_seq, bigsi_path, bigsi_config)
+        r"node ../bin/query_bigsi.js"
+        " -s {0} -b {1} -c {2}").format(
+            query_seq, bigsi_path, bigsi_config)
     with subprocess.Popen(query_bigsi_cmd,
                           stdout=subprocess.PIPE, shell=True) as proc:
         output = proc.stdout.read().decode('utf-8')
-        mappings = output.split('\n')
-        return mappings
+        return output
 
 
 def get_species_seqs(seq_ids, seq_length, num_queries):
@@ -208,7 +166,7 @@ def records_to_fasta(records, output):
         print('{} reads saved to {}'.format(len(records), output))
 
 
-def run_mashmap(query, config, identity, output='mashmap.out'):
+def run_mashmap(query, config, output='mashmap.out'):
     '''Runs mashmap on a set of query seqs vs. ref and outputs to file'''
 
     mashmap_cmd = (
@@ -216,7 +174,7 @@ def run_mashmap(query, config, identity, output='mashmap.out'):
         " -q {1} -r {2} -o {3}"
         " -s {4} --pi {5}"
     ).format(config['mashmap'], query, config['ref'], output, 
-             config['seq_length'], identity)
+             config['seq_length'], config['identity'])
 
     p = subprocess.Popen(mashmap_cmd, shell=True)
     p.communicate()
@@ -251,9 +209,7 @@ def run_pacbio_benchmark() -> list:
     reference.'''
 
     pacbio_longreads = (
-        "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/"
-        "NA12878/PacBio_SequelII_CCS_11kb/"
-        "HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam"
+        "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/PacBio_SequelII_CCS_11kb/HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam"
     )
 
     #random_bin = get_bigsi_bin(6)
@@ -307,8 +263,7 @@ def run_nanopore_benchmark() -> list:
     reference.'''
 
     nanopore_longreads = (
-        "ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/"
-        "NA12878/Ultralong_OxfordNanopore/NA12878-minion-ul_GRCh38.bam"
+        "ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/Ultralong_OxfordNanopore/NA12878-minion-ul_GRCh38.bam"
     )
 
     #random_bin = get_bigsi_bin(6)
@@ -644,11 +599,6 @@ def main():
         required=True
     )
     parser.add_argument(
-        "-i", "--identity", type=int, 
-        help="Percent identity for the mashmap query (80-100)", 
-        required=True
-    )
-    parser.add_argument(
         "-o", "--output", type=str, 
         help="Base file path for outputting benchmark files", 
         required=True
@@ -669,11 +619,10 @@ def main():
 
     bigsi_results_path = args.output + '.bigsi.json'
     write_to_json(bigsi_results, bigsi_results_path)
-    print('Wrote bigsi results to {}'.format(bigsi_results_path))
 
     mashmap_results_path = args.output + '.mashmap.out'
-    run_mashmap(args.query, config, args.identity, output=mashmap_results_path)
-    print('Wrote mashmap results to {}'.format(mashmap_results_path))
+    run_mashmap(args.query, config, output=mashmap_results_path)
+
 
 if __name__ == "__main__":
     try:
