@@ -10,22 +10,23 @@ import json
 import pandas as pd
 import argparse
 import logging
+import math
 
 
 def mutate_sequence(sequence, mutation_rate):
     '''Adds random base substitutions to a sequence'''
 
     seq_length = len(sequence)
+    num_mutations = math.floor(seq_length * mutation_rate)
+    mutant_pos = random.sample(range(seq_length), num_mutations)
 
-    mutated_seq_arr = []
-    num_subs = 0
-    for pos in range(seq_length):
-        if random.random() < mutation_rate:
-            num_subs += 1
-            random_nuc = random.choice(['A', 'C', 'G', 'T'])
-            mutated_seq_arr.append(random_nuc)
-        else:
-            mutated_seq_arr.append(sequence[pos])
+    mutated_seq_arr = list(sequence)
+    for pos in mutant_pos:
+        random_nucs = ['A', 'C', 'G', 'T']
+        if sequence[pos] in random_nucs:
+            random_nucs.remove(sequence[pos])
+            mutant_nuc = random.choice(random_nucs)
+            mutated_seq_arr[pos] = mutant_nuc
 
     mutated_seq = ''.join(mutated_seq_arr)
 
@@ -77,7 +78,7 @@ def main():
         exit(1)
         print('Mutating records...')
     else: 
-        with open(args.mutate, 'r') as handle:
+        with open(args.input, 'r') as handle:
             records = [record for record in SeqIO.parse(handle, 'fasta')]
             output_records = mutate_records(records, args.rate)
 
