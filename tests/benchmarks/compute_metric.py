@@ -13,49 +13,18 @@ import logging
 import importlib
 
 
-def compute_sensitivity_species(bigsi_mappings, mashmap_mappings):
-    '''Given a list of mappings and dict of mashmap mappings computes the
-    sensitivity of bigsi search'''
-    true_positives = 0
-    total = 0
+def is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
+    '''Checks if a mashmap mapping is in any of the reported bigsi bins'''
+    map_ref, map_start, map_end = mashmap_mapping.split(' ')
+    for bigsi_mapping in bigsi_mappings:
+        if bigsi_mapping:
+            bin_ref, bin_start, bin_end = bigsi_mapping.split(' ')
+            if (map_ref == bin_ref and
+                int(map_start) >= int(bin_start) and
+                int(map_end) <= int(bin_end)):
+                return True
 
-    num_buckets_hit = []
-    for mapping in bigsi_mappings:
-        is_true_positive = False
-        mapping_list = mapping.split('\t')
-        seq_key = '{0}:{1}-{2}'.format(mapping_list[1], mapping_list[2],
-                                       mapping_list[3])
-        if seq_key in mashmap_mappings.keys():
-            mashmaps = mashmap_mappings[seq_key]
-            bigsi_output = mapping_list[-1]
-            if bigsi_output and mashmaps:
-                for mapping in mashmaps:
-                    seq_ref, seq_start, seq_end = mapping.split(' ')
-                    bigsi_mappings = bigsi_output.split(',')[0:-1]
-                    num_buckets_hit.append(len(bigsi_mappings))
-                    for bigsi_map in bigsi_mappings:
-                        bigsi_map_list = bigsi_map.split(' ')
-                        bin_ref = bigsi_map_list[0]
-                        bin_start = int(bigsi_map_list[1])
-                        bin_end = int(bigsi_map_list[2])
-                        is_positive = (
-                            seq_ref == bin_ref and
-                            int(seq_start) >= bin_start and
-                            int(seq_end) <= bin_end
-                        )
-
-                        if is_positive:
-                            is_true_positive = True
-
-                if is_true_positive:
-                    true_positives += 1
-
-                total += 1
-
-    sensitivity = true_positives/total
-    num_multibin_hits = [num_bins for num_bins in num_buckets_hit if num_bins > 20]
-    print(num_buckets_hit, len(num_multibin_hits), len(num_buckets_hit))
-    return sensitivity
+    return False
 
 
 def compute_sensitivity(bigsi_results, mashmap_results):
@@ -71,30 +40,14 @@ def compute_sensitivity(bigsi_results, mashmap_results):
     true_positives = 0
     total = 0
 
-    num_buckets_hit = []
-    for mapping in mashmap_results:
-        is_true_positive = False
-        mapping_list = mapping.split('\t')
-        read_ref = mapping_list[1]
-        read_start = int(mapping_list[2])
-        read_end = int(mapping_list[3])
-        bigsi_output = mapping_list[-1]
-        if bigsi_output:
-            bigsi_mappings = bigsi_output.split(',')[0:-1]
-            num_buckets_hit.append(len(bigsi_mappings))
-            for bigsi_map in bigsi_mappings:
-                bigsi_map_list = bigsi_map.split(' ')
-                mapped_ref_name = acn_convert_df[
-                    acn_convert_df['RefSeq-Accn'].str.contains(
-                        bigsi_map_list[0])][reads_chr_format].values[0]
-                bin_start = int(bigsi_map_list[1])
-                bin_end = int(bigsi_map_list[2])
-                is_positive = (read_ref == mapped_ref_name and
-                                read_start >= bin_start and
-                                read_end <= bin_end)
+    for query in mashmap_results:
+        is_true_positive = True
+        mashmap_mappings = mashmap_results[query]
+        bigsi_mappings = bigsi_results[query] 
 
-                if is_positive:
-                    is_true_positive = True
+        for mashmap_mapping in mashmap_mappings:
+            if not is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
+                is_true_positive = False
 
         if is_true_positive:
             true_positives += 1
@@ -102,8 +55,6 @@ def compute_sensitivity(bigsi_results, mashmap_results):
         total += 1
 
     sensitivity = true_positives/total
-    num_multibin_hits = [num_bins for num_bins in num_buckets_hit if num_bins > 20]
-    print(num_buckets_hit, len(num_multibin_hits), len(num_buckets_hit))
     return sensitivity
 
 
@@ -113,8 +64,11 @@ def load_mashmap(mashmap_output):
         for line in handle:
             split_line = line.split(' ')
             record_id = split_line[0]
-            mapping = split_line[-5:-1]
-            if mashmap_results[record_id]:
+            mapping_ref = split_line[-5]
+            mapping_start = split_line[-3]
+            mapping_end = split_line[-2]
+            mapping = ' '.join([mapping_ref, mapping_start, mapping_end])
+            if record_id in mashmap_results:
                 mashmap_results[record_id].append(mapping)
             else:
                 mashmap_results[record_id] = [mapping]
@@ -143,7 +97,9 @@ def main():
     )
     args = parser.parse_args()
 
-    bigsi_results = json.load(args.bigsi)
+    bigsi_results = {}
+    with open(args.bigsi, 'r') as handle:
+        bigsi_results = json.load(handle)
     mashmap_results = load_mashmap(args.mashmap)
 
     if args.metric == 'sensitivity':

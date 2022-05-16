@@ -121,17 +121,18 @@ def load_query_file(query_path):
 def run_bigsi_query(query_seq, config):
     '''Runs the bigsi query for a specified bigsi matrix'''
 
-    bigsi_path = config.bigsi_path
-    bigsi_config = config.bigsi_config_path
+    bigsi_path = config['bigsi_path']
+    bigsi_config = config['bigsi_config_path']
 
     query_bigsi_cmd = (
-        r"node ../bin/query_bigsi.js"
+        r"node ~/Research/Flashmap/bigsi-dev/bin/query_bigsi.js"
         " -s {0} -b {1} -c {2}").format(
             query_seq, bigsi_path, bigsi_config)
     with subprocess.Popen(query_bigsi_cmd,
                           stdout=subprocess.PIPE, shell=True) as proc:
         output = proc.stdout.read().decode('utf-8')
-        return output
+        mappings = output.split('\n')
+        return mappings
 
 
 def get_species_seqs(seq_ids, seq_length, num_queries):
@@ -213,8 +214,8 @@ def run_mashmap(query, config, output='mashmap.out'):
         r"{0}"
         " -q {1} -r {2} -o {3}"
         " -s {4} --pi {5}"
-    ).format(config.mashmap, query, config.ref, output, config.seq_length,
-             config.error_rate)
+    ).format(config['mashmap'], query, config['ref'], output, 
+             config['seq_length'], config['identity'])
 
     p = subprocess.Popen(mashmap_cmd, shell=True)
     p.communicate()
@@ -648,12 +649,16 @@ def main():
     )
     args = parser.parse_args()
 
-    config = json.load(args.config)
+    config = ''
+    with open(args.config, 'r') as handle:
+        config = json.load(handle)
+
     query_records = [record for record in SeqIO.parse(args.query, 'fasta')]
 
     bigsi_results = {}
     for record in query_records:
-        bigsi_output = run_bigsi_query(record.seq, config)
+        query_seq = str(record.seq)
+        bigsi_output = run_bigsi_query(query_seq, config)
         bigsi_results[record.id] = bigsi_output
 
     bigsi_results_path = args.output + '.bigsi.json'
