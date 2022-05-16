@@ -10,6 +10,7 @@ import json
 import pandas as pd
 import argparse
 import logging
+import importlib
 
 
 def get_aligned_reads(
@@ -117,16 +118,16 @@ def load_query_file(query_path):
     return str(query_record.seq)
 
 
-def run_bigsi_query(query_seq):
+def run_bigsi_query(query_seq, config):
     '''Runs the bigsi query for a specified bigsi matrix'''
 
-    bigsi_path = '../bigsis/hg38_whole_genome_005.bin'
-    bigsi_config_path = '../bigsi.random.query.config.json'
+    bigsi_path = config.bigsi_path
+    bigsi_config = config.bigsi_config_path
 
     query_bigsi_cmd = (
         r"node ../bin/query_bigsi.js"
         " -s {0} -b {1} -c {2}").format(
-            query_seq, bigsi_path, bigsi_config_path)
+            query_seq, bigsi_path, bigsi_config)
     with subprocess.Popen(query_bigsi_cmd,
                           stdout=subprocess.PIPE, shell=True) as proc:
         output = proc.stdout.read().decode('utf-8')
@@ -205,15 +206,15 @@ def records_to_fasta(records, output):
         print('{} reads saved to {}'.format(len(records), output))
 
 
-def run_mashmap(query, ref, seq_length=5000, error_rate=95,
-                output='mashmap.out'):
-    '''Runs mashmap on a set of query seqs vs. ref'''
+def run_mashmap(query, config, output='mashmap.out'):
+    '''Runs mashmap on a set of query seqs vs. ref and outputs to file'''
 
     mashmap_cmd = (
-        r"../../MashMap/mashmap"
-        " -q {0} -r {1} -o {2}"
-        " -s {3} --pi {4}"
-    ).format(query, ref, output, seq_length, error_rate)
+        r"{0}"
+        " -q {1} -r {2} -o {3}"
+        " -s {4} --pi {5}"
+    ).format(config.mashmap, query, config.ref, output, config.seq_length,
+             config.error_rate)
 
     p = subprocess.Popen(mashmap_cmd, shell=True)
     p.communicate()
@@ -622,32 +623,44 @@ def pacbio_benchmark():
         #               'multibin_reads_pacbio.fasta')
 
 
+def write_to_json(data, output):
+    with open(output, 'w') as handle:
+        json_data = json.dumps(data)
+        handle.write(json_data)
+
 def main():
-    benchmarks = ['chimp', 'gorilla', 'nanopore', 'pacbio', 'simulation']
-    parser = argparse.ArgumentParser(description="Run Flashmap benchmarks.")
+    parser = argparse.ArgumentParser(
+        description="Run Flashmap on benchmark sequences.")
     parser.add_argument(
-        "-n", "--name", type=str, 
-        help="benchmark to run (chimp, gorilla, nanopore, pacbio, simulation)", 
+        "-q", "--query", type=str, 
+        help="FASTA file with benchmark sequences", 
+        required=True
+    )
+    parser.add_argument(
+        "-c", "--config", type=str, 
+        help="JSON file for specifying BIGSI config", 
+        required=True
+    )
+    parser.add_argument(
+        "-o", "--output", type=str, 
+        help="Base file path for outputting benchmark files", 
         required=True
     )
     args = parser.parse_args()
-    if args.name not in benchmarks:
-        logging.error(
-            "Benchmark not found, please select from:"
-            "chimp, gorilla, nanopore, pacbio or simulation"
-        )
-        exit(1)
 
-    if args.name == 'chimp':
-        chimp_benchmark()
-    elif args.name == 'gorilla':
-        gorilla_benchmark()
-    elif args.name == 'nanopore':
-        nanopore_benchmark()
-    elif args.name == 'pacbio':
-        pacbio_benchmark()
-    elif args.name == 'simulation':
-        simulation_benchmark()
+    config = json.load(args.config)
+    query_records = [record for record in SeqIO.parse(args.query, 'fasta')]
+
+    bigsi_results = {}
+    for record in query_records:
+        bigsi_output = run_bigsi_query(record.seq, config)
+        bigsi_results[record.id] = bigsi_output
+
+    bigsi_results_path = args.output + '.bigsi.json'
+    write_to_json(bigsi_results, bigsi_results_path)
+
+    mashmap_results_path = args.output + '.mashmap.out'
+    run_mashmap(args.query, config, output=mashmap_results_path)
 
 
 if __name__ == "__main__":
