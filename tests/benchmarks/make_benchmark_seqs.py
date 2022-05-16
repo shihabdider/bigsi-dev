@@ -11,7 +11,6 @@ import pandas as pd
 import argparse
 import logging
 
-
 def get_ncbi_record(identifier, start, end):
     '''Retrieves seq record from NCBI'''
     Entrez.email = 'shihabdider@berkeley.edu'
