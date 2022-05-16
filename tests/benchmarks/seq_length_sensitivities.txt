@@ -1,0 +1,4 @@
+output/hg38_5KB.bigsi.json 0.9988826815642458
+output/hg38_10KB.bigsi.json 0.9908361970217641
+output/hg38_100KB.bigsi.json 0.960625
+output/hg38_300KB.bigsi.json 0.9399293286219081
