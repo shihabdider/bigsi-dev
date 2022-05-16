@@ -166,7 +166,7 @@ def records_to_fasta(records, output):
         print('{} reads saved to {}'.format(len(records), output))
 
 
-def run_mashmap(query, config, output='mashmap.out'):
+def run_mashmap(query, config, identity, output='mashmap.out'):
     '''Runs mashmap on a set of query seqs vs. ref and outputs to file'''
 
     mashmap_cmd = (
@@ -174,7 +174,7 @@ def run_mashmap(query, config, output='mashmap.out'):
         " -q {1} -r {2} -o {3}"
         " -s {4} --pi {5}"
     ).format(config['mashmap'], query, config['ref'], output, 
-             config['seq_length'], config['identity'])
+             config['seq_length'], identity)
 
     p = subprocess.Popen(mashmap_cmd, shell=True)
     p.communicate()
@@ -599,6 +599,11 @@ def main():
         required=True
     )
     parser.add_argument(
+        "-i", "--identity", type=int, 
+        help="Identity cutoff for mashmap", 
+        required=True
+    )
+    parser.add_argument(
         "-o", "--output", type=str, 
         help="Base file path for outputting benchmark files", 
         required=True
@@ -621,7 +626,7 @@ def main():
     write_to_json(bigsi_results, bigsi_results_path)
 
     mashmap_results_path = args.output + '.mashmap.out'
-    run_mashmap(args.query, config, output=mashmap_results_path)
+    run_mashmap(args.query, config, args.identity, output=mashmap_results_path)
 
 
 if __name__ == "__main__":
