@@ -71,9 +71,9 @@ def main():
     args = parser.parse_args()
 
     output_records = []
-    if args.rate < 0.01 or args.rate > 0.05:
+    if args.rate <= 0:
         logging.error(
-            "Mutation rate must be between 0.01 and 0.05"
+            "Mutation rate must be greater than 0"
         )
         exit(1)
         print('Mutating records...')
