@@ -1,0 +1,7 @@
+output/hg38_001.bigsi.json 0.9973890339425587
+output/hg38_002.bigsi.json 0.9973890339425587
+output/hg38_003.bigsi.json 0.9973890339425587
+output/hg38_004.bigsi.json 0.9973890339425587
+output/hg38_005.bigsi.json 1.0
+output/hg38_006.bigsi.json 0.9973890339425587
+output/hg38_010.bigsi.json 0.9973890339425587

@@ -37,39 +37,38 @@ def compute_specificity(bigsi_results, mashmap_results):
     not fall in a bin that is not reported by BIGSI. A false positive is when a
     query's mashmap mapping does not match the bucket reported by BIGSI.
     '''
-    
     total_num_bins = 384
     true_negatives = 0
     false_positives = 0
     for query in mashmap_results:
         mashmap_mappings = mashmap_results[query]
-        bigsi_mappings = bigsi_results[query] 
-        
-	num_matches = 0
+        bigsi_mappings = bigsi_results[query]
+
+        num_matches = 0
         num_no_matches = 0 
         for mashmap_mapping in mashmap_mappings:
             if is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
                 num_matches += 1
-	    else:
-		num_no_matches += 1
-	
-	false_positives += len(bigsi_mappings) - num_matches
-	true_negatives += total_num_bins - len(bigsi_mappings) - num_no_matches
+            else:
+                num_no_matches += 1
 
-     specificity = true_negatives / (true_negatives + false_positives)
+    false_positives += len(bigsi_mappings) - num_matches
+    true_negatives += total_num_bins - len(bigsi_mappings) - num_no_matches
+
+    specificity = true_negatives / (true_negatives + false_positives)
+    return specificity
 
 
 def compute_sensitivity(bigsi_results, mashmap_results):
-    '''Computes sensitivity = TP/(TP+FN)'''
+    '''Computes sensitivity = TP/(TP+FN)
     Params: bigsi_results and mashmap_results are dicts with the same key 
     format
 
     A true positive is when a mashmap mapping for a given query sequence is
-    found within one of the buckets returned by the BIGSI query. A false negative
-    is when a mashmap mapping is not found in any of the buckets returned by
-    the BIGSI query.
+    found within one of the buckets returned by the BIGSI query. A false 
+    negative is when a mashmap mapping is not found in any of the buckets 
+    returned by the BIGSI query.
     '''
-    
     true_positives = 0
     false_negatives = 0
     for query in mashmap_results:
@@ -79,22 +78,22 @@ def compute_sensitivity(bigsi_results, mashmap_results):
         for mashmap_mapping in mashmap_mappings:
             if is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
                 true_positives += 1
-	    else:
-		false_negatives += 1
+            else:
+                false_negatives += 1
 
-     sensitivity = true_positives / (true_positives + false_negatives)
+    sensitivity = true_positives / (true_positives + false_negatives)
+    return sensitivity
 
-    
 
 def compute_accuracy(bigsi_results, mashmap_results):
     '''Computes accuracy = TP/Total using mashmap results as truth
-    set. 
+    set.
 
-    Params: bigsi_results and mashmap_results are dicts with the same key 
+    Params: bigsi_results and mashmap_results are dicts with the same key
     format
 
     A true positive is when a mashmap mapping for a given query sequence is
-    found within one of the buckets returned by the BIGSI query. 
+    found within one of the buckets returned by the BIGSI query.
     '''
 
     true_positives = 0
@@ -102,13 +101,12 @@ def compute_accuracy(bigsi_results, mashmap_results):
 
     for query in mashmap_results:
         mashmap_mappings = mashmap_results[query]
-        bigsi_mappings = bigsi_results[query] 
+        bigsi_mappings = bigsi_results[query]
 
         for mashmap_mapping in mashmap_mappings:
             total += 1
             if is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
                 true_positives += 1
-
 
     accuracy = true_positives/total
     return accuracy
@@ -164,7 +162,7 @@ def main():
     elif args.metric == 'sensitivity':
         sensitivity = compute_sensitivity(bigsi_results, mashmap_results)
         print(args.bigsi, sensitivity)
-    elif args.metric == 'sensitivity':
+    elif args.metric == 'specificity':
         specificity = compute_specificity(bigsi_results, mashmap_results)
         print(args.bigsi, specificity)
     else:
