@@ -3,6 +3,6 @@
     "bigsi_config_path": "~/Research/Flashmap/bigsi-dev/bigsi.random.query.config.json",
     "mashmap": "~/Research/Flashmap/MashMap/mashmap",
     "ref": "~/Research/seqs/human/hg38/ncbi-genomes-2021-11-16/hg38.fna",
-    "seq_length": 2500,
-    "identity": 100
+    "seq_length": 5000,
+    "identity": 97
 }
