@@ -81,13 +81,14 @@ def load_query_file(query_path):
 def run_bigsi_query(query_seq, config):
     '''Runs the bigsi query for a specified bigsi matrix'''
 
+    bigsi = config['bigsi']
     bigsi_path = config['bigsi_path']
     bigsi_config = config['bigsi_config_path']
 
     query_bigsi_cmd = (
-        r"node ../bin/query_bigsi.js"
-        " -s {0} -b {1} -c {2}").format(
-            query_seq, bigsi_path, bigsi_config)
+        r"node {0}"
+        " -s {1} -b {2} -c {3}").format(
+            bigsi, query_seq, bigsi_path, bigsi_config)
     with subprocess.Popen(query_bigsi_cmd,
                           stdout=subprocess.PIPE, shell=True) as proc:
         output = proc.stdout.read().decode('utf-8')
