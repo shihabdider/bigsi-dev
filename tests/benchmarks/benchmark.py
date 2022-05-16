@@ -121,13 +121,14 @@ def load_query_file(query_path):
 def run_bigsi_query(query_seq, config):
     '''Runs the bigsi query for a specified bigsi matrix'''
 
+    bigsi = config['bigsi']
     bigsi_path = config['bigsi_path']
     bigsi_config = config['bigsi_config_path']
 
     query_bigsi_cmd = (
-        r"node ~/Research/Flashmap/bigsi-dev/bin/query_bigsi.js"
-        " -s {0} -b {1} -c {2}").format(
-            query_seq, bigsi_path, bigsi_config)
+        r"node {0}"
+        " -s {1} -b {2} -c {3}").format(
+            bigsi, query_seq, bigsi_path, bigsi_config)
     with subprocess.Popen(query_bigsi_cmd,
                           stdout=subprocess.PIPE, shell=True) as proc:
         output = proc.stdout.read().decode('utf-8')
@@ -668,10 +669,11 @@ def main():
 
     bigsi_results_path = args.output + '.bigsi.json'
     write_to_json(bigsi_results, bigsi_results_path)
+    print('Wrote bigsi results to {}'.format(bigsi_results_path))
 
     mashmap_results_path = args.output + '.mashmap.out'
     run_mashmap(args.query, config, args.identity, output=mashmap_results_path)
-
+    print('Wrote mashmap results to {}'.format(mashmap_results_path))
 
 if __name__ == "__main__":
     try:
