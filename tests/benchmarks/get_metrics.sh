@@ -11,9 +11,11 @@ METRIC=$1
 #python compute_metric.py -b output/hg38_010.bigsi.json -m output/hg38_010.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_5KB.bigsi.json -m output/hg38_5KB.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_7KB.bigsi.json -m output/hg38_7KB.mashmap.out -t $METRIC
+#python compute_metric.py -b output/hg38_10KB.bigsi.json -m output/hg38_10KB.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_20KB.bigsi.json -m output/hg38_20KB.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_40KB.bigsi.json -m output/hg38_40KB.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_80KB.bigsi.json -m output/hg38_80KB.mashmap.out -t $METRIC
+#python compute_metric.py -b output/hg38_100KB.bigsi.json -m output/hg38_100KB.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_160KB.bigsi.json -m output/hg38_160KB.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_200KB.bigsi.json -m output/hg38_200KB.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_250KB.bigsi.json -m output/hg38_250KB.mashmap.out -t $METRIC
