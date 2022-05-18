@@ -4,5 +4,5 @@
     "bigsi_config_path": "~/Research/bigsi-dev/bigsi.benchmark.query.json",
     "mashmap": "~/Research/MashMap/mashmap",
     "ref": "~/Research/seqs/hg38.fna",
-    "seq_length": 2500
+    "seq_length": 80000
 }
