@@ -1,0 +1,7 @@
+{
+    "bigsi": "~/Research/bigsi-dev/bin/query_bigsi.js",
+    "bigsi_path": "~/Research/bigsi-dev/bigsis/synthetic_seq_300M.bin",
+    "bigsi_config_path": "~/Research/bigsi-dev/bigsi.query.synth.config.json",
+    "mashmap": "~/Research/MashMap/mashmap",
+    "ref": "~/Research/bigsi-dev/tests/benchmarks/seqs/synthetic_seq_300M.fasta"
+}

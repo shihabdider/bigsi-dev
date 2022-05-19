@@ -92,6 +92,7 @@ def run_bigsi_query(query_seq, config):
     with subprocess.Popen(query_bigsi_cmd,
                           stdout=subprocess.PIPE, shell=True) as proc:
         output = proc.stdout.read().decode('utf-8')
+        #print(output)
         mappings = output.split('\n')
         return mappings
 

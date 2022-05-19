@@ -52,8 +52,8 @@ def compute_specificity(bigsi_results, mashmap_results):
             else:
                 num_no_matches += 1
 
-    false_positives += len(bigsi_mappings) - num_matches
-    true_negatives += total_num_bins - len(bigsi_mappings) - num_no_matches
+        false_positives += len(bigsi_mappings) - num_matches
+        true_negatives += total_num_bins - len(bigsi_mappings) - num_no_matches
 
     specificity = true_negatives / (true_negatives + false_positives)
     return specificity
@@ -155,6 +155,7 @@ def main():
     with open(args.bigsi, 'r') as handle:
         bigsi_results = json.load(handle)
     mashmap_results = load_mashmap(args.mashmap)
+    #print(len(bigsi_results.keys()), len(mashmap_results.keys()))
 
     if args.metric == 'accuracy':
         accuracy = compute_accuracy(bigsi_results, mashmap_results)
