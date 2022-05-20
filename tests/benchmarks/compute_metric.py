@@ -37,7 +37,7 @@ def compute_specificity(bigsi_results, mashmap_results):
     not fall in a bin that is not reported by BIGSI. A false positive is when a
     query's mashmap mapping does not match the bucket reported by BIGSI.
     '''
-    total_num_bins = 384
+    total_num_bins = 16
     true_negatives = 0
     false_positives = 0
     for query in mashmap_results:

@@ -200,7 +200,7 @@ hg38 = {
     'bin_seq_len': 16e6,
     'window_size': 100,
     'min_query_len': 5000,
-    'error_rate': 0.05,
+    'error_rate': 0.07,
     'false_hit_thresh': 1e-2,
     'num_cols': 16*24,
     'kmer_len': 16,
@@ -240,8 +240,8 @@ def main():
     #print_bigsi_stats(human_viruses_parameters)
     print('Worm')
     print_bigsi_stats(worm)
-    #print('hg38')
-    #print_bigsi_stats(hg38)
+    print('hg38')
+    print_bigsi_stats(hg38)
     #print('hg38_chr1')
     #print_bigsi_stats(hg38_chr1)
     #print(compute_minimizer_index_size(2e7, 100), 'mb')
