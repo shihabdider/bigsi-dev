@@ -1,0 +1,10 @@
+output/synthetic_seq_300M.random.001.bigsi.json 0.9968304278922345
+output/synthetic_seq_300M.random.002.bigsi.json 0.9616564417177914
+output/synthetic_seq_300M.random.003.bigsi.json 0.8827247191011236
+output/synthetic_seq_300M.random.004.bigsi.json 1.0
+output/synthetic_seq_300M.random.005.bigsi.json 1.0
+output/synthetic_seq_300M.random.006.bigsi.json 0.9969325153374233
+output/synthetic_seq_300M.random.007.bigsi.json 0.9504504504504504
+output/synthetic_seq_300M.random.008.bigsi.json 0.7672479150871873
+output/synthetic_seq_300M.random.009.bigsi.json 0.4837430610626487
+output/synthetic_seq_300M.random.010.bigsi.json 0.25037707390648567

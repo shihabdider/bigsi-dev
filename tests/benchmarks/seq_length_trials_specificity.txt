@@ -278,5 +278,3 @@ output/hg38.experiment.17.300000.bigsi.json 0.9965187119234117
 output/hg38.experiment.18.300000.bigsi.json 0.9963560197406175
 output/hg38.experiment.19.300000.bigsi.json 0.9962048759753469
 output/hg38.experiment.20.300000.bigsi.json 0.9960395458679262
-output/synthetic_seq_300M.random.002.bigsi.json 0.9980356049865814
-output/synthetic_seq_300M.random.003.bigsi.json 0.9980063003003632

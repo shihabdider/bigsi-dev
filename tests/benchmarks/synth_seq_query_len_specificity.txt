@@ -1,0 +1,13 @@
+output/synthetic_seq_300M.1000.bigsi.json 0.99311227154047
+output/synthetic_seq_300M.2000.bigsi.json 0.9959634464751959
+output/synthetic_seq_300M.3000.bigsi.json 0.9967937336814622
+output/synthetic_seq_300M.4000.bigsi.json 0.9971201044386423
+output/synthetic_seq_300M.5000.bigsi.json 0.9972767624020887
+output/synthetic_seq_300M.10000.bigsi.json 0.9973733524647362
+output/synthetic_seq_300M.20000.bigsi.json 0.9973629242819844
+output/synthetic_seq_300M.40000.bigsi.json 0.9973550913838121
+output/synthetic_seq_300M.80000.bigsi.json 0.9973524804177546
+output/synthetic_seq_300M.160000.bigsi.json 0.9973550913838121
+output/synthetic_seq_300M.200000.bigsi.json 0.9973420365535248
+output/synthetic_seq_300M.250000.bigsi.json 0.9973237597911228
+output/synthetic_seq_300M.300000.bigsi.json 0.9972950391644909
