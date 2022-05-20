@@ -29,7 +29,7 @@ METRIC=$1
 #	done
 #done
 
-lengths=( 5000 7000 10000 20000 40000 80000 160000 200000 250000 300000 )
+lengths=( 1000 2000 3000 4000 5000 7000 10000 20000 40000 80000 160000 200000 250000 300000 )
 for length in "${lengths[@]}"; do
 	for i in {1..20};
 	do
@@ -38,8 +38,8 @@ for length in "${lengths[@]}"; do
 done
 
 #python compute_metric.py -b output/synthetic_seq_300M.random.001.bigsi.json -m output/synthetic_seq_300M.random.001.mashmap.out -t $METRIC
-#python compute_metric.py -b output/synthetic_seq_300M.random.002.bigsi.json -m output/synthetic_seq_300M.random.002.mashmap.out -t $METRIC
-#python compute_metric.py -b output/synthetic_seq_300M.random.003.bigsi.json -m output/synthetic_seq_300M.random.003.mashmap.out -t $METRIC
+python compute_metric.py -b output/synthetic_seq_300M.random.002.bigsi.json -m output/synthetic_seq_300M.random.002.mashmap.out -t $METRIC
+python compute_metric.py -b output/synthetic_seq_300M.random.003.bigsi.json -m output/synthetic_seq_300M.random.003.mashmap.out -t $METRIC
 #python compute_metric.py -b output/synthetic_seq_300M.random.004.bigsi.json -m output/synthetic_seq_300M.random.004.mashmap.out -t $METRIC
 #python compute_metric.py -b output/synthetic_seq_300M.random.005.bigsi.json -m output/synthetic_seq_300M.random.005.mashmap.out -t $METRIC
 #python compute_metric.py -b output/synthetic_seq_300M.random.006.bigsi.json -m output/synthetic_seq_300M.random.006.mashmap.out -t $METRIC
