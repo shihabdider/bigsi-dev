@@ -625,14 +625,15 @@ def main():
 
     query_records = [record for record in SeqIO.parse(args.query, 'fasta')]
 
-    bigsi_results = {}
-    for record in query_records:
-        query_seq = str(record.seq)
-        bigsi_output = run_bigsi_query(query_seq, config)
-        bigsi_results[record.id] = bigsi_output
+    #bigsi_results = {}
+    #for record in query_records:
+    #    query_seq = str(record.seq)
+    #    bigsi_output = run_bigsi_query(query_seq, config)
+    #    bigsi_results[record.id] = bigsi_output
 
-    bigsi_results_path = args.output + '.bigsi.json'
-    write_to_json(bigsi_results, bigsi_results_path)
+    #bigsi_results_path = args.output + '.bigsi.json'
+    #write_to_json(bigsi_results, bigsi_results_path)
+    #print('Wrote to {}'.format(bigsi_results_path))
 
     mashmap_results_path = args.output + '.mashmap.out'
     run_mashmap(args.query, config, args.identity, args.length, output=mashmap_results_path)

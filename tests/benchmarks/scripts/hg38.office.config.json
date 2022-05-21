@@ -1,7 +1,7 @@
 {
-    "bigsi": "~/Research/bigsi-dev/bin/query_bigsi.js",
-    "bigsi_path": "~/Research/bigsi-dev/bigsis/hg38_whole_genome_007.bin",
+    "bigsi": "/Users/shihabdider/Research/bigsi-dev/bin/query_bigsi.js",
+    "bigsi_path": "/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_whole_genome_007.bin",
     "bigsi_config_path": "~/Research/bigsi-dev/bigsi.benchmark.query.json",
-    "mashmap": "~/Research/MashMap/mashmap",
-    "ref": "~/Research/seqs/hg38.fna"
+    "mashmap": "/Users/shihabdider/Research/MashMap/mashmap",
+    "ref": "/Users/shihabdider/Research/seqs/hg38.fna"
 }

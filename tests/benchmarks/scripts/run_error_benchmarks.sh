@@ -5,9 +5,9 @@ PIS=( 99 98 97 96 95 94 93 92 91 90 )
 N=12
 for i in ${!SUB_RATES[@]};
 do
-    for j in {1..10};
+    for j in {1..100};
     do
-        ((job=jobi%N)); ((job++==0)) && wait
+        ((b=b%N)); ((b++==0)) && wait
         time python scripts/benchmark.py \
             -q seqs/${HG38_SUB_RATE}/experiment_$j/${SUB_RATES[i]}.fasta \
             -c scripts/hg38.office.config.json \
