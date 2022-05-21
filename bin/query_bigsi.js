@@ -156,7 +156,7 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize) {
         let numIntersections = hammingWeights[bucketNum]
         const containmentScore = numIntersections/queryNumBitsSet
         const errorRate = -1/kmerLength * Math.log(containmentScore)
-        if (errorRate < 0.05) {
+        if (errorRate < 0.07) {
             //console.log(hammingWeights[bucketNum])
             const percentMatch = 100*(1 - errorRate)
             bigsiHits[bucketNum] = {'percent match': percentMatch}
@@ -232,7 +232,7 @@ async function main(querySeq, bigsiPath, bigsiConfigPath) {
     const bloomFilterSize = bigsiDims.rows
     //const queryFragmentsMinimizers = await winnowQueryFragments(querySeq)
     // Test: non-frag query
-    const isQuerySeqRightSize = querySeq.length >= 5000 && querySeq.length <= 300000
+    const isQuerySeqRightSize = querySeq.length >= 1000 && querySeq.length <= 300000
     if (true) {
         const fragmentSizeZero = 0
         const queryFragmentsMinimizers = await winnowQueryFragments(querySeq, fragmentSizeZero)
@@ -294,7 +294,7 @@ async function run() {
 
         const bigsiPath = argv.bigsi
         const bigsiConfigPath = argv.config
-        const binMapPath = '../bigsis/hg38_whole_genome_005_bucket_map.json'
+        const binMapPath = bigsiPath.slice(0, -4) + '_bucket_map.json'
         if (argv.querySeq) { // passing query as string
             const hits = await main(argv.querySeq, bigsiPath, bigsiConfigPath);
             printResults(hits, binMapPath)

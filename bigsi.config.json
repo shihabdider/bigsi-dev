@@ -5,5 +5,5 @@
     "windowSize": 100,
     "minQuerySize": 5000,
     "kmer":16,
-    "errorRate": 0.05
+    "errorRate": 0.07
 }

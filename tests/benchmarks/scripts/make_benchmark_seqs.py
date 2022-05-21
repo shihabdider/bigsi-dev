@@ -55,9 +55,9 @@ def get_aligned_reads_records(
 
 def get_pysam_record(fasta_path, identifier, start, end):
     ref = pysam.FastaFile(fasta_path)
-    seq = ref.fetch(identifier, start, end)
+    seq = ref.fetch(identifier, start, end).upper()
     record_id = '{0}:{1}-{2}'.format(identifier, start, end)
-    fasta_record = SeqRecord(Seq(seq.upper()), record_id)
+    fasta_record = SeqRecord(Seq(seq), record_id)
     return fasta_record
 
 
@@ -179,8 +179,11 @@ def main():
                         args.faidx, identifier, args.length)
                     random_record = get_pysam_record(args.fasta, identifier,
                                                     rand_start, rand_end)
-                    print(identifier, i, random_record)
-                    output_records.append(random_record)
+                    num_n = str(random_record.seq).count('N')
+                    is_valid_seq = num_n/len(random_record.seq) < 0.3
+                    #print(identifier, i, random_record)
+                    if is_valid_seq:
+                        output_records.append(random_record)
 
     elif args.bam:
         for identifier in identifiers:

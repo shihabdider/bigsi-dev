@@ -2,18 +2,18 @@ HG38_SUB_RATE=hg38/simulation/substitution_rate
 SUB_RATES=( 001 002 003 004 005 006 007 008 009 010 )
 PIS=( 99 98 97 96 95 94 93 92 91 90 )
 
-N=4
+N=12
 for i in ${!SUB_RATES[@]};
 do
-    for j in {1..100};
+    for j in {1..10};
     do
-        #time python benchmark.py \
-        ((i=i%N)); ((i++==0)) && wait
-        echo \
+        ((job=jobi%N)); ((job++==0)) && wait
+        time python scripts/benchmark.py \
             -q seqs/${HG38_SUB_RATE}/experiment_$j/${SUB_RATES[i]}.fasta \
-            -c  hg38.office.config.json \
-            -o output/${HG38_SUB_RATE}/experiment_$j/${SUB_RATES[i]} \
-            -i ${PIS[i]} &
+            -c scripts/hg38.office.config.json \
+            -o outputs/${HG38_SUB_RATE}/experiment_$j/${SUB_RATES[i]} \
+            -i ${PIS[i]} \
+	&
     done
 done
 

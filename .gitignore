@@ -11,4 +11,5 @@ tests/*.txt
 tests/*.out
 tests/test_data/
 tests/random_seqs/
+tests/benchmarks/seqs/
 mutation_rate_ci_calculator/
