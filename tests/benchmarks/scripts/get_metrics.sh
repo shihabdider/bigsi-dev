@@ -21,23 +21,23 @@ METRIC=$1
 #python compute_metric.py -b output/hg38_250KB.bigsi.json -m output/hg38_250KB.mashmap.out -t $METRIC
 #python compute_metric.py -b output/hg38_300KB.bigsi.json -m output/hg38_300KB.mashmap.out -t $METRIC
 
-HG38_SUB_RATE=hg38/simulation/substitution_rate
-errs=( 001 002 003 004 005 006 007 008 009 010 )
-for err in "${errs[@]}"; do
-	for i in {1..100};
-	do
-		python scripts/compute_metric.py -b outputs/${HG38_SUB_RATE}/experiment_$i/$err.bigsi.json -m outputs/${HG38_SUB_RATE}/experiment_$i/$err.mashmap.out -t $METRIC
-	done
-done
-
-#HG38_QUERY_LEN=hg38/simulation/query_length
-#lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
-#for length in "${lengths[@]}"; do
+#HG38_SUB_RATE=hg38/simulation/substitution_rate
+#errs=( 001 002 003 004 005 006 007 008 009 010 )
+#for err in "${errs[@]}"; do
 #	for i in {1..100};
 #	do
-#		python scripts/compute_metric.py -b outputs/${HG38_QUERY_LEN}/experiment_$i/$length.bigsi.json -m outputs/${HG38_QUERY_LEN}/experiment_$i/$length.mashmap.out -t $METRIC
+#		python scripts/compute_metric.py -b outputs/${HG38_SUB_RATE}/experiment_$i/$err.bigsi.json -m outputs/${HG38_SUB_RATE}/experiment_$i/$err.mashmap.out -t $METRIC
 #	done
 #done
+
+HG38_QUERY_LEN=hg38/simulation/query_length
+lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+for length in "${lengths[@]}"; do
+	for i in {1..100};
+	do
+		python scripts/compute_metric.py -b outputs/${HG38_QUERY_LEN}/experiment_$i/$length.bigsi.json -m outputs/${HG38_QUERY_LEN}/experiment_$i/$length.mashmap.out -t $METRIC
+	done
+done
 
 #python compute_metric.py -b output/synthetic_seq_300M.random.001.bigsi.json -m output/synthetic_seq_300M.random.001.mashmap.out -t $METRIC
 #python compute_metric.py -b output/synthetic_seq_300M.random.002.bigsi.json -m output/synthetic_seq_300M.random.002.mashmap.out -t $METRIC
