@@ -142,19 +142,25 @@ def get_error_metrics(file, num_trials):
     return error_rates, error_rate_metrics
 
 
-def get_length_metrics(file):
+def get_length_metrics(file, num_trials):
     seq_lengths = []
-    seq_len_metrics = []
+    seq_length_metrics = []
     with open(file, 'r') as handle:
-        for line in handle:
-            split_line = line.split(' ')
-            seq_length = int(split_line[0][26:-11])
-            print(seq_length)
-            seq_lengths.append(seq_length)
-            metric = float(split_line[1])
-            seq_len_metrics.append(metric)
+        for lst in chunked(handle.readlines(), num_trials):
+            metrics = []
+            for i, line in enumerate(lst):
+                split_line = line.split(' ')
+                seq_length = int(
+                    split_line[0].split('/')[-1].split('.')[0]
+                )
+                if seq_length not in seq_lengths:
+                    seq_lengths.append(seq_length)
 
-    return seq_lengths, seq_len_metrics
+                metric = float(split_line[1])
+                metrics.append(metric)
+            seq_length_metrics.append(metrics)
+
+    return seq_lengths, seq_length_metrics
 
 
 def make_trials_figure():
@@ -164,6 +170,13 @@ def make_trials_figure():
     _, error_specificities = get_error_metrics(
         'metrics/sub_rate_specificity_100_exp.txt', num_trials=100)
 
+    seq_lengths, seq_length_sensitivities = get_length_metrics(
+        'metrics/query_length_sensitivity_100_exp.txt', num_trials=100)
+
+    _, seq_length_specificities = get_length_metrics(
+        'metrics/query_length_specificity_100_exp.txt', num_trials=100)
+
+    # Sub Rate
     subs_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
                               error_sensitivities]
     subs_sensitivity_stds = [np.std(sensitivities) for sensitivities in 
@@ -175,6 +188,19 @@ def make_trials_figure():
     subs_specificity_stds = [np.std(specificities) for specificities in 
                              error_specificities]
     subs_specificity_errors = [2*std for std in subs_specificity_stds]
+
+    # Query Length
+    length_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
+                                seq_length_sensitivities]
+    length_sensitivity_stds = [np.std(sensitivities) for sensitivities in 
+                               seq_length_sensitivities]
+    length_sensitivity_errors = [2*std for std in length_sensitivity_stds]
+
+    length_specificity_means = [np.mean(specificities) for specificities in 
+                                seq_length_specificities]
+    length_specificity_stds = [np.std(specificities) for specificities in 
+                               seq_length_specificities]
+    length_specificity_errors = [2*std for std in length_specificity_stds]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
     fig.suptitle('Flashmap accuracy on simulated data')
@@ -198,23 +224,24 @@ def make_trials_figure():
     fig.legend()
 
     # Query Length
-    #ax2.plot(seq_lengths, length_sensitivity_means, label='sensitivity', 
-    #         marker='o')
-    #ax2.errorbar(seq_lengths, length_sensitivity_means, 
-    #             yerr=[length_sensitivity_errors_lower, 
-    #                   length_sensitivity_errors_upper], fmt='-', color='blue')
+    ax2.plot(seq_lengths, length_sensitivity_means, label='sensitivity', 
+             marker='o')
+    ax2.errorbar(seq_lengths, length_sensitivity_means, 
+                 #yerr=[length_sensitivity_errors_lower, length_sensitivity_errors_upper], 
+                 yerr=length_sensitivity_errors, 
+                 fmt='-', color='blue')
 
-    #ax2.plot(seq_lengths, length_specificity_means, label='specificity', 
-    #         marker='o')
-    #ax2.errorbar(seq_lengths, length_specificity_means, 
-    #             yerr=length_specificity_errors, fmt='-', color='orange')
-    #ax2.axvline(x=5000, linestyle='--', color='grey')
-    #ax2.text(5500, 0.2, '5kb query threshold', rotation=90)
-    #ax2.set_xscale('log')
-    #ax2.set_xlabel('Query length (kb)')
+    ax2.plot(seq_lengths, length_specificity_means, label='specificity', 
+             marker='o')
+    ax2.errorbar(seq_lengths, length_specificity_means, 
+                 yerr=length_specificity_errors, fmt='-', color='orange')
+    ax2.axvline(x=5000, linestyle='--', color='grey')
+    ax2.text(5500, 0.2, '5kb query threshold', rotation=90)
+    ax2.set_xscale('log')
+    ax2.set_xlabel('Query length (kb)')
     #ax2.legend()
-    plt.show()
-    #plt.savefig('flashmap_accuracy_simulation_trials.png')
+    #plt.show()
+    plt.savefig('flashmap_accuracy_simulation_100_trials.png')
 
 
 
@@ -263,8 +290,8 @@ def make_synth_figure():
     ax2.set_xscale('log')
     ax2.set_xlabel('Query length (kb)')
     #ax2.legend()
-    #plt.show()
-    plt.savefig('flashmap_accuracy_synthetic_data.png')
+    plt.show()
+    #plt.savefig('flashmap_accuracy_synthetic_data.png')
 
 make_trials_figure()
 #make_synth_figure()
