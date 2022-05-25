@@ -241,7 +241,7 @@ def make_trials_figure():
     ax2.set_xlabel('Query length (kb)')
     #ax2.legend()
     #plt.show()
-    plt.savefig('flashmap_accuracy_simulation_100_trials.png')
+    plt.savefig('figures/flashmap_accuracy_simulation_100_trials.png')
 
 
 def make_synth_figure():
@@ -344,7 +344,8 @@ def make_runtime_figure():
     ax2.errorbar(query_sizes, query_runtime_means, yerr=query_runtime_errors, 
                  fmt='-', color='orange')
     ax2.set_xlabel('Query size (kb)')
-    plt.show()
+    #plt.show()
+    plt.savefig('figures/flashmap_runtimes.png')
 
 
 make_runtime_figure()
