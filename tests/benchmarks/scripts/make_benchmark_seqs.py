@@ -167,7 +167,9 @@ def main():
     identifiers = []
     with open(args.identifiers, 'r') as handle:
         for line in handle:
-            identifiers.append(line.rstrip())
+            split_line = line.split('\t')
+            identifier = split_line[0]
+            identifiers.append(identifier)
 
     output_records = []
     if args.fasta:
