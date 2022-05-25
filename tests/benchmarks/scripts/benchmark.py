@@ -13,71 +13,6 @@ import logging
 import importlib
 
 
-def get_read_by_name(bam: str, read_name: str, loc: dict):
-    '''Gets a read filtered by its name and location'''
-
-    with pysam.AlignmentFile(bam, "rb") as samfile:
-        for read in samfile.fetch(loc['ref'], loc['start'], loc['end']):
-            if read.query_name == read_name:
-                return read
-
-
-def get_sequence(identifier, start, end):
-    '''Retrieves sequence from NCBI'''
-    Entrez.email = 'shihabdider@berkeley.edu'
-    fasta_handle = Entrez.efetch(db='nucleotide', id=identifier, 
-                                 rettype='fasta', retmode='text', 
-                                 seq_start=start, seq_stop=end)
-
-    fasta_record = SeqIO.read(fasta_handle, "fasta")
-    fasta_handle.close()
-
-    return str(fasta_record.seq)
-
-
-def get_gene_sequence(gene_id):
-    '''Retrieves sequence of gene from NCBI'''
-    Entrez.email = 'shihabdider@berkeley.edu'
-    # get the ref length
-    gene_handle = Entrez.efetch(db='gene', id=gene_id,
-                           rettype='gene_table', retmode='text')
-
-    #gene_record = SeqIO.read(gene_handle, "text")
-
-    for line in gene_handle:
-        print(line)
-    gene_handle.close()
-
-
-def get_random_sequence(identifier, query_len):
-    '''Retrieves a random sequence record of specified length from NCBI'''
-
-    Entrez.email = 'shihabdider@berkeley.edu'
-    # get the ref length
-    gb_handle = Entrez.efetch(db='nucleotide', id=identifier,
-                              rettype='gb', retmode='text')
-    gb_record = SeqIO.read(gb_handle, "genbank")
-    gb_handle.close()
-    ref_len = len(gb_record.seq)
-
-    # get random sequence
-    query_start = random.randint(0, ref_len - query_len)
-    query_end = query_start + query_len - 1
-    fasta_handle = Entrez.efetch(db='nucleotide', id=identifier, 
-                                 rettype='fasta', retmode='text', 
-                                 seq_start=query_start, seq_stop=query_end)
-
-    fasta_record = SeqIO.read(fasta_handle, "fasta")
-    fasta_handle.close()
-
-    return fasta_record
-
-
-def load_query_file(query_path):
-    query_record = SeqIO.read(query_path, "fasta")
-    return str(query_record.seq)
-
-
 def run_bigsi_query(query_seq, config):
     '''Runs the bigsi query for a specified bigsi matrix'''
 
@@ -95,31 +30,6 @@ def run_bigsi_query(query_seq, config):
         #print(output)
         mappings = output.split('\n')
         return mappings
-
-
-def get_species_seqs(seq_ids, seq_length, num_queries):
-    '''
-        Gets random subsequence records from NCBI genome
-
-        Args:
-            seq_ids - array of NCBI formatted sequence ids
-            seq_length - length of the sequence to be retrieved
-            num_queries - how many subsequences to retrieve for each sequence
-            id
-
-        Returns:
-            records - array of SeqIO records
-    '''
-    records = []
-    for _ in range(num_queries):
-        for seq_id in seq_ids:
-            random_query_record = get_random_sequence(
-                seq_id,
-                seq_length
-            )
-            records.append(random_query_record)
-
-    return records
 
 
 def run_species_benchmark(benchmark_params):
@@ -625,15 +535,15 @@ def main():
 
     query_records = [record for record in SeqIO.parse(args.query, 'fasta')]
 
-    #bigsi_results = {}
-    #for record in query_records:
-    #    query_seq = str(record.seq)
-    #    bigsi_output = run_bigsi_query(query_seq, config)
-    #    bigsi_results[record.id] = bigsi_output
+    bigsi_results = {}
+    for record in query_records:
+        query_seq = str(record.seq)
+        bigsi_output = run_bigsi_query(query_seq, config)
+        bigsi_results[record.id] = bigsi_output
 
-    #bigsi_results_path = args.output + '.bigsi.json'
-    #write_to_json(bigsi_results, bigsi_results_path)
-    #print('Wrote to {}'.format(bigsi_results_path))
+    bigsi_results_path = args.output + '.bigsi.json'
+    write_to_json(bigsi_results, bigsi_results_path)
+    print('Wrote to {}'.format(bigsi_results_path))
 
     mashmap_results_path = args.output + '.mashmap.out'
     run_mashmap(args.query, config, args.identity, args.length, output=mashmap_results_path)
