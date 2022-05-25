@@ -1,7 +1,7 @@
 BIGSI_DIR=~/Research/bigsi-dev/tests/benchmarks/bigsis
 
 function benchmark_bigsi_size_time() {
-	BIGSI_SIZES=( 100 200 400 800 1600 2000 2500 3000 )
+	BIGSI_SIZES=( 100 400 800 1200 1600 2000 2500 3000 )
 	QUERY_SIZE=300000
 	METRIC_FILE=metrics/synth_bigsi_size_performance_times.txt
 
@@ -34,4 +34,5 @@ function benchmark_query_size_time() {
 	done
 };
 
+benchmark_bigsi_size_time;
 benchmark_query_size_time
