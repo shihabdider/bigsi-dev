@@ -72,9 +72,19 @@ Questions:
 import math
 from scipy.stats import binom
 
+
+def bits_to_mb(bits):
+    return bits/(8*10**6)
+
+
 def compute_num_minimizers(seq_length, window_size):
     num_minimizers = math.ceil(2*seq_length/window_size)
     return num_minimizers
+
+
+def error_to_containment(error_rate, kmer_length):
+    containment_score = math.exp(-1*error_rate*kmer_length)
+    return containment_score
 
 
 def compute_num_hash_funcs(bf_size, num_inserted):
@@ -91,11 +101,12 @@ def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
     return false_pos
 
 
-def compute_false_hit(false_pos, num_minimizers, error_rate, kmer_length):
+def compute_false_hit(false_pos, query_seq_length, error_rate, kmer_length):
     '''Computes the probability of a false bucket hit for a query sequence'''
+    num_minimizers = compute_num_minimizers(query_seq_length)
     false_hit_prob = false_pos**num_minimizers
     if (error_rate != 0):
-        containment = math.exp(-1*error_rate*kmer_length)
+        containment = error_to_containment(error_rate, kmer_length)
         num_matches = math.ceil(num_minimizers*containment)
         false_hit_prob = binom.sf(num_matches, num_minimizers, false_pos)
     return false_hit_prob
@@ -107,20 +118,14 @@ def compute_bf_size(num_inserted_elements, false_prob_rate):
     num_bits = -num_inserted_elements/math.log((1 - false_prob_rate))
     return num_bits
 
-def bits_to_mb(bits):
-    return bits/(8*10**6)
 
-
-def compute_column_size(seq_length, window_size, false_prob_rate):
+def compute_bf_size_seq(seq_length, window_size, false_prob_rate):
+    '''Computes Bloom filter array size from sequence length'''
     num_inserted = compute_num_minimizers(seq_length, window_size)
     bf_size = compute_bf_size(num_inserted, false_prob_rate)
 
     return bf_size
 
-
-def error_to_containment(error_rate, kmer_length):
-    containment_score = math.exp(-1*error_rate*kmer_length)
-    return containment_score
 
 def print_bigsi_stats(parameters):
 
@@ -133,9 +138,10 @@ def print_bigsi_stats(parameters):
     error_rate = parameters['error_rate']
     false_hit_thresh = parameters['false_hit_thresh']
     num_cols = parameters['num_cols']
+
     for bf_size_bits in range(1, 10**8, 10**3):
         bf_size_mb = bits_to_mb(bf_size_bits)
-        #num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
+        # num_hashes = compute_num_hash_funcs(bf_size_bits, num_inserted)
         num_hashes = 1
         false_pos_rate = compute_bf_false_pos(num_hashes, num_inserted,
                                               bf_size_bits)
