@@ -293,9 +293,9 @@ def make_synth_figure():
     #plt.savefig('flashmap_accuracy_synthetic_data.png')
 
 
-def make_bigsi_size_performance_figure():
+def make_runtime_figure():
     # Varying BIGSI/target size
-    bigsi_sizes = [100, 200, 400, 800, 1600, 2000, 2500, 3000]
+    bigsi_sizes = [100, 400, 800, 1200, 1600, 2000, 2500, 3000]
     all_bigsi_runtimes = []
     num_trials = 100
     with open('metrics/synth_bigsi_size_performance_times.txt', 'r') as handle:
@@ -332,33 +332,21 @@ def make_bigsi_size_performance_figure():
     fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
     fig.suptitle('Flashmap Runtimes')
 
-    # Sub errors
+    # BIGSI Size
     ax1.plot(bigsi_sizes, bigsi_runtime_means, marker='o')
     ax1.errorbar(bigsi_sizes, bigsi_runtime_means, yerr=bigsi_runtime_errors, 
                  fmt='-', color='blue')
     ax1.set_ylabel('Wall-clock Runtimes (s)')
     ax1.set_xlabel('BIGSI size (MB)')
 
+    # Query size
     ax2.plot(query_sizes, query_runtime_means, marker='o')
-    ax2.errorbar(bigsi_sizes, query_runtime_means, yerr=query_runtime_errors, 
+    ax2.errorbar(query_sizes, query_runtime_means, yerr=query_runtime_errors, 
                  fmt='-', color='orange')
     ax2.set_xlabel('Query size (kb)')
     plt.show()
 
 
-def make_query_size_performance_figure():
-    fig, ax = plt.subplots()
-    fig.suptitle('Flashmap Runtimes')
-
-    # Sub errors
-    ax.plot(bigsi_sizes, runtime_means, marker='o')
-    ax.errorbar(bigsi_sizes, runtime_means, yerr=runtime_errors, fmt='-', 
-                color='blue')
-    ax.set_ylabel('Wall-clock Runtimes (s)')
-    ax.set_xlabel('BIGSI size (MB)')
-    plt.show()
-
-#make_bigsi_size_performance_figure()
-#make_query_size_performance_figure()
+make_runtime_figure()
 #make_trials_figure()
 #make_synth_figure()
