@@ -35,4 +35,4 @@ function benchmark_query_size_time() {
 };
 
 benchmark_bigsi_size_time;
-benchmark_query_size_time
+#benchmark_query_size_time
