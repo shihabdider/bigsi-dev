@@ -72,6 +72,10 @@ Questions:
 import math
 from scipy.stats import binom
 
+def compute_num_minimizers(seq_length, window_size):
+    num_minimizers = math.ceil(2*seq_length/window_size)
+    return num_minimizers
+
 
 def compute_num_hash_funcs(bf_size, num_inserted):
     '''Computes optimal number of hash functions for a bloom filter'''
@@ -79,7 +83,7 @@ def compute_num_hash_funcs(bf_size, num_inserted):
 
 
 def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
-    '''Computes false positive rate for a single element/minimizer'''
+    '''Computes false positive rate for querying a single element/minimizer'''
     false_pos = (1 - math.exp(
         -1*num_hashes*num_inserted_elements/bf_size
     ))**num_hashes
@@ -88,7 +92,7 @@ def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
 
 
 def compute_false_hit(false_pos, num_minimizers, error_rate, kmer_length):
-    '''Computes the probability of a false bucket hit for a query'''
+    '''Computes the probability of a false bucket hit for a query sequence'''
     false_hit_prob = false_pos**num_minimizers
     if (error_rate != 0):
         containment = math.exp(-1*error_rate*kmer_length)
@@ -106,9 +110,6 @@ def compute_bf_size(num_inserted_elements, false_prob_rate):
 def bits_to_mb(bits):
     return bits/(8*10**6)
 
-def compute_num_minimizers(seq_length, window_size):
-    num_minimizers = math.ceil(2*seq_length/window_size)
-    return num_minimizers
 
 def compute_column_size(seq_length, window_size, false_prob_rate):
     num_inserted = compute_num_minimizers(seq_length, window_size)
