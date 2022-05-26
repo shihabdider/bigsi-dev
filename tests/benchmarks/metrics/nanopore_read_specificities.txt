@@ -1,0 +1,10 @@
+outputs/hg38/reads/nanopore/experiment_1.bigsi.json 0.9655302625757136
+outputs/hg38/reads/nanopore/experiment_2.bigsi.json 0.983854065302334
+outputs/hg38/reads/nanopore/experiment_3.bigsi.json 0.9668002713683045
+outputs/hg38/reads/nanopore/experiment_4.bigsi.json 0.9877379050976011
+outputs/hg38/reads/nanopore/experiment_5.bigsi.json 0.9800320245176952
+outputs/hg38/reads/nanopore/experiment_6.bigsi.json 0.9796338440067467
+outputs/hg38/reads/nanopore/experiment_7.bigsi.json 0.9749044739509858
+outputs/hg38/reads/nanopore/experiment_8.bigsi.json 0.9770483629097377
+outputs/hg38/reads/nanopore/experiment_9.bigsi.json 0.9832825790192167
+outputs/hg38/reads/nanopore/experiment_10.bigsi.json 0.9746421301599598

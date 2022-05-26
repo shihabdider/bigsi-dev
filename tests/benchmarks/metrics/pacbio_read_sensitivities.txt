@@ -1,0 +1,10 @@
+outputs/hg38/reads/pacbio/experiment_1.bigsi.json 0.996532027743778
+outputs/hg38/reads/pacbio/experiment_2.bigsi.json 0.9978490418459132
+outputs/hg38/reads/pacbio/experiment_3.bigsi.json 0.9945933768866861
+outputs/hg38/reads/pacbio/experiment_4.bigsi.json 0.9994007191370355
+outputs/hg38/reads/pacbio/experiment_5.bigsi.json 0.9926961602671118
+outputs/hg38/reads/pacbio/experiment_6.bigsi.json 0.9977964743589743
+outputs/hg38/reads/pacbio/experiment_7.bigsi.json 0.9969436485195797
+outputs/hg38/reads/pacbio/experiment_8.bigsi.json 0.9986661585365854
+outputs/hg38/reads/pacbio/experiment_9.bigsi.json 0.995213319458897
+outputs/hg38/reads/pacbio/experiment_10.bigsi.json 0.9973195481524029
