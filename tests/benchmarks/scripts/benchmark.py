@@ -13,7 +13,7 @@ import logging
 import importlib
 
 
-def run_bigsi_query(query_seq, config):
+def run_bigsi_query(query_seq, subrate, config):
     '''Runs the bigsi query for a specified bigsi matrix'''
 
     bigsi = config['bigsi']
@@ -22,8 +22,8 @@ def run_bigsi_query(query_seq, config):
 
     query_bigsi_cmd = (
         r"node {0}"
-        " -s {1} -b {2} -c {3}").format(
-            bigsi, query_seq, bigsi_path, bigsi_config)
+        " -s {1} -b {2} -c {3} -e {4}").format(
+            bigsi, query_seq, bigsi_path, bigsi_config, subrate)
     with subprocess.Popen(query_bigsi_cmd,
                           stdout=subprocess.PIPE, shell=True) as proc:
         output = proc.stdout.read().decode('utf-8')
@@ -538,7 +538,7 @@ def main():
     bigsi_results = {}
     for record in query_records:
         query_seq = str(record.seq)
-        bigsi_output = run_bigsi_query(query_seq, config)
+        bigsi_output = run_bigsi_query(query_seq, config, args.identity)
         bigsi_results[record.id] = bigsi_output
 
     bigsi_results_path = args.output + '.bigsi.json'

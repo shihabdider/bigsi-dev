@@ -140,7 +140,7 @@ function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
 // Containment score is the Jaccard containment identity:
 // Hamming weight of submatrix columns divided by
 // number of minimizers inserted into query Bloom Filter
-function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize) {
+function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, subrate) {
     const kmerLength = 16
     const queryNumBitsSet = submatrix.size()[0]
     const submatrix_T = submatrix.trans()
@@ -151,12 +151,11 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize) {
         hammingWeights.push(weight)
     }
 
-    const numHashes = 1
     for (let bucketNum = 0; bucketNum < hammingWeights.length; bucketNum++){
         let numIntersections = hammingWeights[bucketNum]
         const containmentScore = numIntersections/queryNumBitsSet
         const errorRate = -1/kmerLength * Math.log(containmentScore)
-        if (errorRate < 0.07) {
+        if (errorRate <= subrate) {
             //console.log(hammingWeights[bucketNum])
             const percentMatch = 100*(1 - errorRate)
             bigsiHits[bucketNum] = {'percent match': percentMatch}
@@ -176,7 +175,7 @@ function queryHexBigsi(hexBigsi, queryFragmentsBloomFilters, bloomFilterSize){
         const querySubmatrix = getHexBigsiSubmatrix(hexBigsi, queryBFSetBitsIndices)
 
         if (numFragments == 1){
-            computeQueryContainmentScores(querySubmatrix, bigsiHits, bloomFilterSize)
+            computeQueryContainmentScores(querySubmatrix, bigsiHits, bloomFilterSize, subrate)
         } else {
             computeSubmatrixHits(querySubmatrix, bigsiHits, numCols)
         }
@@ -196,7 +195,7 @@ function queryHexBigsi(hexBigsi, queryFragmentsBloomFilters, bloomFilterSize){
  *
  * @return { object } filteredBigsiHits - object containing fragment hits in the bigsi buckets
  */
-async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize){
+async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize, subrate){
 
     const bigsiHits = {}
 
@@ -209,7 +208,7 @@ async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols,
         const querySubmatrix = await getBinaryBigsiSubmatrix(bigsiArray, queryBFSetBitsIndices, numCols)
 
         if (numFragments == 1){
-            computeQueryContainmentScores(querySubmatrix, bigsiHits, bloomFilterSize)
+            computeQueryContainmentScores(querySubmatrix, bigsiHits, bloomFilterSize, subrate)
         } else {
             computeSubmatrixHits(querySubmatrix, bigsiHits, numCols)
         }
@@ -222,7 +221,7 @@ async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols,
     return bigsiHits
 }
 
-async function main(querySeq, bigsiPath, bigsiConfigPath) {
+async function main(querySeq, bigsiPath, bigsiConfigPath, subrate) {
     const bigsiBuffer = fs.readFileSync(bigsiPath)
     let bigsiArray = new Uint16Array(bigsiBuffer.buffer, bigsiBuffer.byteOffset, bigsiBuffer.length / 2);
     //console.log('bigsiArray size: ', bigsiArray.length)
@@ -241,7 +240,7 @@ async function main(querySeq, bigsiPath, bigsiConfigPath) {
         //const numHashes = 5
         //const queryRowFilters = await utils.makeQueryRowFilters(queryMinimizers, bloomFilterSize, numHashes)
 
-        const filteredBigsiHits = await queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize)
+        const filteredBigsiHits = await queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize, subrate)
 
         return filteredBigsiHits
     } else {
@@ -284,6 +283,13 @@ async function run() {
                 type: 'string',
                 nargs: 1,
             })
+            .option('subrate', {
+                alias: 'e',
+                describe: 'Substitution rate threshold',
+                demandOption: 'Substitution rate threshold is required',
+                type: 'number',
+                nargs: 1,
+            })
             .option('config', {
                 alias: 'c',
                 describe: 'Path to BIGSI config file',
@@ -296,7 +302,7 @@ async function run() {
         const bigsiConfigPath = argv.config
         const binMapPath = bigsiPath.slice(0, -4) + '_bucket_map.json'
         if (argv.querySeq) { // passing query as string
-            const hits = await main(argv.querySeq, bigsiPath, bigsiConfigPath);
+            const hits = await main(argv.querySeq, bigsiPath, bigsiConfigPath, argv.subrate);
             printResults(hits, binMapPath)
         } else { // ...or else as a file
             const fai = `${argv.query}.fai`
