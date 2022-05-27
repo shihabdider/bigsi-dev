@@ -5,13 +5,14 @@ PIS=( 99 98 97 96 95 94 93 92 91 90 )
 N=12
 for i in ${!SUB_RATES[@]};
 do
-    for j in {1..100};
+    filename=${SUB_RATES[i]}
+    for j in {1..10};
     do
         ((b=b%N)); ((b++==0)) && wait
-        time python scripts/benchmark.py \
-            -q seqs/${HG38_SUB_RATE}/experiment_$j/${SUB_RATES[i]}.fasta \
+        time python3 scripts/benchmark.py \
+            -q seqs/${HG38_SUB_RATE}/experiment_$j/${filename}.fasta \
             -c scripts/hg38.office.config.json \
-            -o outputs/${HG38_SUB_RATE}/experiment_$j/${SUB_RATES[i]} \
+            -o outputs/${HG38_SUB_RATE}/experiment_$j/${filename}_adaptive_error \
             -i ${PIS[i]} \
 	&
     done

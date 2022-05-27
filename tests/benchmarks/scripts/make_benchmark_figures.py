@@ -122,18 +122,18 @@ def chunked(lst, n):
 #                                 subs_specificity_stds]
 
 def get_error_metrics(file, num_trials):
-    error_rates = []
+    error_rates = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
     error_rate_metrics = []
     with open(file, 'r') as handle:
         for lst in chunked(handle.readlines(), num_trials):
             metrics = []
             for i, line in enumerate(lst):
                 split_line = line.split(' ')
-                error_rate = int(
-                    split_line[0].split('/')[-1].split('.')[0]
-                )/100
-                if error_rate not in error_rates:
-                    error_rates.append(error_rate)
+                #error_rate = int(
+                #    split_line[0].split('/')[-1].split('.')[0]
+                #)/100
+                #if error_rate not in error_rates:
+                #    error_rates.append(error_rate)
 
                 metric = float(split_line[1])
                 metrics.append(metric)
@@ -174,10 +174,10 @@ def get_read_metrics(file):
 
 def make_trials_figure():
     error_rates, error_sensitivities = get_error_metrics(
-        'metrics/sub_rate_sensitivity_100_exp.txt', num_trials=100)
+        'metrics/adaptive_error_sensitivity.txt', num_trials=10)
 
     _, error_specificities = get_error_metrics(
-        'metrics/sub_rate_specificity_100_exp.txt', num_trials=100)
+        'metrics/adaptive_error_specificity.txt', num_trials=10)
 
     seq_lengths, seq_length_sensitivities = get_length_metrics(
         'metrics/query_length_sensitivity_100_exp.txt', num_trials=100)
@@ -249,8 +249,8 @@ def make_trials_figure():
     ax2.set_xscale('log')
     ax2.set_xlabel('Query length (kb)')
     #ax2.legend()
-    #plt.show()
-    plt.savefig('figures/flashmap_accuracy_simulation_100_trials.png')
+    plt.show()
+    #plt.savefig('figures/flashmap_accuracy_simulation_100_trials.png')
 
 
 def make_synth_figure():
@@ -390,7 +390,7 @@ def make_runtime_figure():
     plt.savefig('figures/flashmap_runtimes.png')
 
 
-make_read_figure()
+#make_read_figure()
 #make_runtime_figure()
-#make_trials_figure()
+make_trials_figure()
 #make_synth_figure()

@@ -25,12 +25,15 @@ function sub_rate_metrics() {
     HG38_SUB_RATE=hg38/simulation/substitution_rate
     errs=( 001 002 003 004 005 006 007 008 009 010 )
     for err in "${errs[@]}"; do
-        for i in {1..100};
+        for i in {1..10};
         do
-            python3 scripts/compute_metric.py -b outputs/${HG38_SUB_RATE}/experiment_$i/$err.bigsi.json -m outputs/${HG38_SUB_RATE}/experiment_$i/$err.mashmap.out -t $METRIC
+            python3 scripts/compute_metric.py -b outputs/${HG38_SUB_RATE}/experiment_$i/${err}_adaptive_error.bigsi.json -m outputs/${HG38_SUB_RATE}/experiment_$i/${err}_adaptive_error.mashmap.out -t $METRIC
         done
     done
 }
+
+sub_rate_metrics sensitivity > metrics/adaptive_error_sensitivity.txt
+sub_rate_metrics specificity > metrics/adaptive_error_specificity.txt
 
 function query_length_metrics() {
     local METRIC=$1
@@ -66,10 +69,10 @@ function pacbio_read_metrics() {
     done
 }
 
-nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities.txt;
-nanopore_read_metrics specificity > metrics/nanopore_read_specificities.txt; 
-pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities.txt;
-pacbio_read_metrics specificity > metrics/pacbio_read_specificities.txt
+#nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities.txt;
+#nanopore_read_metrics specificity > metrics/nanopore_read_specificities.txt; 
+#pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities.txt;
+#pacbio_read_metrics specificity > metrics/pacbio_read_specificities.txt
 
 #python compute_metric.py -b output/synthetic_seq_300M.random.001.bigsi.json -m output/synthetic_seq_300M.random.001.mashmap.out -t $METRIC
 #python compute_metric.py -b output/synthetic_seq_300M.random.002.bigsi.json -m output/synthetic_seq_300M.random.002.mashmap.out -t $METRIC
