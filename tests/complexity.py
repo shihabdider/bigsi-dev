@@ -73,6 +73,7 @@ import math
 from scipy.stats import binom
 
 
+
 def bits_to_mb(bits):
     return bits/(8*10**6)
 
@@ -92,6 +93,57 @@ def compute_num_hash_funcs(bf_size, num_inserted):
     return math.ceil((bf_size/num_inserted)*math.log(2))
 
 
+def log_binomial(n, k):
+    return (math.lgamma(n+1) - math.lgamma(k+1) - math.lgamma(n-k+1))
+
+
+def compute_prob_n_kmers_not_in_minimizer_set(n, seq_length, window_size):
+    num_seq_kmers = seq_length - 16 + 1
+    num_minimizers = compute_num_minimizers(seq_length, window_size)
+    prob_n_kmers_not_in_minimizer_set = (
+        log_binomial(num_seq_kmers - n, num_seq_kmers - num_minimizers - n) -
+        log_binomial(num_seq_kmers, num_seq_kmers - num_minimizers)
+    )
+
+    return math.exp(prob_n_kmers_not_in_minimizer_set)
+
+
+def compute_prob_n_kmers_in_minimizer_set(n, seq_length, window_size):
+    num_seq_kmers = seq_length - 16 + 1
+    num_minimizers = compute_num_minimizers(seq_length, window_size)
+    prob_n_kmers_in_minimizer_set = (
+        log_binomial(num_seq_kmers - n, num_minimizers - n) -
+        log_binomial(num_seq_kmers, num_minimizers)
+    )
+
+    return math.exp(prob_n_kmers_in_minimizer_set)
+
+
+def compute_winnow_false_neg(query_size, target_size,
+                             window_size, error_rate):
+    '''Computes the false negative probability arising because of the
+    winnnowing process for a single bin'''
+
+    num_query_minimizers = compute_num_minimizers(query_size, window_size)
+    containment_thresh = error_to_containment(error_rate, kmer_length=16)
+    num_containment_queries = int(math.ceil(
+        containment_thresh*num_query_minimizers)
+    )
+
+    false_negative_prob = 0
+    for i in range(num_query_minimizers - num_containment_queries+1, num_query_minimizers+1):
+        prob_unmatched_kmers_in_query = compute_prob_n_kmers_in_minimizer_set(
+            i, query_size, window_size
+        )
+        prob_unmatched_kmers_not_in_target = compute_prob_n_kmers_not_in_minimizer_set(
+            i, target_size, window_size
+        )
+
+        false_negative_prob += prob_unmatched_kmers_in_query * prob_unmatched_kmers_not_in_target
+
+    return false_negative_prob 
+
+
 def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
     '''Computes false positive rate for querying a single element/minimizer'''
     false_pos = (1 - math.exp(
@@ -101,15 +153,24 @@ def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
     return false_pos
 
 
-def compute_false_hit(false_pos, query_seq_length, error_rate, kmer_length):
+def compute_false_hit(false_pos, num_minimizers, error_rate, kmer_length):
     '''Computes the probability of a false bucket hit for a query sequence'''
-    num_minimizers = compute_num_minimizers(query_seq_length)
     false_hit_prob = false_pos**num_minimizers
     if (error_rate != 0):
         containment = error_to_containment(error_rate, kmer_length)
         num_matches = math.ceil(num_minimizers*containment)
         false_hit_prob = binom.sf(num_matches, num_minimizers, false_pos)
     return false_hit_prob
+
+
+def compute_sensitivity(false_positive, false_negative):
+    TP = 1 - false_positive
+    return TP / (TP + false_negative)
+
+
+def compute_specificity(false_positive, false_negative):
+    TN = 1 - false_negative
+    return TN / (TN + false_positive)
 
 
 def compute_bf_size(num_inserted_elements, false_prob_rate):
@@ -127,7 +188,22 @@ def compute_bf_size_seq(seq_length, window_size, false_prob_rate):
     return bf_size
 
 
-def print_bigsi_stats(parameters):
+def compute_bigsi_metrics(bigsi_parameters, query_size, query_sub_rate):
+    bf_stats = compute_bigsi_stats(bigsi_parameters)
+    false_pos_prob = bf_stats['false hit rate']
+
+    target_size = bigsi_parameters['bin_seq_len']
+    window_size = bigsi_parameters['window_size']
+    false_negative_prob = compute_winnow_false_neg(query_size, target_size, 
+                                                   window_size, query_sub_rate)
+
+    sensitivity = compute_sensitivity(false_pos_prob, false_negative_prob)
+    specificity = compute_specificity(false_pos_prob, false_negative_prob)
+
+    return sensitivity, specificity
+
+
+def compute_bigsi_stats(parameters):
 
     kmer_length = parameters['kmer_len']
     max_seq_length = parameters['bin_seq_len']
@@ -158,9 +234,7 @@ def print_bigsi_stats(parameters):
             'false hit total': false_hit_total,
         }
         if false_hit_total <= false_hit_thresh:
-            print('optimal params found!')
-            print(bf_stats)
-            break
+            return bf_stats
 
 
 ar_genes_parameters = {
@@ -203,15 +277,6 @@ worm = {
     'kmer_len': 16,
 }
 
-hg38 = {
-    'bin_seq_len': 16e6,
-    'window_size': 100,
-    'min_query_len': 5000,
-    'error_rate': 0.07,
-    'false_hit_thresh': 1e-2,
-    'num_cols': 16*24,
-    'kmer_len': 16,
-}
 
 hg38_chr1 = {
     'bin_seq_len': 16e6,
@@ -236,31 +301,8 @@ def compute_minimizer_index_size(seq_length, window_size):
     minimizer_index_size = minimizer_size*num_minimizers/(8*1024*1024)  # mb
     return minimizer_index_size
 
-def main():
-    #print(error_to_containment(0.15, 8))
 
-    print('ar genes')
-    print_bigsi_stats(ar_genes_parameters)
-    #print('gene fusions')
-    #print_bigsi_stats(gene_fusion_parameters)
-    #print('viruses')
-    #print_bigsi_stats(human_viruses_parameters)
-    print('Worm')
-    print_bigsi_stats(worm)
-    print('hg38')
-    print_bigsi_stats(hg38)
-    #print('hg38_chr1')
-    #print_bigsi_stats(hg38_chr1)
-    #print(compute_minimizer_index_size(2e7, 100), 'mb')
-    #optimal_bigsi_size = 0
-    #for size in bacterial_ref_sizes:
-    #    optimal_bigsi_size += compute_column_size(size, 25, 0.83)
 
-    ##print(optimal_bigsi_size/(8*1024*1024))
-    #print(compute_minimizer_index_size(3e8, 100))
-    
- 
-main()
 # Minimizers
 
 ALPHABET_SIZE = 4
@@ -435,3 +477,27 @@ def containment_false_pos():
     false_pos_rate = binom.sf(min_num_matches, query_sketch_size, r)
     print(false_pos_rate)
 
+
+def main():
+    hg38 = {
+        'bin_seq_len': 16e6,
+        'window_size': 100,
+        'min_query_len': 50000,
+        'error_rate': 0.07,
+        'false_hit_thresh': 1e-2,
+        'num_cols': 16*24,
+        'kmer_len': 16,
+    }
+
+    print('hg38')
+    false_negative_prob = compute_winnow_false_neg(
+        query_size=5000, 
+        target_size=hg38['bin_seq_len'], 
+        window_size=hg38['window_size'],
+        error_rate=0.10
+    )
+    print(false_negative_prob)
+    # metrics = compute_bigsi_metrics(hg38, query_size=5000, query_sub_rate=0.05)
+    # print(metrics)
+ 
+main()

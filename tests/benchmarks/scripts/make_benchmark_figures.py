@@ -163,6 +163,15 @@ def get_length_metrics(file, num_trials):
     return seq_lengths, seq_length_metrics
 
 
+def get_read_metrics(file):
+    metrics = []
+    with open(file, 'r') as handle:
+        for line in handle:
+            metric = float(line.split(' ')[1].rstrip())
+            metrics.append(metric)
+
+    return metrics
+
 def make_trials_figure():
     error_rates, error_sensitivities = get_error_metrics(
         'metrics/sub_rate_sensitivity_100_exp.txt', num_trials=100)
@@ -293,6 +302,39 @@ def make_synth_figure():
     #plt.savefig('flashmap_accuracy_synthetic_data.png')
 
 
+def make_read_figure():
+    # Nanopore reads
+    nanopore_sensitivities = get_read_metrics(
+        'metrics/nanopore_read_sensitivities.txt')
+
+    nanopore_specificities = get_read_metrics(
+        'metrics/nanopore_read_specificities.txt')
+
+    
+    # Pacbio reads
+    pacbio_sensitivities = get_read_metrics(
+        'metrics/pacbio_read_sensitivities.txt')
+
+    pacbio_specificities = get_read_metrics(
+        'metrics/pacbio_read_specificities.txt')
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
+    fig.suptitle('Flashmap accuracy on read datasets')
+
+    read_dataset_names = ['Nanopore', 'Pacbio']
+    # Sensitivity
+    ax1.scatter([read_dataset_names[0]]*len(nanopore_sensitivities), nanopore_sensitivities, marker='o')
+    ax1.scatter([read_dataset_names[1]]*len(pacbio_sensitivities), pacbio_sensitivities, marker='o')
+    ax1.set_xlabel('Sensitivity')
+
+    # Pacbio
+    ax2.scatter([read_dataset_names[0]]*len(nanopore_specificities), nanopore_specificities, marker='o')
+    ax2.scatter([read_dataset_names[1]]*len(pacbio_specificities), pacbio_specificities, marker='o')
+    ax2.set_xlabel('Specificity')
+    #plt.show()
+    plt.savefig('figures/flashmap_reads_accuracy.png')
+
+
 def make_runtime_figure():
     # Varying BIGSI/target size
     bigsi_sizes = [100, 400, 800, 1200, 1600, 2000, 2500, 3000]
@@ -348,6 +390,7 @@ def make_runtime_figure():
     plt.savefig('figures/flashmap_runtimes.png')
 
 
-make_runtime_figure()
+make_read_figure()
+#make_runtime_figure()
 #make_trials_figure()
 #make_synth_figure()
