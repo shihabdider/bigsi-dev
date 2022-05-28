@@ -143,18 +143,20 @@ def get_error_metrics(file, num_trials):
 
 
 def get_length_metrics(file, num_trials):
-    seq_lengths = []
+
+    seq_lengths = [1000, 2000, 3000, 4000, 5000, 10000, 20000, 40000, 80000, 
+                   160000, 200000, 250000, 300000]
     seq_length_metrics = []
     with open(file, 'r') as handle:
         for lst in chunked(handle.readlines(), num_trials):
             metrics = []
             for i, line in enumerate(lst):
                 split_line = line.split(' ')
-                seq_length = int(
-                    split_line[0].split('/')[-1].split('.')[0]
-                )
-                if seq_length not in seq_lengths:
-                    seq_lengths.append(seq_length)
+                #seq_length = int(
+                #    split_line[0].split('/')[-1].split('.')[0]
+                #)
+                #if seq_length not in seq_lengths:
+                #    seq_lengths.append(seq_length)
 
                 metric = float(split_line[1])
                 metrics.append(metric)
@@ -174,16 +176,16 @@ def get_read_metrics(file):
 
 def make_trials_figure():
     error_rates, error_sensitivities = get_error_metrics(
-        'metrics/adaptive_error_sensitivity.txt', num_trials=10)
+        'metrics/adaptive_error_error_sensitivity.txt', num_trials=10)
 
     _, error_specificities = get_error_metrics(
-        'metrics/adaptive_error_specificity.txt', num_trials=10)
+        'metrics/adaptive_error_error_specificity.txt', num_trials=10)
 
     seq_lengths, seq_length_sensitivities = get_length_metrics(
-        'metrics/query_length_sensitivity_100_exp.txt', num_trials=100)
+        'metrics/adaptive_error_length_sensitivity.txt', num_trials=10)
 
     _, seq_length_specificities = get_length_metrics(
-        'metrics/query_length_specificity_100_exp.txt', num_trials=100)
+        'metrics/adaptive_error_length_specificity.txt', num_trials=10)
 
     # Sub Rate
     subs_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
@@ -249,8 +251,8 @@ def make_trials_figure():
     ax2.set_xscale('log')
     ax2.set_xlabel('Query length (kb)')
     #ax2.legend()
-    plt.show()
-    #plt.savefig('figures/flashmap_accuracy_simulation_100_trials.png')
+    #plt.show()
+    plt.savefig('figures/flashmap_adaptive_error_accuracy_03.png')
 
 
 def make_synth_figure():
