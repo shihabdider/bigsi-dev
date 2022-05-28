@@ -126,5 +126,5 @@ outputs/hg38/simulation/query_length/experiment_5/300000_adaptive_error.bigsi.js
 outputs/hg38/simulation/query_length/experiment_6/300000_adaptive_error.bigsi.json 0.967032967032967
 outputs/hg38/simulation/query_length/experiment_7/300000_adaptive_error.bigsi.json 0.9764705882352941
 outputs/hg38/simulation/query_length/experiment_8/300000_adaptive_error.bigsi.json 0.9887640449438202
-outputs/hg38/simulation/query_length/experiment_9/300000_adaptive_error.bigsi.json 0.9659090909090909
-outputs/hg38/simulation/query_length/experiment_10/300000_adaptive_error.bigsi.json 0.9775280898876404
+outputs/hg38/simulation/query_length/experiment_9/300000_adaptive_error.bigsi.json 0.9772727272727273
+outputs/hg38/simulation/query_length/experiment_10/300000_adaptive_error.bigsi.json 0.9662921348314607
