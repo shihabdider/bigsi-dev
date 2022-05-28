@@ -6,7 +6,7 @@ function query_length_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in {1..10};
+        for j in {1..100};
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -29,7 +29,7 @@ function error_benchmark() {
     for i in ${!SUB_RATES[@]};
     do
         filename=${SUB_RATES[i]}
-        for j in {1..10};
+        for j in {1..100};
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \

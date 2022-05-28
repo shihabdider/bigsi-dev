@@ -25,7 +25,7 @@ function sub_rate_metrics() {
     HG38_SUB_RATE=hg38/simulation/substitution_rate
     errs=( 001 002 003 004 005 006 007 008 009 010 )
     for err in "${errs[@]}"; do
-        for i in {1..10};
+        for i in {1..100};
         do
             python3 scripts/compute_metric.py -b outputs/${HG38_SUB_RATE}/experiment_$i/${err}_adaptive_error.bigsi.json -m outputs/${HG38_SUB_RATE}/experiment_$i/${err}_adaptive_error.mashmap.out -t $METRIC
         done
@@ -40,7 +40,7 @@ function query_length_metrics() {
     HG38_QUERY_LEN=hg38/simulation/query_length
     lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     for length in "${lengths[@]}"; do
-        for i in {1..10};
+        for i in {1..100};
         do
             python3 scripts/compute_metric.py -b outputs/${HG38_QUERY_LEN}/experiment_$i/${length}_adaptive_error.bigsi.json -m outputs/${HG38_QUERY_LEN}/experiment_$i/${length}_adaptive_error.mashmap.out -t $METRIC
         done
