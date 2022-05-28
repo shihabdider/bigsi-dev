@@ -32,20 +32,23 @@ function sub_rate_metrics() {
     done
 }
 
-sub_rate_metrics sensitivity > metrics/adaptive_error_sensitivity.txt
-sub_rate_metrics specificity > metrics/adaptive_error_specificity.txt
+sub_rate_metrics sensitivity > metrics/adaptive_error_error_sensitivity.txt
+sub_rate_metrics specificity > metrics/adaptive_error_error_specificity.txt
 
 function query_length_metrics() {
     local METRIC=$1
     HG38_QUERY_LEN=hg38/simulation/query_length
     lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     for length in "${lengths[@]}"; do
-        for i in {1..100};
+        for i in {1..10};
         do
-            python3 scripts/compute_metric.py -b outputs/${HG38_QUERY_LEN}/experiment_$i/$length.bigsi.json -m outputs/${HG38_QUERY_LEN}/experiment_$i/$length.mashmap.out -t $METRIC
+            python3 scripts/compute_metric.py -b outputs/${HG38_QUERY_LEN}/experiment_$i/${length}_adaptive_error.bigsi.json -m outputs/${HG38_QUERY_LEN}/experiment_$i/${length}_adaptive_error.mashmap.out -t $METRIC
         done
     done
 }
+
+query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity.txt
+query_length_metrics specificity > metrics/adaptive_error_length_specificity.txt
 
 function nanopore_read_metrics() {
     local METRIC=$1

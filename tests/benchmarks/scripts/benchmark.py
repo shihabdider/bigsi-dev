@@ -538,7 +538,7 @@ def main():
     bigsi_results = {}
     for record in query_records:
         query_seq = str(record.seq)
-        subrate = (1 - args.identity/100) + 0.02
+        subrate = (1 - args.identity/100) + 0.03
         bigsi_output = run_bigsi_query(query_seq, config, subrate)
         bigsi_results[record.id] = bigsi_output
 
