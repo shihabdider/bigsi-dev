@@ -176,16 +176,16 @@ def get_read_metrics(file):
 
 def make_trials_figure():
     error_rates, error_sensitivities = get_error_metrics(
-        'metrics/adaptive_error_error_sensitivity.txt', num_trials=10)
+        'metrics/adaptive_error_error_sensitivity.txt', num_trials=100)
 
     _, error_specificities = get_error_metrics(
-        'metrics/adaptive_error_error_specificity.txt', num_trials=10)
+        'metrics/adaptive_error_error_specificity.txt', num_trials=100)
 
     seq_lengths, seq_length_sensitivities = get_length_metrics(
-        'metrics/adaptive_error_length_sensitivity.txt', num_trials=10)
+        'metrics/adaptive_error_length_sensitivity.txt', num_trials=100)
 
     _, seq_length_specificities = get_length_metrics(
-        'metrics/adaptive_error_length_specificity.txt', num_trials=10)
+        'metrics/adaptive_error_length_specificity.txt', num_trials=100)
 
     # Sub Rate
     subs_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
@@ -251,8 +251,8 @@ def make_trials_figure():
     ax2.set_xscale('log')
     ax2.set_xlabel('Query length (kb)')
     #ax2.legend()
-    #plt.show()
-    plt.savefig('figures/flashmap_adaptive_error_accuracy_03.png')
+    plt.show()
+    #plt.savefig('figures/flashmap_adaptive_error_accuracy_03.png')
 
 
 def make_synth_figure():
