@@ -72,10 +72,46 @@ function pacbio_read_metrics() {
     done
 }
 
+function pan_trog_metrics() {
+    local METRIC=$1
+    pan_trog_dir=pan_trog/simulation/
+    lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+    for length in "${lengths[@]}"; 
+    do
+        for i in {1..100};
+        do
+            python3 scripts/compute_metric.py -b \
+            outputs/${pan_trog_dir}/experiment_$i/${length}.bigsi.json -m \
+            outputs/${pan_trog_dir}/experiment_$i/${length}.mashmap.out \
+            -t $METRIC
+        done
+    done
+}
+
+function gorilla_metrics() {
+    local METRIC=$1
+    gorilla_dir=gorilla/simulation/
+    lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+    for length in "${lengths[@]}"; do
+        for i in {1..100};
+        do
+            python3 scripts/compute_metric.py -b \
+            outputs/${gorilla_dir}/experiment_$i/${length}.bigsi.json -m \
+            outputs/${gorilla_dir}/experiment_$i/${length}.mashmap.out \
+            -t $METRIC
+        done
+    done
+}
+
 #nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities.txt;
 #nanopore_read_metrics specificity > metrics/nanopore_read_specificities.txt; 
 #pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities.txt;
 #pacbio_read_metrics specificity > metrics/pacbio_read_specificities.txt
+
+pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities.txt;
+pan_trog_metrics specificity > metrics/pan_trog_specificities.txt; 
+gorilla_metrics sensitivity > metrics/gorilla_sensitivities.txt;
+gorilla_metrics specificity > metrics/gorilla_specificities.txt
 
 #python compute_metric.py -b output/synthetic_seq_300M.random.001.bigsi.json -m output/synthetic_seq_300M.random.001.mashmap.out -t $METRIC
 #python compute_metric.py -b output/synthetic_seq_300M.random.002.bigsi.json -m output/synthetic_seq_300M.random.002.mashmap.out -t $METRIC
