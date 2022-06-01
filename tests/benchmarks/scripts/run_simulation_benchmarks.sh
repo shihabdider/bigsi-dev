@@ -68,7 +68,7 @@ function query_length_benchmark() {
             time python3 scripts/benchmark.py \
                 -q seqs/${HG38_QUERY_LEN}/experiment_$j/${QUERY_LENGTHS[i]}.fasta \
                 -c scripts/hg38.office.config.json \
-                -o outputs/${HG38_QUERY_LEN}/experiment_$j/${QUERY_LENGTHS[i]}_adaptive_error \
+                -o outputs/${HG38_QUERY_LEN}/experiment_$j/${QUERY_LENGTHS[i]} \
                 -i 100 \
             -l ${MIN_LENGTHS[i]} \
         &
@@ -91,15 +91,15 @@ function error_benchmark() {
             time python3 scripts/benchmark.py \
                 -q seqs/${HG38_SUB_RATE}/experiment_$j/${filename}.fasta \
                 -c scripts/hg38.office.config.json \
-                -o outputs/${HG38_SUB_RATE}/experiment_$j/${filename}_adaptive_error \
+                -o outputs/${HG38_SUB_RATE}/experiment_$j/${filename} \
                 -i ${PIS[i]} \
         &
         done
     done
 }
 
-#error_benchmark && wait;
-#query_length_benchmark;
-pan_trog_benchmark && wait;
-gorilla_benchmark;
+error_benchmark && wait;
+query_length_benchmark;
+#pan_trog_benchmark && wait;
+#gorilla_benchmark;
 
