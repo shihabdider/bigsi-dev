@@ -174,18 +174,121 @@ def get_read_metrics(file):
 
     return metrics
 
-def make_trials_figure():
+
+def make_mammal_figure():
+    pan_trog_lengths, pan_trog_sensitivities = get_length_metrics(
+        'metrics/pan_trog_sensitivities.txt', num_trials=100)
+
+    _, pan_trog_specificities = get_error_metrics(
+        'metrics/pan_trog_specificities.txt', num_trials=100)
+
+    gorilla_lengths, gorilla_sensitivities = get_length_metrics(
+        'metrics/gorilla_sensitivities.txt', num_trials=100)
+
+    _, gorilla_specificities = get_error_metrics(
+        'metrics/gorilla_specificities.txt', num_trials=100)
+
+    # Pan Trog (Chimp)
+    pan_trog_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
+                                  pan_trog_sensitivities]
+    pan_trog_sensitivity_stds = [np.std(sensitivities) for sensitivities in 
+                                 pan_trog_sensitivities]
+
+    pan_trog_sensitivity_errors_upper = []
+    for i, mean in enumerate(pan_trog_sensitivity_means):
+        if (mean + 2*pan_trog_sensitivity_stds[i] > 1):
+            error = 1 - mean
+            pan_trog_sensitivity_errors_upper.append(error)
+        else:
+            pan_trog_sensitivity_errors_upper.append(pan_trog_sensitivity_stds[i]*2)
+    
+    pan_trog_sensitivity_errors_lower = [max((2*std, 0)) for std in 
+                                        pan_trog_sensitivity_stds]
+
+    pan_trog_specificity_means = [np.mean(specificities) for specificities in 
+                                  pan_trog_specificities]
+    pan_trog_specificity_stds = [np.std(specificities) for specificities in 
+                                 pan_trog_specificities]
+    pan_trog_specificity_errors = [2*std for std in pan_trog_specificity_stds]
+
+    # Gorilla
+    gorilla_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
+                                  gorilla_sensitivities]
+    gorilla_sensitivity_stds = [np.std(sensitivities) for sensitivities in 
+                                 gorilla_sensitivities]
+
+    gorilla_sensitivity_errors_upper = []
+    for i, mean in enumerate(gorilla_sensitivity_means):
+        if (mean + 2*gorilla_sensitivity_stds[i] > 1):
+            error = 1 - mean
+            gorilla_sensitivity_errors_upper.append(error)
+        else:
+            gorilla_sensitivity_errors_upper.append(gorilla_sensitivity_stds[i]*2)
+    
+    gorilla_sensitivity_errors_lower = [max((2*std, 0)) for std in 
+                                        gorilla_sensitivity_stds]
+
+    gorilla_specificity_means = [np.mean(specificities) for specificities in 
+                                  gorilla_specificities]
+    gorilla_specificity_stds = [np.std(specificities) for specificities in 
+                                 gorilla_specificities]
+    gorilla_specificity_errors = [2*std for std in gorilla_specificity_stds]
+
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
+    fig.suptitle('Flashmap accuracy on mammalian genomes')
+
+    # Pan Trog
+    ax1.set_title('Chimpanzee')
+    ax1.plot(pan_trog_lengths, pan_trog_sensitivity_means, label='sensitivity', 
+             marker='o')
+    ax1.errorbar(pan_trog_lengths, pan_trog_sensitivity_means, 
+                 yerr=[pan_trog_sensitivity_errors_lower, 
+                       pan_trog_sensitivity_errors_upper], 
+                 fmt='-', color='blue')
+
+    ax1.plot(pan_trog_lengths, pan_trog_specificity_means, label='specificity', 
+             marker='o')
+    ax1.errorbar(pan_trog_lengths, pan_trog_specificity_means, 
+                 yerr=pan_trog_specificity_errors, fmt='-', color='orange')
+    ax1.axvline(x=5000, linestyle='--', color='grey')
+    ax1.text(5500, 0.2, '5kb query threshold', rotation=90)
+    ax1.set_xscale('log')
+    ax1.set_xlabel('Query length (kb)')
+
+    # Gorilla
+    ax2.set_title('Gorilla')
+    ax2.plot(gorilla_lengths, gorilla_sensitivity_means, label='sensitivity', 
+             marker='o')
+    ax2.errorbar(gorilla_lengths, gorilla_sensitivity_means, 
+                 yerr=[gorilla_sensitivity_errors_lower, gorilla_sensitivity_errors_upper], 
+                 fmt='-', color='blue')
+
+    ax2.plot(gorilla_lengths, gorilla_specificity_means, label='specificity', 
+             marker='o')
+    ax2.errorbar(gorilla_lengths, gorilla_specificity_means, 
+                 yerr=gorilla_specificity_errors, fmt='-', color='orange')
+    ax2.text(5500, 0.2, '5kb query threshold', rotation=90)
+    ax2.axvline(x=5000, linestyle='--', color='grey')
+    ax2.set_xscale('log')
+    ax2.set_xlabel('Query length (kb)')
+    #ax2.legend()
+    plt.show()
+    #plt.savefig('figures/flashmap_mammal_accuracy.png')
+
+
+def make_simulation_trials_figure():
     error_rates, error_sensitivities = get_error_metrics(
-        'metrics/adaptive_error_error_sensitivity.txt', num_trials=100)
+        'metrics/adaptive_error_error_sensitivity_unbound.txt', num_trials=100)
 
     _, error_specificities = get_error_metrics(
-        'metrics/adaptive_error_error_specificity.txt', num_trials=100)
+        'metrics/adaptive_error_error_specificity_unbound.txt', num_trials=100)
 
     seq_lengths, seq_length_sensitivities = get_length_metrics(
-        'metrics/adaptive_error_length_sensitivity.txt', num_trials=100)
+        'metrics/adaptive_error_length_sensitivity_unbound.txt', num_trials=100)
 
     _, seq_length_specificities = get_length_metrics(
-        'metrics/adaptive_error_length_specificity.txt', num_trials=100)
+        'metrics/adaptive_error_length_specificity_unbound.txt', num_trials=100)
 
     # Sub Rate
     subs_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
@@ -247,12 +350,12 @@ def make_trials_figure():
     ax2.errorbar(seq_lengths, length_specificity_means, 
                  yerr=length_specificity_errors, fmt='-', color='orange')
     ax2.axvline(x=5000, linestyle='--', color='grey')
-    ax2.text(5500, 0.2, '5kb query threshold', rotation=90)
+    ax2.text(5500, 0.3, '5kb query threshold', rotation=90)
     ax2.set_xscale('log')
     ax2.set_xlabel('Query length (kb)')
     #ax2.legend()
     plt.show()
-    #plt.savefig('figures/flashmap_adaptive_error_accuracy_03.png')
+    #plt.savefig('figures/flashmap_adaptive_error_accuracy_02_unbound.png')
 
 
 def make_synth_figure():
@@ -394,5 +497,6 @@ def make_runtime_figure():
 
 #make_read_figure()
 #make_runtime_figure()
-make_trials_figure()
+#make_simulation_trials_figure()
+make_mammal_figure()
 #make_synth_figure()
