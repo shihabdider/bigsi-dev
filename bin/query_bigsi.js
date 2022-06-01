@@ -155,7 +155,8 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
         let numIntersections = hammingWeights[bucketNum]
         const containmentScore = numIntersections/queryNumBitsSet
         const errorRate = -1/kmerLength * Math.log(containmentScore)
-        if (errorRate <= subrate && errorRate <= 0.07) {
+        const errorRate = Math.max((-1/kmerLength * Math.log(containmentScore)) - 0.02, 0)
+        if (errorRate <= subrate) {
             //console.log(hammingWeights[bucketNum])
             const percentMatch = 100*(1 - errorRate)
             bigsiHits[bucketNum] = {'percent match': percentMatch}
