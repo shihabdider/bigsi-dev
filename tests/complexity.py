@@ -72,8 +72,6 @@ Questions:
 import math
 from scipy.stats import binom
 
-
-
 def bits_to_mb(bits):
     return bits/(8*10**6)
 
@@ -154,8 +152,8 @@ def compute_bf_false_pos(num_hashes, num_inserted_elements, bf_size):
 
 
 def compute_false_hit(false_pos, num_minimizers, error_rate, kmer_length):
-    '''Computes the probability of a false bucket hit for a query sequence'''
-    false_hit_prob = false_pos**num_minimizers
+    '''Computes the probability of a false bucket hit for a set of minimizers'''
+    false_hit_prob = (false_pos)**num_minimizers
     if (error_rate != 0):
         containment = error_to_containment(error_rate, kmer_length)
         num_matches = math.ceil(num_minimizers*containment)
@@ -190,7 +188,12 @@ def compute_bf_size_seq(seq_length, window_size, false_prob_rate):
 
 def compute_bigsi_metrics(bigsi_parameters, query_size, query_sub_rate):
     bf_stats = compute_bigsi_stats(bigsi_parameters)
-    false_pos_prob = bf_stats['false hit rate']
+    print(bf_stats['bf size'])
+    false_pos_rate = bf_stats['false positive rate']
+    num_query_minimizers = compute_num_minimizers(query_size, window_size=100)
+    false_pos_prob = compute_false_hit(false_pos_rate, num_query_minimizers, 
+                                       query_sub_rate, kmer_length=16)
+    false_pos_prob = (1 - (1 - false_pos_prob)**384)
 
     target_size = bigsi_parameters['bin_seq_len']
     window_size = bigsi_parameters['window_size']
@@ -221,6 +224,7 @@ def compute_bigsi_stats(parameters):
         num_hashes = 1
         false_pos_rate = compute_bf_false_pos(num_hashes, num_inserted,
                                               bf_size_bits)
+        #j_null = compute_j_null(kmer_length=16, target_length=num_inserted)
         false_hit = compute_false_hit(false_pos_rate,
                                       num_minimizers_query,
                                       error_rate, kmer_length)
@@ -235,6 +239,20 @@ def compute_bigsi_stats(parameters):
         }
         if false_hit_total <= false_hit_thresh:
             return bf_stats
+
+
+def compute_j_null(kmer_length, target_length):
+    return 1 - ((1 - 4**(-1*kmer_length))**target_length)
+
+
+def compute_prob_false_hit_winnow(j_null, num_query_minimizers, error_rate):
+
+    containment = error_to_containment(error_rate, kmer_length=16)
+    num_matches = math.ceil(num_query_minimizers*containment)
+    false_hit_prob = binom.sf(num_matches, num_query_minimizers, j_null)
+
+    return false_hit_prob
+
 
 
 ar_genes_parameters = {
@@ -311,12 +329,13 @@ MIN_MATCH_LENGTH = 5*10**3
 REF_LENGTH = 3*10**9
 
 
-
 def compute_prob_random_kmer_in_set(kmer_length, kmer_set_size):
     '''Computes the probability of a random k-mer appearing in a k-mer set at
     least once, assuming the k-mers are independent'''
     alphabet_size = 4   # for DNA
-    random_kmer_match = 1 - (1 - alphabet_size**(-kmer_length))**(kmer_set_size)
+    random_kmer_match = 1 - \
+        (1 - alphabet_size**(-kmer_length))**(kmer_set_size)
+
     return random_kmer_match
 
 
@@ -482,22 +501,31 @@ def main():
     hg38 = {
         'bin_seq_len': 16e6,
         'window_size': 100,
-        'min_query_len': 50000,
+        'min_query_len': 5000,
         'error_rate': 0.07,
         'false_hit_thresh': 1e-2,
         'num_cols': 16*24,
         'kmer_len': 16,
     }
 
-    print('hg38')
-    false_negative_prob = compute_winnow_false_neg(
-        query_size=5000, 
-        target_size=hg38['bin_seq_len'], 
-        window_size=hg38['window_size'],
-        error_rate=0.10
-    )
-    print(false_negative_prob)
-    # metrics = compute_bigsi_metrics(hg38, query_size=5000, query_sub_rate=0.05)
-    # print(metrics)
+    # print('hg38')
+    # false_negative_prob = compute_winnow_false_neg(
+    #     query_size=5000, 
+    #     target_size=hg38['bin_seq_len'], 
+    #     window_size=hg38['window_size'],
+    #     error_rate=0.10
+    # )
+    # print(false_negative_prob)
+    metrics = compute_bigsi_metrics(hg38, query_size=10000, query_sub_rate=0.03)
+    print(metrics)
+
+    # j_null = compute_j_null(kmer_length=16, target_length=1e7)
+    # num_query_minimizers = compute_num_minimizers(seq_length=1000, 
+    #                                               window_size=100)
+    # false_hit_winnow = compute_prob_false_hit_winnow(j_null, 
+    #                                                  num_query_minimizers, 
+    #                                                  error_rate=0.05)
+
+    # print(j_null, false_hit_winnow)
  
 main()
