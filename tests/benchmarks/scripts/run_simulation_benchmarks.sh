@@ -98,8 +98,8 @@ function error_benchmark() {
     done
 }
 
+pan_trog_benchmark && wait;
+gorilla_benchmark && wait;
 error_benchmark && wait;
 query_length_benchmark;
-#pan_trog_benchmark && wait;
-#gorilla_benchmark;
 

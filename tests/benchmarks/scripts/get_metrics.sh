@@ -32,8 +32,6 @@ function sub_rate_metrics() {
     done
 }
 
-sub_rate_metrics sensitivity > metrics/adaptive_error_error_sensitivity_unbound.txt
-sub_rate_metrics specificity > metrics/adaptive_error_error_specificity_unbound.txt
 
 function query_length_metrics() {
     local METRIC=$1
@@ -47,8 +45,6 @@ function query_length_metrics() {
     done
 }
 
-query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity_unbound.txt
-query_length_metrics specificity > metrics/adaptive_error_length_specificity_unbound.txt
 
 function nanopore_read_metrics() {
     local METRIC=$1
@@ -103,15 +99,20 @@ function gorilla_metrics() {
     done
 }
 
+sub_rate_metrics sensitivity > metrics/adaptive_error_error_sensitivity_03_unbound.txt
+sub_rate_metrics specificity > metrics/adaptive_error_error_specificity_03_unbound.txt
+query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity_03_unbound.txt
+query_length_metrics specificity > metrics/adaptive_error_length_specificity_03_unbound.txt
+
 #nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities.txt;
 #nanopore_read_metrics specificity > metrics/nanopore_read_specificities.txt; 
 #pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities.txt;
 #pacbio_read_metrics specificity > metrics/pacbio_read_specificities.txt
 
-#pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities.txt;
-#pan_trog_metrics specificity > metrics/pan_trog_specificities.txt; 
-#gorilla_metrics sensitivity > metrics/gorilla_sensitivities.txt;
-#gorilla_metrics specificity > metrics/gorilla_specificities.txt
+#pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities_03_unbound.txt;
+#pan_trog_metrics specificity > metrics/pan_trog_specificities_03_unbound.txt; 
+#gorilla_metrics sensitivity > metrics/gorilla_sensitivities_03_unbound.txt;
+#gorilla_metrics specificity > metrics/gorilla_specificities_03_unbound.txt
 
 #python compute_metric.py -b output/synthetic_seq_300M.random.001.bigsi.json -m output/synthetic_seq_300M.random.001.mashmap.out -t $METRIC
 #python compute_metric.py -b output/synthetic_seq_300M.random.002.bigsi.json -m output/synthetic_seq_300M.random.002.mashmap.out -t $METRIC
