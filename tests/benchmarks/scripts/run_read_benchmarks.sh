@@ -22,5 +22,5 @@ PACBIO_READ_DIR=hg38/reads/pacbio
     done
 }
 
-#pacbio_benchmark;
+pacbio_benchmark && wait;
 nanopore_benchmark

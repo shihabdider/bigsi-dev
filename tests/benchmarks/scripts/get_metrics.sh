@@ -99,15 +99,15 @@ function gorilla_metrics() {
     done
 }
 
-sub_rate_metrics sensitivity > metrics/adaptive_error_error_sensitivity_03_unbound.txt
-sub_rate_metrics specificity > metrics/adaptive_error_error_specificity_03_unbound.txt
-query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity_03_unbound.txt
-query_length_metrics specificity > metrics/adaptive_error_length_specificity_03_unbound.txt
+#sub_rate_metrics sensitivity > metrics/adaptive_error_error_sensitivity_03_unbound.txt
+#sub_rate_metrics specificity > metrics/adaptive_error_error_specificity_03_unbound.txt
+#query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity_03_unbound.txt
+#query_length_metrics specificity > metrics/adaptive_error_length_specificity_03_unbound.txt
 
-#nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities.txt;
-#nanopore_read_metrics specificity > metrics/nanopore_read_specificities.txt; 
-#pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities.txt;
-#pacbio_read_metrics specificity > metrics/pacbio_read_specificities.txt
+nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities_003.txt;
+nanopore_read_metrics specificity > metrics/nanopore_read_specificities_003.txt; 
+pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities_003.txt;
+pacbio_read_metrics specificity > metrics/pacbio_read_specificities_003.txt
 
 #pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities_03_unbound.txt;
 #pan_trog_metrics specificity > metrics/pan_trog_specificities_03_unbound.txt; 
