@@ -66,6 +66,19 @@ function writeBucketMapToJSON(bucketMap, output){
     });
 }
 
+function writeQueryConfigToJSON(bigsiDims, output) {
+    // convert JSON object to string
+    const json = JSON.stringify(bigsiDims);
+
+    // write JSON string to a file
+    fs.writeFile(output, json, (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log("Saved JSON of query configuration.");
+    });
+}
+
 // Write BIGSI to binary file
 // --------------------------
 
@@ -146,6 +159,7 @@ module.exports = {
     makeBucketMap: makeBucketMap,
     makeBucketToPositionMap: makeBucketToPositionMap,
     writeBucketMapToJSON: writeBucketMapToJSON,
+    writeQueryConfigToJSON: writeQueryConfigToJSON,
     bigsiToInts: bigsiToInts,
     flattenBigsi: flattenBigsi,
     writeBinaryBigsi: writeBinaryBigsi,

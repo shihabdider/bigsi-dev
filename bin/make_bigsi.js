@@ -1,4 +1,4 @@
-/* Makes a bigsi from a reference sequence
+/* Makes a BIGSI from a reference sequence
  *
  * Input:
  *  sequence: (string)
@@ -8,6 +8,7 @@
  *  bigsi: (matrix)
  *
  */
+
 const utils = require('./utils.js')
 const matrix = require('matrix-js')
 const cdf = require('binomial-cdf');
@@ -183,6 +184,10 @@ function mergeBigsis(bigsis){
     return mergedBigsi
 }
 
+
+/**
+ * @param { IndexedFasta } fasta - indexedFasta object
+ */
 async function main(fasta) {
     const minSeqLength = 30e6
     const seqSizes = Object.values(await fasta.getSequenceSizes())
@@ -192,13 +197,14 @@ async function main(fasta) {
         const bigsis = await makeFastaBigsis(fasta, config.numBuckets)
         console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
         const bigsi = await mergeBigsis(bigsis)
+        const bigsiDims = bigsi.size()
         console.log(`Bigsis merged!`)
         console.log('Number of (rows, cols):', bigsi.size())
 
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process uses ${memoryUsed}`)
 
-        return bigsi
+        return bigsi, bigsiDims
     } else { 
         if (!areFastaSeqsValidSize) { 
             console.log('All sequences must be at least 30Mbp in length.') 
