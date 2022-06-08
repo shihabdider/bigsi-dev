@@ -177,16 +177,16 @@ def get_read_metrics(file):
 
 def make_mammal_figure():
     pan_trog_lengths, pan_trog_sensitivities = get_length_metrics(
-        'metrics/pan_trog_sensitivities.txt', num_trials=100)
+        'metrics/pan_trog_sensitivities_03_unbound.txt', num_trials=100)
 
     _, pan_trog_specificities = get_error_metrics(
-        'metrics/pan_trog_specificities.txt', num_trials=100)
+        'metrics/pan_trog_specificities_03_unbound.txt', num_trials=100)
 
     gorilla_lengths, gorilla_sensitivities = get_length_metrics(
-        'metrics/gorilla_sensitivities.txt', num_trials=100)
+        'metrics/gorilla_sensitivities_03_unbound.txt', num_trials=100)
 
     _, gorilla_specificities = get_error_metrics(
-        'metrics/gorilla_specificities.txt', num_trials=100)
+        'metrics/gorilla_specificities_03_unbound.txt', num_trials=100)
 
     # Pan Trog (Chimp)
     pan_trog_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
@@ -255,13 +255,15 @@ def make_mammal_figure():
     ax1.text(5500, 0.2, '5kb query threshold', rotation=90)
     ax1.set_xscale('log')
     ax1.set_xlabel('Query length (kb)')
+    #ax1.set_ylim(ymin=0)
 
     # Gorilla
     ax2.set_title('Gorilla')
     ax2.plot(gorilla_lengths, gorilla_sensitivity_means, label='sensitivity', 
              marker='o')
     ax2.errorbar(gorilla_lengths, gorilla_sensitivity_means, 
-                 yerr=[gorilla_sensitivity_errors_lower, gorilla_sensitivity_errors_upper], 
+                 yerr=[gorilla_sensitivity_errors_lower, 
+                       gorilla_sensitivity_errors_upper], 
                  fmt='-', color='blue')
 
     ax2.plot(gorilla_lengths, gorilla_specificity_means, label='specificity', 
@@ -274,21 +276,21 @@ def make_mammal_figure():
     ax2.set_xlabel('Query length (kb)')
     #ax2.legend()
     plt.show()
-    #plt.savefig('figures/flashmap_mammal_accuracy.png')
+    #plt.savefig('figures/flashmap_mammal_accuracy_03.png')
 
 
 def make_simulation_trials_figure():
     error_rates, error_sensitivities = get_error_metrics(
-        'metrics/adaptive_error_error_sensitivity_unbound.txt', num_trials=100)
+        'metrics/adaptive_error_error_sensitivity_03_unbound.txt', num_trials=100)
 
     _, error_specificities = get_error_metrics(
-        'metrics/adaptive_error_error_specificity_unbound.txt', num_trials=100)
+        'metrics/adaptive_error_error_specificity_03_unbound.txt', num_trials=100)
 
     seq_lengths, seq_length_sensitivities = get_length_metrics(
-        'metrics/adaptive_error_length_sensitivity_unbound.txt', num_trials=100)
+        'metrics/adaptive_error_length_sensitivity_03_unbound.txt', num_trials=100)
 
     _, seq_length_specificities = get_length_metrics(
-        'metrics/adaptive_error_length_specificity_unbound.txt', num_trials=100)
+        'metrics/adaptive_error_length_specificity_03_unbound.txt', num_trials=100)
 
     # Sub Rate
     subs_sensitivity_means = [np.mean(sensitivities) for sensitivities in 
@@ -296,6 +298,18 @@ def make_simulation_trials_figure():
     subs_sensitivity_stds = [np.std(sensitivities) for sensitivities in 
                              error_sensitivities]
     subs_sensitivity_errors = [2*std for std in subs_sensitivity_stds]
+
+    subs_sensitivity_errors_upper = []
+    for i, mean in enumerate(subs_sensitivity_means):
+        if (mean + 2*subs_sensitivity_stds[i] > 1):
+            error = 1 - mean
+            subs_sensitivity_errors_upper.append(error)
+        else:
+            subs_sensitivity_errors_upper.append(subs_sensitivity_stds[i]*2)
+    
+    subs_sensitivity_errors_lower = [max((2*std, 0)) for std in 
+                                     subs_sensitivity_stds]
+
 
     subs_specificity_means = [np.mean(specificities) for specificities in 
                               error_specificities]
@@ -310,11 +324,39 @@ def make_simulation_trials_figure():
                                seq_length_sensitivities]
     length_sensitivity_errors = [2*std for std in length_sensitivity_stds]
 
+    length_sensitivity_errors_upper = []
+    for i, mean in enumerate(length_sensitivity_means):
+        if (mean + 2*length_sensitivity_stds[i] > 1):
+            error = 1 - mean
+            length_sensitivity_errors_upper.append(error)
+        else:
+            length_sensitivity_errors_upper.append(length_sensitivity_stds[i]*2)
+    
+    length_sensitivity_errors_lower = [max((2*std, 0)) for std in 
+                                     length_sensitivity_stds]
+
     length_specificity_means = [np.mean(specificities) for specificities in 
                                 seq_length_specificities]
     length_specificity_stds = [np.std(specificities) for specificities in 
                                seq_length_specificities]
     length_specificity_errors = [2*std for std in length_specificity_stds]
+
+
+    # Theoritical Curve
+    error_rate_theory_sensitivities = [0.9999999999999992, 0.9999999973133248, 
+                                       0.999999035776888, 0.9999633461915861, 
+                                       0.9996118046476143, 0.9985398391125027, 
+                                       0.9951159587019267, 0.9887248080755489, 
+                                       0.9786179973528009, 0.9625853664976465]
+    error_rate_theory_specificities = [1.0, 1.0, 1.0, 0.9999999999630376, 
+                                       0.9999965025321311, 0.9881394058910561, 
+                                       0.2188627586201921, 
+                                       5.96189764223709e-14, 0.0, 0.0]
+    query_size_theory_sensitivities = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+                                       1.0, 1.0, 1.0, 1.0, 1.0]
+    query_size_theory_specificities = [0.999999585864842, 0.9999999999999574, 
+                                       1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+                                       1.0, 1.0, 1.0]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
     fig.suptitle('Flashmap accuracy on simulated data')
@@ -323,8 +365,15 @@ def make_simulation_trials_figure():
     # Sub errors
     ax1.plot(error_rates, subs_sensitivity_means, label='sensitivity', 
              marker='o')
+    # ax1.plot(error_rates, error_rate_theory_sensitivities,
+    #          label='theoretical sensitivity')
+    # ax1.plot(error_rates, error_rate_theory_specificities,
+    #         label='theoretical specificity')
     ax1.errorbar(error_rates, subs_sensitivity_means, 
-                 yerr=subs_sensitivity_errors, fmt='-', color='blue')
+                 #yerr=subs_sensitivity_errors, 
+                 yerr=[subs_sensitivity_errors_lower, 
+                       subs_sensitivity_errors_upper], 
+                 fmt='-', color='blue',)
     ax1.plot(error_rates, subs_specificity_means, label='specificity', 
              marker='o')
     ax1.errorbar(error_rates, subs_specificity_means, 
@@ -335,14 +384,19 @@ def make_simulation_trials_figure():
     ax1.axvline(x=0.05, linestyle='--', color='grey')
     ax1.text(0.045, 0.1, '0.05 substitution rate threshold', rotation=90)
     ax1.set_xlabel('Substitutions per site')
-    fig.legend()
+    #ax1.set_ylim(ymin=0.7)
+    fig.legend(frameon=True)
 
     # Query Length
     ax2.plot(seq_lengths, length_sensitivity_means, label='sensitivity', 
              marker='o')
+    # ax2.plot(seq_lengths, query_size_theory_sensitivities, 
+    #          label='theoretical sensitivity')
+    # ax2.plot(seq_lengths, query_size_theory_specificities,
+    #          label='theoretical specificity')
     ax2.errorbar(seq_lengths, length_sensitivity_means, 
-                 #yerr=[length_sensitivity_errors_lower, length_sensitivity_errors_upper], 
-                 yerr=length_sensitivity_errors, 
+                 yerr=[length_sensitivity_errors_lower, length_sensitivity_errors_upper], 
+                 #yerr=length_sensitivity_errors, 
                  fmt='-', color='blue')
 
     ax2.plot(seq_lengths, length_specificity_means, label='specificity', 
@@ -353,9 +407,8 @@ def make_simulation_trials_figure():
     ax2.text(5500, 0.3, '5kb query threshold', rotation=90)
     ax2.set_xscale('log')
     ax2.set_xlabel('Query length (kb)')
-    #ax2.legend()
-    plt.show()
-    #plt.savefig('figures/flashmap_adaptive_error_accuracy_02_unbound.png')
+    #plt.show()
+    plt.savefig('figures/flashmap_adaptive_error_accuracy_03_unbound.png')
 
 
 def make_synth_figure():
@@ -410,18 +463,18 @@ def make_synth_figure():
 def make_read_figure():
     # Nanopore reads
     nanopore_sensitivities = get_read_metrics(
-        'metrics/nanopore_read_sensitivities.txt')
+        'metrics/nanopore_read_sensitivities_003.txt')
 
     nanopore_specificities = get_read_metrics(
-        'metrics/nanopore_read_specificities.txt')
+        'metrics/nanopore_read_specificities_003.txt')
 
     
     # Pacbio reads
     pacbio_sensitivities = get_read_metrics(
-        'metrics/pacbio_read_sensitivities.txt')
+        'metrics/pacbio_read_sensitivities_003.txt')
 
     pacbio_specificities = get_read_metrics(
-        'metrics/pacbio_read_specificities.txt')
+        'metrics/pacbio_read_specificities_003.txt')
 
     fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
     fig.suptitle('Flashmap accuracy on read datasets')
@@ -436,8 +489,8 @@ def make_read_figure():
     ax2.scatter([read_dataset_names[0]]*len(nanopore_specificities), nanopore_specificities, marker='o')
     ax2.scatter([read_dataset_names[1]]*len(pacbio_specificities), pacbio_specificities, marker='o')
     ax2.set_xlabel('Specificity')
-    #plt.show()
-    plt.savefig('figures/flashmap_reads_accuracy.png')
+    plt.show()
+    #plt.savefig('figures/flashmap_reads_accuracy_003.png')
 
 
 def make_runtime_figure():
@@ -495,8 +548,8 @@ def make_runtime_figure():
     plt.savefig('figures/flashmap_runtimes.png')
 
 
-#make_read_figure()
+make_read_figure()
 #make_runtime_figure()
 #make_simulation_trials_figure()
-make_mammal_figure()
+#make_mammal_figure()
 #make_synth_figure()

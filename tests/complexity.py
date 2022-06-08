@@ -189,9 +189,20 @@ def compute_false_hit(false_pos, num_minimizers, error_rate, kmer_length):
     return false_hit_prob
 
 
-def compute_sensitivity(false_positive, false_negative):
-    TP = 1 - false_negative
-    return TP / (TP + false_negative)
+def compute_sensitivity(true_error_rate, num_query_minimizers, kmer_length):
+    true_jaccard_containment = error_to_containment(true_error_rate, 
+                                                    kmer_length)
+
+    expected_num_matched = math.ceil(error_to_containment(
+        true_error_rate + 0.02, kmer_length
+    ) * num_query_minimizers)
+
+    sensitivity = binom.sf(expected_num_matched, num_query_minimizers, 
+                           true_jaccard_containment)
+
+    #sensitivity = sensitivity**384
+
+    return sensitivity
 
 
 def compute_specificity(false_positive, false_negative):
@@ -217,23 +228,24 @@ def compute_bf_size_seq(seq_length, window_size, false_prob_rate):
 def compute_bigsi_metrics(bigsi_parameters, query_size, query_sub_rate):
     bf_stats = compute_bigsi_stats(bigsi_parameters)
     bf_false_pos = bf_stats['false positive rate']
-    num_query_minimizers = compute_num_minimizers(query_size, window_size=100)
-    query_sub_rate_lower = error_lower_bound(query_sub_rate, 
-                                             num_query_minimizers, 
-                                             conf_interval=0.999)
-    #query_sub_rate = query_sub_rate + (query_sub_rate - query_sub_rate_lower)
-    false_pos_prob = compute_false_hit(bf_false_pos, num_query_minimizers, 
-                                       query_sub_rate + 0.02, 
-                                       kmer_length=16)
-    false_pos_prob = (1 - (1 - false_pos_prob)**384)
-
     target_size = bigsi_parameters['bin_seq_len']
     window_size = bigsi_parameters['window_size']
-    false_negative_prob = compute_winnow_false_neg(query_size, target_size, 
-                                                   window_size, query_sub_rate)
+    num_query_minimizers = compute_num_minimizers(query_size, window_size)
+    #query_sub_rate_lower = error_lower_bound(query_sub_rate, 
+    #                                         num_query_minimizers, 
+    #                                         conf_interval=0.9999)
+    #query_sub_rate = query_sub_rate + (query_sub_rate - query_sub_rate_lower)
+    false_pos_prob = compute_false_hit(bf_false_pos, num_query_minimizers, 
+                                       query_sub_rate+0.02, 
+                                       kmer_length=16)
+    false_positive_rate = (1 - (1 - false_pos_prob)**384)
 
-    sensitivity = compute_sensitivity(false_pos_prob, false_negative_prob)
-    specificity = compute_specificity(false_pos_prob, false_negative_prob)
+    # false_negative_rate = compute_winnow_false_neg(query_size, target_size, 
+    #                                                window_size, query_sub_rate)
+
+    sensitivity = compute_sensitivity(query_sub_rate,  num_query_minimizers, 
+                                      kmer_length=16,)
+    specificity = 1 - false_positive_rate
 
     return sensitivity, specificity
 
@@ -248,9 +260,10 @@ def compute_bigsi_stats(parameters):
                                                   window_size)
     error_rate = parameters['error_rate']
     # Take the 90% upper CI of error rate to account for variance in estimate
-    error_rate_lower = error_lower_bound(error_rate, num_minimizers_query, 
-                                         conf_interval=0.999)
-    error_rate = error_rate + (error_rate - error_rate_lower)
+    # error_rate_lower = error_lower_bound(error_rate, num_minimizers_query, 
+    #                                      conf_interval=0.9995)
+    # error_rate = error_rate + (error_rate - error_rate_lower)
+    # print(error_rate)
 
     false_hit_thresh = parameters['false_hit_thresh']
     num_cols = parameters['num_cols']
@@ -358,12 +371,12 @@ def main():
 
 
     hg38 = {
-        'bin_seq_len': 16e6,
+        'bin_seq_len': 10e6,
         'window_size': 100,
         'min_query_len': 5000,
-        'error_rate': 0.05,
+        'error_rate': 0.093,
         'false_hit_thresh': 1e-2,
-        'num_cols': 16*24,
+        'num_cols': 3e9/10e6,
         'kmer_len': 16,
     }
 
@@ -378,9 +391,30 @@ def main():
     #     error_rate=0.10
     # )
     # print(false_negative_prob)
-    metrics = compute_bigsi_metrics(hg38, query_size=2000, query_sub_rate=0.0)
-    print(metrics)
+    # seq_lengths = [1000, 2000, 3000, 4000, 5000, 10000, 20000, 40000, 80000, 
+    #                160000, 200000, 250000, 300000]
+    # 
+    # query_size_sensitivities = []
+    # query_size_specificities = []
+    # for query_size in seq_lengths:
+    #     sensitivity, specificity = compute_bigsi_metrics(hg38, query_size, 
+    #                                     query_sub_rate=0.0)
+    #     query_size_sensitivities.append(sensitivity)
+    #     query_size_specificities.append(specificity)
 
+    # error_rates = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+    # error_rate_sensitivities = []
+    # error_rate_specificities = []
+    # for query_sub_rate in error_rates:
+    #     sensitivity, specificity = compute_bigsi_metrics(hg38, 10000, 
+    #                                                      query_sub_rate)
+    #     error_rate_sensitivities.append(sensitivity)
+    #     error_rate_specificities.append(specificity)
+
+    # print('error_rate_theory_sensitivities =', error_rate_sensitivities)
+    # print('error_rate_theory_specificities =', error_rate_specificities)
+    # print('query_size_theory_sensitivities =', query_size_sensitivities)
+    # print('query_size_theory_specificities =', query_size_specificities)
     # j_null = compute_j_null(kmer_length=16, target_length=1e7)
     # num_query_minimizers = compute_num_minimizers(seq_length=1000, 
     #                                               window_size=100)
