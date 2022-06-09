@@ -96,19 +96,20 @@ function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBucke
 /* estimate bloom filter size using minimizer count computed from bucket size 
  * of longest sequence + bucket overhang
 */ 
-function estimateBloomFilterSize(seqSizes){
-    const seqSizesArr = Object.values(seqSizes)
-    const maxSeqLength = Math.ceil(Math.max(...seqSizesArr)/config.numBuckets + config.bucketOverhang)
-    console.log('maximum sequence length: ', maxSeqLength)
-    const maxNumElementsInserted = estimateNumMinimizers(maxSeqLength)
-    console.log('max number of minimizers: ', maxNumElementsInserted)
+function estimateBloomFilterSize(seqSizes, bucketSize){
+    const numElementsInserted = estimateNumMinimizers(bucketSize)
+    console.log('number of minimizers: ', numElementsInserted)
     const errorRate = config.errorRate
     console.log('max error rate:', errorRate)
-    const totalNumBuckets = seqSizesArr.length*config.numBuckets
-    console.log('total number of buckets:', totalNumBuckets)
+    let totalNumBuckets = 0
+    const seqSizesArr = Object.values(seqSizes)
+    for (const seqSize of seqSizesArr) {
+        const numBucketsInSeq = computeNumBuckets(seqSize)
+        totalNumBuckets += numBucketsInSeq
+    }
 
     const bloomFilterSize = computeBloomFilterSize(
-        maxNumElementsInserted, 
+        numElementsInserted, 
         errorRate,
         totalNumBuckets
     )
@@ -125,7 +126,7 @@ function computeNumBuckets(seqLength) {
 function computeBucketCoords(seqLength) {
     const bucketCoords = []
     const numBuckets = computeNumBuckets(seqLength)
-    for (let bucketNum=0; i < numBuckets; i++){
+    for (let bucketNum=0; bucketNum < numBuckets; bucketNum++){
         const bucketStart = Math.max(bucketNum*config.bucketSize - config.bucketOverhang, 0)
         let bucketEnd = Math.min(bucketStart + config.bucketSize + 2*config.bucketOverhang, seqLength)
 
@@ -153,7 +154,7 @@ async function makeFastaBigsis(fasta){
 
     const seqSizes = await fasta.getSequenceSizes()
     const fullBucketSize = config.bucketSize + 2*config.bucketOverhang
-    const bloomFilterSize = estimateBloomFilterSize(fullBucketSize)
+    const bloomFilterSize = estimateBloomFilterSize(seqSizes, fullBucketSize)
 
     const fastaBigsis = []
     for (const seqName of seqNames){
@@ -190,7 +191,7 @@ async function main(fasta) {
     const seqSizes = Object.values(await fasta.getSequenceSizes())
     const areFastaSeqsValidSize = Math.min(...seqSizes) > minSeqLength 
 
-    if (areFastaSeqsValidSize && config.numBuckets > 0) {
+    if (areFastaSeqsValidSize && config.bucketSize > 0) {
         const bigsis = await makeFastaBigsis(fasta, config.numBuckets)
         console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
         const bigsi = await mergeBigsis(bigsis)
@@ -201,13 +202,14 @@ async function main(fasta) {
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process uses ${memoryUsed}`)
 
-        return bigsi, bigsiDims
+        return bigsi
+
     } else { 
         if (!areFastaSeqsValidSize) { 
             console.log('All sequences must be at least 30Mbp in length.') 
         }
-        if (!(config.numBuckets > 0)) { 
-            console.log('Number of buckets must be greater than 0.') 
+        if (!(config.bucketSize > 0)) { 
+            console.log('Bucket size must be greater than 0.') 
         }
     }
 }
