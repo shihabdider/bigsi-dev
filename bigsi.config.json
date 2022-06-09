@@ -1,6 +1,6 @@
 {
     "bucketOverhang": 150000,
-    "numBuckets": 16,
+    "bucketSize": 32000000,
     "intBits": 16,
     "windowSize": 100,
     "minQuerySize": 5000,

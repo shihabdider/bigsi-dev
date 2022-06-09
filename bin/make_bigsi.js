@@ -117,15 +117,20 @@ function estimateBloomFilterSize(seqSizes){
     return bloomFilterSize
 }
 
-function computeBucketCoords(seqLength, bucketSize) {
-    const bucketCoords = []
-    for (let i=0; i < config.numBuckets; i++){
-        const bucketStart = Math.max((bucketSize - config.bucketOverhang)*i, 0)
-        let bucketEnd = bucketStart + bucketSize
+function computeNumBuckets(seqLength) {
+    const numBuckets = Math.ceil(seqLength/config.bucketSize)
+    return numBuckets
+}
 
-        // Handle last bucket
-        if (i == config.numBuckets - 1){
-            bucketEnd = seqLength
+function computeBucketCoords(seqLength) {
+    const bucketCoords = []
+    const numBuckets = computeNumBuckets(seqLength)
+    for (let bucketNum=0; i < numBuckets; i++){
+        const bucketStart = Math.max(bucketNum*config.bucketSize - config.bucketOverhang, 0)
+        let bucketEnd = Math.min(bucketStart + config.bucketSize + 2*config.bucketOverhang, seqLength)
+
+        if (bucketStart === 0) { // handle first bucket 
+            bucketEnd -= config.bucketOverhang
         }
 
         const coord = { bucketStart, bucketEnd }
@@ -138,32 +143,27 @@ function computeBucketCoords(seqLength, bucketSize) {
 /**
  * @param { IndexedFasta } fasta - indexedFasta object
  *
- * @returns { matrix[] } fastaBigsis - bigsi matrix for each seq in fasta in 
- * compressed format (each column is a vector of 16bit ints corresponding to 
- * a 16-column row)
+ * @returns { string[][] } fastaBigsis - array for each seq in fasta in 
+ * bitstring format (each element is a bitstring corresponding to the bigsi row 
+ * for each sequence)
  */
 async function makeFastaBigsis(fasta){
     const seqNames = await fasta.getSequenceList()
     console.log('seqNames: ', seqNames)
 
     const seqSizes = await fasta.getSequenceSizes()
-    const bloomFilterSize = estimateBloomFilterSize(seqSizes)
+    const fullBucketSize = config.bucketSize + 2*config.bucketOverhang
+    const bloomFilterSize = estimateBloomFilterSize(fullBucketSize)
 
     const fastaBigsis = []
     for (const seqName of seqNames){
         const sequence = await fasta.getSequence(seqName)
-        const bucketSize = Math.round(
-            (seqSizes[seqName] + ((config.numBuckets - 1)*config.bucketOverhang))/config.numBuckets
-        )
-        const bucketCoords = computeBucketCoords(sequence.length, bucketSize)
+        const bucketCoords = computeBucketCoords(sequence.length, config.bucketSize)
         const seqBigsi = await buildBigsi(sequence, bloomFilterSize, bucketCoords)
+        const bigsiBitstrings = writeBigsi.bigsiToBitstrings(seqBigsi)
         //console.log('seqBigsi', seqBigsi)
-        const seqBigsiInts = writeBigsi.bigsiToInts(seqBigsi)
-        //console.log('seqBigsiInts', seqBigsiInts)
-        const seqBigsiVector = seqBigsiInts.map((elem) => [elem])
-        //console.log('seqBigsiVector', seqBigsiVector)
         console.log(`Bigsi of ${seqName} built...`)
-        fastaBigsis.push(matrix(seqBigsiVector))
+        fastaBigsis.push(bigsiBitstrings)
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process used ${memoryUsed} MB`)
     }
@@ -172,12 +172,7 @@ async function makeFastaBigsis(fasta){
 }
 
 function mergeBigsis(bigsis){
-    let mergedBigsi = bigsis[0]
-    if (bigsis.length > 1){
-        for (let i=1; i < bigsis.length; i++){
-            mergedBigsi = matrix(mergedBigsi.merge.right(bigsis[i]()))
-        }
-    }
+    const mergedBigsi = bigsis.reduce((a, b) => a.map((x, i) => x + b[i]));
     const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
     console.log(`Process used ${memoryUsed} MB`)
 
@@ -187,6 +182,8 @@ function mergeBigsis(bigsis){
 
 /**
  * @param { IndexedFasta } fasta - indexedFasta object
+ * @returns { string[] } bigsi - array of bitstrings corresponding to each row 
+ * of the full bigsi
  */
 async function main(fasta) {
     const minSeqLength = 30e6
@@ -197,9 +194,9 @@ async function main(fasta) {
         const bigsis = await makeFastaBigsis(fasta, config.numBuckets)
         console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
         const bigsi = await mergeBigsis(bigsis)
-        const bigsiDims = bigsi.size()
+        const bigsiDims = [bigsi.length, bigsi[0].length]
         console.log(`Bigsis merged!`)
-        console.log('Number of (rows, cols):', bigsi.size())
+        console.log('Number of (rows, cols):', bigsiDims)
 
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process uses ${memoryUsed}`)

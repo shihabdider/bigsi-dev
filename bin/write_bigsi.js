@@ -3,33 +3,31 @@
 const config = require('../bigsi.config.json')
 const fs = require('fs')
 
+function computeNumBuckets(seqLength) {
+    const numBuckets = Math.ceil(seqLength/config.bucketSize)
+    return numBuckets
+}
+
 /** Makes the bucket map to retrieve sequence intervals from bucket number
  */
-function makeBucketMap(seqName, seqSize, seqIdx){
-    const bucketStart = seqIdx*config.numBuckets
-    const bucketEnd = bucketStart + config.numBuckets - 1
-    const bucketSize = Math.round(
-        (seqSize + ((config.numBuckets - 1)*config.bucketOverhang))/config.numBuckets
-    )
-
+function makeBucketMap(seqName, seqSize, currentBucketNum, numBuckets){
+    const bucketSize = config.bucketSize
     const bucketMap = {} 
-    for (let bucketNum=bucketStart; bucketNum <= bucketEnd; bucketNum++){
+    for (let bucketNum=0; bucketNum < numBuckets; bucketNum++){
 
-        const intervalStart = Math.max(
-            (bucketSize-config.bucketOverhang)*(bucketNum%config.numBuckets), 0
-        )
-        let intervalEnd = intervalStart + bucketSize
+        const intervalStart = Math.max(bucketNum*config.bucketSize - config.bucketOverhang, 0)
+        let intervalEnd = Math.min(intervalStart + config.bucketSize + 2*config.bucketOverhang, seqSize)
 
-        // Handle final bucket
-        if (bucketNum == config.numBuckets - 1){
-            intervalEnd = seqSize
+        if (intervalStart === 0) { // handle first bucket 
+            intervalEnd -= config.bucketOverhang
         }
-
-        bucketMap[bucketNum] = {
-                refName: seqName,
-                bucketStart: intervalStart,
-                bucketEnd: intervalEnd,
-            }
+        
+        const adjustedBucketNum = bucketNum + currentBucketNum
+        bucketMap[adjustedBucketNum] = {
+            refName: seqName,
+            bucketStart: intervalStart,
+            bucketEnd: intervalEnd,
+        }
     }
 
     return bucketMap
@@ -42,12 +40,13 @@ async function makeBucketToPositionMap(fasta){
     const seqSizes = await fasta.getSequenceSizes()
 
     let bucketToPositionMap = {}
-    let seqIdx = 0
+    let currentBucketNum = 0
     for (seqName in seqSizes) {
         const seqSize = seqSizes[seqName]
-        const bucketMap = makeBucketMap(seqName, seqSize, seqIdx)
+        const numBuckets = computeNumBuckets(seqSize)
+        const bucketMap = makeBucketMap(seqName, seqSize, currentBucketNum, numBuckets)
         bucketToPositionMap = { ...bucketToPositionMap, ...bucketMap }
-        seqIdx++
+        currentBucketNum += numBuckets
     }
 
     return bucketToPositionMap
@@ -81,6 +80,38 @@ function writeQueryConfigToJSON(bigsiDims, output) {
 
 // Write BIGSI to binary file
 // --------------------------
+
+/** Converts bigsi into a flat array of bitstrings
+ * @param { matrix } bigsi 
+ */
+function bigsiToBitstrings(bigsi) {
+    const bigsiArr = bigsi()
+
+    const bigsiBitstrings = []
+    for (const row of bigsiArr){
+        const rowBitstring = row.join('')
+        bigsiBitStrings.push(rowBitstring)
+    }
+
+    return bigsiBitstrings
+}
+
+/* @param { number } intSize - number of bits in the int (e.g 16 bit integers)
+ */
+function bitstringsToInts(bitstrings, intSize) {
+    const ints = []
+    for (const bitstring of bitstrings) {
+        const paddingSize = bitstring.length % intSize
+        const paddedBitstring = bitstring.padEnd(paddingSize, '0')
+        const regex = new RegExp(`.{1,${intSize}}`, "g");
+        const chunks = bitstring.match(regex)
+        for (const chunk of chunks) {
+            const integer = parseInt(chunk, intSize)
+            ints.push(integer)
+        }
+    }
+    return ints
+}
 
 /** Converts bigsi into a flat array of ints
  */
@@ -160,6 +191,8 @@ module.exports = {
     makeBucketToPositionMap: makeBucketToPositionMap,
     writeBucketMapToJSON: writeBucketMapToJSON,
     writeQueryConfigToJSON: writeQueryConfigToJSON,
+    bitstringsToInts: bitstringsToInts,
+    bigsiToBitstrings: bigsiToBitstrings,
     bigsiToInts: bigsiToInts,
     flattenBigsi: flattenBigsi,
     writeBinaryBigsi: writeBinaryBigsi,
