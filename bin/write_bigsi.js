@@ -90,16 +90,15 @@ function bigsiToBitstrings(bigsi) {
     const bigsiBitstrings = []
     for (const row of bigsiArr){
         const rowBitstring = row.join('')
-        bigsiBitStrings.push(rowBitstring)
+        bigsiBitstrings.push(rowBitstring)
     }
 
     return bigsiBitstrings
 }
 
-/* @param { number } intSize - number of bits in the int (e.g 16 bit integers)
- */
-function bitstringsToInts(bitstrings, intSize) {
+function bitstringsToInts(bitstrings) {
     const ints = []
+    const intSize = config.intBits
     for (const bitstring of bitstrings) {
         const paddingSize = bitstring.length % intSize
         const paddedBitstring = bitstring.padEnd(paddingSize, '0')

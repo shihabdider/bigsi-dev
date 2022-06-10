@@ -28,7 +28,7 @@ async function main(){
     const fasta = await utils.loadFasta(argv.ref, fai)
     console.log('Sequence loaded...')
 
-    const bigsi = await makeBigsi.main(fasta)
+    const [bigsi, bigsiDims] = await makeBigsi.main(fasta)
     const bigsiInts = writeBigsi.bitstringsToInts(bigsi)
     const binaryBigsi = writeBigsi.makeBinaryBigsi(bigsiInts)
     console.log(`Converted bigsi matrix to binary TypedArray format, writing to file...`)

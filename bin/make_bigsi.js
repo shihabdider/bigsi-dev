@@ -192,17 +192,17 @@ async function main(fasta) {
     const areFastaSeqsValidSize = Math.min(...seqSizes) > minSeqLength 
 
     if (areFastaSeqsValidSize && config.bucketSize > 0) {
-        const bigsis = await makeFastaBigsis(fasta, config.numBuckets)
+        const bigsis = await makeFastaBigsis(fasta)
         console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
         const bigsi = await mergeBigsis(bigsis)
-        const bigsiDims = [bigsi.length, bigsi[0].length]
+        const bigsiDims = { 'rows': bigsi.length, 'cols': bigsi[0].length }
         console.log(`Bigsis merged!`)
         console.log('Number of (rows, cols):', bigsiDims)
 
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process uses ${memoryUsed}`)
 
-        return bigsi
+        return [bigsi, bigsiDims]
 
     } else { 
         if (!areFastaSeqsValidSize) { 
