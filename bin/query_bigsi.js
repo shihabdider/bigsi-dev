@@ -137,6 +137,29 @@ function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
     }
 }
 
+function computeLowerBoundContainmentScore(containmentScore, 
+    numMinimizersInQuery, confidenceInterval) {
+    const quantile = (1 - confidenceInterval)/2
+    
+    // begin search from x = s * containment score
+    let x = Math.max( Math.ceil(numMinimizersInQuery * containmentScore, 1))
+
+    while (x <= numMinimizersInQuery) {
+        //probability of having x or more shared sketches
+        const cdf_complement = 1 - cdf(x-1, numMinimizersInQuery, containmentScore);
+
+        if (cdf_complement < q2) {
+          x--;  //Last guess was right
+          break;
+        }
+
+        x++;
+      }
+
+      const lowerBoundContainmentScore = x / numMinimizersInQuery;
+      return lowerBoundContainmentScore; 
+}
+
 // Containment score is the Jaccard containment identity:
 // Hamming weight of submatrix columns divided by
 // number of minimizers inserted into query Bloom Filter
@@ -154,8 +177,9 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
     for (let bucketNum = 0; bucketNum < hammingWeights.length; bucketNum++){
         let numIntersections = hammingWeights[bucketNum]
         const containmentScore = numIntersections/queryNumBitsSet
-        const errorRate = -1/kmerLength * Math.log(containmentScore)
-        const errorRate = Math.max((-1/kmerLength * Math.log(containmentScore)) - 0.03, 0)
+        const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.995)
+        //const errorRate = -1/kmerLength * Math.log(containmentScore)
+        const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
         if (errorRate <= subrate) {
             //console.log(hammingWeights[bucketNum])
             const percentMatch = 100*(1 - errorRate)
