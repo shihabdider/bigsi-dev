@@ -21,6 +21,7 @@ const matrix = require('matrix-js')
 const BitSet = require('bitset')
 const fs = require('fs')
 const utils = require('./utils.js')
+const quantile = require( '@stdlib/stats-base-dists-binomial-quantile' );
 
 // One function is used for fragmenting and winnowing to prevent double 
 // iteration
@@ -139,25 +140,13 @@ function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
 
 function computeLowerBoundContainmentScore(containmentScore, 
     numMinimizersInQuery, confidenceInterval) {
-    const quantile = (1 - confidenceInterval)/2
+    const q2 = (1 - confidenceInterval)/2
     
     // begin search from x = s * containment score
-    let x = Math.max( Math.ceil(numMinimizersInQuery * containmentScore, 1))
+    let x = quantile(q2, numMinimizersInQuery, containmentScore)
 
-    while (x <= numMinimizersInQuery) {
-        //probability of having x or more shared sketches
-        const cdf_complement = 1 - cdf(x-1, numMinimizersInQuery, containmentScore);
-
-        if (cdf_complement < quantile) {
-          x--;  //Last guess was right
-          break;
-        }
-
-        x++;
-      }
-
-      const lowerBoundContainmentScore = x / numMinimizersInQuery;
-      return lowerBoundContainmentScore; 
+    const lowerBoundContainmentScore = x / numMinimizersInQuery;
+    return lowerBoundContainmentScore; 
 }
 
 // Containment score is the Jaccard containment identity:

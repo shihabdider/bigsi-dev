@@ -3,6 +3,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
     "@babel/preset-env": "^7.15.8",
     "@gmod/indexedfasta": "^1.1.0",
+    "@stdlib/stats-base-dists-binomial-quantile": "^0.0.6",
     "binomial-cdf": "^1.0.4",
     "bionode-ncbi": "^1.6.3",
     "bitset": "^5.1.1",
