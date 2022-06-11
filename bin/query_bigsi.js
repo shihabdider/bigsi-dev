@@ -148,7 +148,7 @@ function computeLowerBoundContainmentScore(containmentScore,
         //probability of having x or more shared sketches
         const cdf_complement = 1 - cdf(x-1, numMinimizersInQuery, containmentScore);
 
-        if (cdf_complement < q2) {
+        if (cdf_complement < quantile) {
           x--;  //Last guess was right
           break;
         }
@@ -177,7 +177,7 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
     for (let bucketNum = 0; bucketNum < hammingWeights.length; bucketNum++){
         let numIntersections = hammingWeights[bucketNum]
         const containmentScore = numIntersections/queryNumBitsSet
-        const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.995)
+        const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.90)
         //const errorRate = -1/kmerLength * Math.log(containmentScore)
         const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
         if (errorRate <= subrate) {

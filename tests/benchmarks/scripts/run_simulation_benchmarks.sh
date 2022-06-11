@@ -1,10 +1,14 @@
+num_experiments=$1
+echo "Running $num_experiments experiments...";
+
 function pan_trog_benchmark() {
+    echo "Running pan trog benchmark";
     pan_trog_dir=pan_trog/simulation
     QUERY_LENGTHS=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     MIN_LENGTHS=( 500 1000 1500 2000 2500 5000 10000 20000 40000 80000 100000 125000 150000 )
 
 
-    for j in {1..100};
+    for j in $( seq 1 $num_experiments );
     do
         mkdir -p outputs/${pan_trog_dir}/experiment_$j/;
     done
@@ -12,7 +16,7 @@ function pan_trog_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in {1..100};
+        for j in $( seq 1 $num_experiments );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -27,12 +31,13 @@ function pan_trog_benchmark() {
 }
 
 function gorilla_benchmark() {
+    echo "Running gorilla benchmark";
     gorilla_dir=gorilla/simulation
     QUERY_LENGTHS=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     MIN_LENGTHS=( 500 1000 1500 2000 2500 5000 10000 20000 40000 80000 100000 125000 150000 )
 
 
-    for j in {1..100};
+    for j in {1..$num_experiments};
     do
         mkdir -p outputs/${gorilla_dir}/experiment_$j/;
     done
@@ -40,7 +45,7 @@ function gorilla_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in {1..100};
+        for j in {1..$num_experiments};
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -55,6 +60,7 @@ function gorilla_benchmark() {
 }
 
 function query_length_benchmark() {
+    echo "Running query length benchmark";
     HG38_QUERY_LEN=hg38/simulation/query_length
     QUERY_LENGTHS=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     MIN_LENGTHS=( 500 1000 1500 2000 2500 5000 10000 20000 40000 80000 100000 125000 150000 )
@@ -62,7 +68,7 @@ function query_length_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in {1..100};
+        for j in {1..$num_experiments};
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -77,6 +83,7 @@ function query_length_benchmark() {
 }
 
 function error_benchmark() {
+    echo "Running error rate benchmark";
     HG38_SUB_RATE=hg38/simulation/substitution_rate
     SUB_RATES=( 001 002 003 004 005 006 007 008 009 010 )
     PIS=( 99 98 97 96 95 94 93 92 91 90 )
@@ -85,7 +92,7 @@ function error_benchmark() {
     for i in ${!SUB_RATES[@]};
     do
         filename=${SUB_RATES[i]}
-        for j in {1..100};
+        for j in {1..$num_experiments};
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -99,7 +106,7 @@ function error_benchmark() {
 }
 
 pan_trog_benchmark && wait;
-gorilla_benchmark && wait;
-error_benchmark && wait;
-query_length_benchmark;
+#gorilla_benchmark && wait;
+#error_benchmark && wait;
+#query_length_benchmark;
 
