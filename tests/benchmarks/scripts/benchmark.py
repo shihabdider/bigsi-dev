@@ -546,8 +546,8 @@ def main():
     write_to_json(bigsi_results, bigsi_results_path)
     print('Wrote to {}'.format(bigsi_results_path))
 
-    mashmap_results_path = args.output + '.mashmap.out'
-    run_mashmap(args.query, config, args.identity, args.length, output=mashmap_results_path)
+    #mashmap_results_path = args.output + '.mashmap.out'
+    #run_mashmap(args.query, config, args.identity, args.length, output=mashmap_results_path)
 
 
 if __name__ == "__main__":
