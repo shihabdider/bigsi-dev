@@ -140,10 +140,9 @@ function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
 
 function computeLowerBoundContainmentScore(containmentScore, 
     numMinimizersInQuery, confidenceInterval) {
-    const q2 = (1 - confidenceInterval)/2
     
     // begin search from x = s * containment score
-    let x = quantile(q2, numMinimizersInQuery, containmentScore)
+    let x = quantile(confidenceInterval, numMinimizersInQuery, containmentScore)
 
     const lowerBoundContainmentScore = x / numMinimizersInQuery;
     return lowerBoundContainmentScore; 
