@@ -74,7 +74,7 @@ function pan_trog_metrics() {
     lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     for length in "${lengths[@]}"; 
     do
-        for i in {1..100};
+        for i in {1..10};
         do
             python3 scripts/compute_metric.py -b \
             outputs/${pan_trog_dir}/experiment_$i/${length}.bigsi.json -m \
@@ -104,13 +104,13 @@ function gorilla_metrics() {
 #query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity_03_unbound.txt
 #query_length_metrics specificity > metrics/adaptive_error_length_specificity_03_unbound.txt
 
-nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities_003.txt;
-nanopore_read_metrics specificity > metrics/nanopore_read_specificities_003.txt; 
-pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities_003.txt;
-pacbio_read_metrics specificity > metrics/pacbio_read_specificities_003.txt
+#nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities_003.txt;
+#nanopore_read_metrics specificity > metrics/nanopore_read_specificities_003.txt; 
+#pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities_003.txt;
+#pacbio_read_metrics specificity > metrics/pacbio_read_specificities_003.txt
 
-#pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities_03_unbound.txt;
-#pan_trog_metrics specificity > metrics/pan_trog_specificities_03_unbound.txt; 
+pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities_90CI.txt;
+pan_trog_metrics specificity > metrics/pan_trog_specificities_90CI.txt; 
 #gorilla_metrics sensitivity > metrics/gorilla_sensitivities_03_unbound.txt;
 #gorilla_metrics specificity > metrics/gorilla_specificities_03_unbound.txt
 
