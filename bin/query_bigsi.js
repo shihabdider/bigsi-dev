@@ -81,9 +81,7 @@ function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
     const submatrixRows = []
 
     const intSize = 16
-    const paddingSize = intSize - (numCols % intSize)
-    const numColsPadded = numCols + paddingSize
-    const numInts = numColsPadded/intSize
+    const numInts = numCols/intSize
 
     for (const rowNum of rowFilter){
 
@@ -169,9 +167,9 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
         let numIntersections = hammingWeights[bucketNum]
         const containmentScore = numIntersections/queryNumBitsSet
         const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.90)
-        //const errorRate = -1/kmerLength * Math.log(containmentScore)
         const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
         if (errorRate <= subrate) {
+            console.log(errorRate)
             //console.log(hammingWeights[bucketNum])
             const percentMatch = 100*(1 - errorRate)
             bigsiHits[bucketNum] = {'percent match': percentMatch}

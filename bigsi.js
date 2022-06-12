@@ -38,7 +38,6 @@ async function main(){
     const bucketToPosition = await writeBigsi.makeBucketToPositionMap(fasta)
     writeBigsi.writeBucketMapToJSON(bucketToPosition, `${argv.output}_bucket_map.json`)
 
-
 }
 
 main()
