@@ -80,18 +80,20 @@ function getBloomFilterSetBitsIndices(queryBF){
 function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
     const submatrixRows = []
 
-    const numSeqs = numCols/16
+    const intSize = 16
+    const paddingSize = intSize - (numCols % intSize)
+    const numColsPadded = numCols + paddingSize
+    const numInts = numColsPadded/intSize
 
     for (const rowNum of rowFilter){
 
-        const offsetStart = rowNum*numSeqs
-        const offsetEnd = offsetStart + numSeqs
+        const offsetStart = rowNum*numInts
+        const offsetEnd = offsetStart + numInts
 
         const rowInts = Array.from(bigsi.subarray(offsetStart, offsetEnd))
         const rowBitStrings = rowInts.map((num) => utils.zeroPadBitstring(num.toString(2), 16))
         const rowBitString = rowBitStrings.join('')
 
-        // Front padding ensures all columns are accounted for
         const row = rowBitString.split('').map(Number)
         submatrixRows.push(row)
     }
