@@ -522,10 +522,10 @@ def main():
         required=True
     )
     parser.add_argument(
-        "-m", "--mashmap", type=bool, 
-        help="Flag for whether to run mashmap on the benchmark data", 
+        "-m", "--mashmap", type=int, 
+        help="Flag (0 or 1) for whether to run mashmap on the benchmark data", 
         required=True,
-        default=True
+        default=1
     )
     args = parser.parse_args()
 

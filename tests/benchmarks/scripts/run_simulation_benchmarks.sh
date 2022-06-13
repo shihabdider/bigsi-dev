@@ -1,5 +1,7 @@
-num_experiments=$1
-echo "Running $num_experiments experiments...";
+NUM_EXPERIMENTS=$1
+MASHMAP_FLAG=$2
+echo "Running $NUM_EXPERIMENTS experiments...";
+echo "Running mashmap query: $MASHMAP_FLAG"
 
 # Global parameters
 QUERY_LENGTHS=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
@@ -9,7 +11,7 @@ function mammal_benchmark() {
     echo "Running $1 benchmark";
     mammal_dir=$1/simulation
 
-    for j in $( seq 1 $num_experiments );
+    for j in $( seq 1 $NUM_EXPERIMENTS );
     do
         mkdir -p outputs/${mammal_dir}/experiment_$j/;
     done
@@ -17,7 +19,7 @@ function mammal_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in $( seq 1 $num_experiments );
+        for j in $( seq 1 $NUM_EXPERIMENTS );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -25,7 +27,7 @@ function mammal_benchmark() {
                 -c scripts/hg38.office.config.json \
                 -o outputs/${mammal_dir}/experiment_$j/${QUERY_LENGTHS[i]} \
                 -i 95 \
-                -l ${MIN_LENGTHS[i]} \
+                -m $MASHMAP_FLAG \
         &
         done
     done
@@ -38,7 +40,7 @@ function query_length_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in $( seq 1 $num_experiments );
+        for j in $( seq 1 $NUM_EXPERIMENTS );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -46,6 +48,7 @@ function query_length_benchmark() {
                 -c scripts/hg38.office.config.json \
                 -o outputs/${HG38_QUERY_LEN}/experiment_$j/${QUERY_LENGTHS[i]} \
                 -i 100 \
+                -m $MASHMAP_FLAG \
         &
         done
     done
@@ -59,7 +62,7 @@ function error_benchmark() {
     for i in ${!SUB_RATES[@]};
     do
         filename=${SUB_RATES[i]}
-        for j in $( seq 1 $num_experiments );
+        for j in $( seq 1 $NUM_EXPERIMENTS );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -67,6 +70,7 @@ function error_benchmark() {
                 -c scripts/hg38.office.config.json \
                 -o outputs/${HG38_SUB_RATE}/experiment_$j/${filename} \
                 -i ${SUB_RATES[i]} \
+                -m $MASHMAP_FLAG \
         &
         done
     done
