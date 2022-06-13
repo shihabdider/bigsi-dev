@@ -80,10 +80,10 @@ function gorilla_metrics() {
     done
 }
 
-sub_rate_metrics sensitivity > metrics/adaptive_error_error_sensitivity_90CI.txt
-sub_rate_metrics specificity > metrics/adaptive_error_error_specificity_90CI.txt
-query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity_90CI.txt
-query_length_metrics specificity > metrics/adaptive_error_length_specificity_90CI.txt
+#sub_rate_metrics sensitivity > metrics/adaptive_error_error_sensitivity_90CI.txt
+#sub_rate_metrics specificity > metrics/adaptive_error_error_specificity_90CI.txt
+#query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity_90CI.txt
+#query_length_metrics specificity > metrics/adaptive_error_length_specificity_90CI.txt
 
 #nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities_003.txt;
 #nanopore_read_metrics specificity > metrics/nanopore_read_specificities_003.txt; 

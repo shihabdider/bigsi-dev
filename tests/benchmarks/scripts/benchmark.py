@@ -517,12 +517,6 @@ def main():
         required=True
     )
     parser.add_argument(
-        "-l", "--length", type=int, 
-        help="Sequence length parameter for mashmap", 
-        required=False,
-	default=2500
-    )
-    parser.add_argument(
         "-o", "--output", type=str, 
         help="Base file path for outputting benchmark files", 
         required=True
@@ -536,9 +530,11 @@ def main():
     query_records = [record for record in SeqIO.parse(args.query, 'fasta')]
 
     bigsi_results = {}
+    query_lengths = []
+    subrate = int(args.identity)/100
     for record in query_records:
         query_seq = str(record.seq)
-        subrate = (1 - args.identity/100)
+        query_lengths.append(len(query_seq))
         bigsi_output = run_bigsi_query(query_seq, config, subrate)
         bigsi_results[record.id] = bigsi_output
 
@@ -547,7 +543,9 @@ def main():
     print('Wrote to {}'.format(bigsi_results_path))
 
     mashmap_results_path = args.output + '.mashmap.out'
-    run_mashmap(args.query, config, args.identity, args.length, output=mashmap_results_path)
+    mashmap_query_length = max(query_lengths)/2
+    mashmap_identity = 1 - subrate
+    run_mashmap(args.query, config, mashmap_identity, mashmap_query_length, output=mashmap_results_path)
 
 
 if __name__ == "__main__":
