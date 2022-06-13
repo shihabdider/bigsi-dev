@@ -141,10 +141,9 @@ function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
 function computeLowerBoundContainmentScore(containmentScore, 
     numMinimizersInQuery, confidenceInterval) {
     
-    // begin search from x = s * containment score
     let x = quantile(confidenceInterval, numMinimizersInQuery, containmentScore)
-
     const lowerBoundContainmentScore = x / numMinimizersInQuery;
+
     return lowerBoundContainmentScore; 
 }
 
@@ -165,7 +164,7 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
     for (let bucketNum = 0; bucketNum < hammingWeights.length; bucketNum++){
         let numIntersections = hammingWeights[bucketNum]
         const containmentScore = numIntersections/queryNumBitsSet
-        const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.9995)
+        const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.9999999)
         //const errorRate = -1/kmerLength * Math.log(containmentScore)
         const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
         if (errorRate <= subrate) {
