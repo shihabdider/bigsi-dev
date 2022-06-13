@@ -100,10 +100,10 @@ function bitstringsToInts(bitstrings) {
     const ints = []
     const intSize = config.intBits
     for (const bitstring of bitstrings) {
-        const paddingSize = intSize - (bitstring.length % intSize)
-        const paddedBitstring = bitstring.padEnd(paddingSize, '0')
+        const paddedBitstringSize = bitstring.length + (intSize - (bitstring.length % intSize))
+        const paddedBitstring = bitstring.padEnd(paddedBitstringSize, '0')
         const regex = new RegExp(`.{1,${intSize}}`, "g");
-        const chunks = bitstring.match(regex)
+        const chunks = paddedBitstring.match(regex)
         for (const chunk of chunks) {
             const integer = parseInt(chunk, intSize)
             ints.push(integer)
