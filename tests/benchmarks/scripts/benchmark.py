@@ -521,6 +521,12 @@ def main():
         help="Base file path for outputting benchmark files", 
         required=True
     )
+    parser.add_argument(
+        "-m", "--mashmap", type=bool, 
+        help="Flag for whether to run mashmap on the benchmark data", 
+        required=True,
+        default=True
+    )
     args = parser.parse_args()
 
     config = ''
@@ -542,10 +548,11 @@ def main():
     write_to_json(bigsi_results, bigsi_results_path)
     print('Wrote to {}'.format(bigsi_results_path))
 
-    mashmap_results_path = args.output + '.mashmap.out'
-    mashmap_query_length = max(query_lengths)/2
-    mashmap_identity = 1 - subrate
-    run_mashmap(args.query, config, mashmap_identity, mashmap_query_length, output=mashmap_results_path)
+    if args.mashmap:
+        mashmap_results_path = args.output + '.mashmap.out'
+        mashmap_query_length = min(query_lengths)/2
+        mashmap_identity = 1 - subrate
+        run_mashmap(args.query, config, mashmap_identity, mashmap_query_length, output=mashmap_results_path)
 
 
 if __name__ == "__main__":
