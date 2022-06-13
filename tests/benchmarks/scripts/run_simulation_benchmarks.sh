@@ -37,7 +37,7 @@ function gorilla_benchmark() {
     MIN_LENGTHS=( 500 1000 1500 2000 2500 5000 10000 20000 40000 80000 100000 125000 150000 )
 
 
-    for j in {1..$num_experiments};
+    for j in $( seq 1 $num_experiments );
     do
         mkdir -p outputs/${gorilla_dir}/experiment_$j/;
     done
@@ -45,7 +45,7 @@ function gorilla_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in {1..$num_experiments};
+        for j in $( seq 1 $num_experiments );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -68,7 +68,7 @@ function query_length_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in {1..$num_experiments};
+        for j in $( seq 1 $num_experiments );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -92,7 +92,7 @@ function error_benchmark() {
     for i in ${!SUB_RATES[@]};
     do
         filename=${SUB_RATES[i]}
-        for j in {1..$num_experiments};
+        for j in $( seq 1 $num_experiments );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -105,8 +105,8 @@ function error_benchmark() {
     done
 }
 
-pan_trog_benchmark && wait;
+#pan_trog_benchmark && wait;
 #gorilla_benchmark && wait;
-#error_benchmark && wait;
-#query_length_benchmark;
+error_benchmark && wait;
+query_length_benchmark;
 
