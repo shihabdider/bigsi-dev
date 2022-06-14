@@ -1,5 +1,5 @@
-const hexBigsi = require('./test_data/hg38_chr1_hex.json')
-const helper = require('../bin/helper.js')
+//const hexBigsi = require('./test_data/hg38_chr1_hex.json')
+const helper = require('../bin/utils.js')
 const BitSet = require('bitset')
 const matrix = require('matrix-js')
 const fs = require('fs')
@@ -113,25 +113,44 @@ function writeBufferToFile(path, buffer){
 }
 
 function main(){
-    const testBigsiArray = [
-        [1, 1, 1, 0, 1, 1, 0, 1, 
-            1, 1, 0, 1, 1, 0, 1, 1],
-        [0, 0, 1, 0, 1, 1, 0, 1, 
-            1, 1, 0, 0, 1, 0, 1, 0]
-    ]
 
-    const bigsiMatrix = matrix(testBigsiArray)
-    const buffer = matrixToBuffer(bigsiMatrix)
+    const intSize = 8
+    const bitstring = '00001000001000'
+    const paddingSize = bitstring.length + (intSize - (bitstring.length % intSize))
+    const paddedBitstring = bitstring.padEnd(paddingSize, '0')
+    const regex = new RegExp(`.{1,${intSize}}`, "g");
+    const chunks = paddedBitstring.match(regex)
 
-    const bufferPath ='tests/test_data/bufferTestFile.bin' 
-    fs.writeFileSync(bufferPath, buffer, 'binary')
-    const loadedBuffer = fs.readFileSync(bufferPath)
-    let arr = new Uint16Array(loadedBuffer.buffer, loadedBuffer.byteOffset, loadedBuffer.length / 2);
-    console.log('arr', arr)
+    const ints = []
+    for (const chunk of chunks) {
+        const integer = parseInt(chunk, intSize)
+        ints.push(integer)
+    }
 
-    const derivedMatrix = bufferToMatrix(arr)
+    console.log(bitstring, bitstring.length, paddingSize)
+    console.log(paddedBitstring)
+    console.log(chunks)
+    console.log(ints)
 
-    console.log('bigsi:', bigsiMatrix(), '\n\n', 'derived:', derivedMatrix(), '\n\n', 'original:', testBigsiArray)
+    //const testBigsiArray = [
+    //    [1, 1, 1, 0, 1, 1, 0, 1, 
+    //        1, 1, 0, 1, 1, 0, 1, 1],
+    //    [0, 0, 1, 0, 1, 1, 0, 1, 
+    //        1, 1, 0, 0, 1, 0, 1, 0]
+    //]
+
+    //const bigsiMatrix = matrix(testBigsiArray)
+    //const buffer = matrixToBuffer(bigsiMatrix)
+
+    //const bufferPath ='tests/test_data/bufferTestFile.bin' 
+    //fs.writeFileSync(bufferPath, buffer, 'binary')
+    //const loadedBuffer = fs.readFileSync(bufferPath)
+    //let arr = new Uint16Array(loadedBuffer.buffer, loadedBuffer.byteOffset, loadedBuffer.length / 2);
+    //console.log('arr', arr)
+
+    //const derivedMatrix = bufferToMatrix(arr)
+
+    //console.log('bigsi:', bigsiMatrix(), '\n\n', 'derived:', derivedMatrix(), '\n\n', 'original:', testBigsiArray)
 
 }
 
