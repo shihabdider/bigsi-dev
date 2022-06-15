@@ -537,7 +537,7 @@ def main():
 
     bigsi_results = {}
     query_lengths = []
-    subrate = int(args.identity)/100
+    subrate = 1 - (int(args.identity)/100)
     for record in query_records:
         query_seq = str(record.seq)
         query_lengths.append(len(query_seq))
