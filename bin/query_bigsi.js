@@ -125,7 +125,7 @@ function computeLowerBoundContainmentScore(containmentScore,
     // begin search from x = s * containment score
     let x = quantile(confidenceInterval, numMinimizersInQuery, containmentScore)
 
-    const lowerBoundContainmentScore = x / numMinimizersInQuery;
+    const lowerBoundContainmentScore = Math.min(x / numMinimizersInQuery, 1);
     return lowerBoundContainmentScore; 
 }
 
@@ -147,7 +147,7 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
         let numIntersections = hammingWeights[bucketNum]
         if (numIntersections > 0) {
             const containmentScore = numIntersections/queryNumBitsSet
-            const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.9999999)
+            const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.99)
             const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
             if (errorRate <= subrate) {
                 //console.log(hammingWeights[bucketNum])
