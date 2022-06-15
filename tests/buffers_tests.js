@@ -1,10 +1,8 @@
 //const hexBigsi = require('./test_data/hg38_chr1_hex.json')
-const helper = require('../bin/utils.js')
+const utils = require('../bin/utils.js')
 const BitSet = require('bitset')
 const matrix = require('matrix-js')
 const fs = require('fs')
-
-
 
 //write bitmatrix to buffer 
 function matrixToBuffer(bitmatrix){
@@ -50,7 +48,7 @@ function bufferToMatrix(buffer){
 
         const rowInts = Array.from(buffer.subarray(offsetStart, offsetEnd))
         console.log(rowInts, rowInts[0].toString(2))
-        const rowBitStrings = rowInts.map((num) => helper.zeroPadBitstring(num.toString(2), 16))
+        const rowBitStrings = rowInts.map((num) => utils.zeroPadBitstring(num.toString(2), 16))
         const rowBitString = rowBitStrings.join('')
 
         // Front padding ensures all columns are accounted for
@@ -108,10 +106,6 @@ function bufferTest(){
     console.log(int8View.length)
 }
 
-function writeBufferToFile(path, buffer){
-
-}
-
 function main(){
 
     const intSize = 8
@@ -123,14 +117,19 @@ function main(){
 
     const ints = []
     for (const chunk of chunks) {
-        const integer = parseInt(chunk, intSize)
+        const integer = parseInt(chunk, 2)
         ints.push(integer)
     }
+
+    const rowBitStrings = ints.map((num) => utils.zeroPadBitstring(num.toString(2), intSize))
+    const rowBitString = rowBitStrings.join('')
 
     console.log(bitstring, bitstring.length, paddingSize)
     console.log(paddedBitstring)
     console.log(chunks)
     console.log(ints)
+    console.log(rowBitStrings)
+    console.log(rowBitString, paddedBitstring)
 
     //const testBigsiArray = [
     //    [1, 1, 1, 0, 1, 1, 0, 1, 

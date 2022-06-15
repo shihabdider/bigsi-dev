@@ -90,10 +90,10 @@ query_length_metrics specificity > metrics/adaptive_error_length_specificity_com
 #pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities_003.txt;
 #pacbio_read_metrics specificity > metrics/pacbio_read_specificities_003.txt
 
-#pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities_90CI.txt;
-#pan_trog_metrics specificity > metrics/pan_trog_specificities_90CI.txt; 
-#gorilla_metrics sensitivity > metrics/gorilla_sensitivities_03_unbound.txt;
-#gorilla_metrics specificity > metrics/gorilla_specificities_03_unbound.txt
+pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities_comp.txt;
+pan_trog_metrics specificity > metrics/pan_trog_specificities_comp.txt; 
+gorilla_metrics sensitivity > metrics/gorilla_sensitivities_comp.txt;
+gorilla_metrics specificity > metrics/gorilla_specificities_comp.txt
 
 #python compute_metric.py -b output/synthetic_seq_300M.random.001.bigsi.json -m output/synthetic_seq_300M.random.001.mashmap.out -t $METRIC
 #python compute_metric.py -b output/synthetic_seq_300M.random.002.bigsi.json -m output/synthetic_seq_300M.random.002.mashmap.out -t $METRIC

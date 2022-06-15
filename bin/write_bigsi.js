@@ -105,7 +105,7 @@ function bitstringsToInts(bitstrings) {
         const regex = new RegExp(`.{1,${intSize}}`, "g");
         const chunks = paddedBitstring.match(regex)
         for (const chunk of chunks) {
-            const integer = parseInt(chunk, intSize)
+            const integer = parseInt(chunk, 2)
             ints.push(integer)
         }
     }

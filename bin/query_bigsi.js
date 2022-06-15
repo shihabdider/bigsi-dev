@@ -101,24 +101,6 @@ function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
     return submatrix
 }
 
-// hexBigsi is an array of hexstrings
-function getHexBigsiSubmatrix(hexBigsi, rowFilter){
-    const submatrixRows = []
-
-    for (const rowNum of rowFilter){
-
-        const rowHex = hexBigsi[rowNum]
-        const rowBitString = parseInt(rowHex, 16).toString(2).padStart(16, '0')
-        // Front padding ensures all columns are accounted for
-        const row = rowBitString.split('').map(Number)
-        submatrixRows.push(row)
-    }
-
-    const submatrix = matrix(submatrixRows)
-
-    return submatrix
-}
-
 function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
     const numRows = submatrix.size()[0]
     const submatrix_T = submatrix.trans()
@@ -163,41 +145,19 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
 
     for (let bucketNum = 0; bucketNum < hammingWeights.length; bucketNum++){
         let numIntersections = hammingWeights[bucketNum]
-        const containmentScore = numIntersections/queryNumBitsSet
-        const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.9999999)
-        const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
-        if (errorRate <= subrate) {
-            //console.log(hammingWeights[bucketNum])
-            const percentMatch = 100*(1 - errorRate)
-            bigsiHits[bucketNum] = {'percent match': percentMatch}
+        if (numIntersections > 0) {
+            const containmentScore = numIntersections/queryNumBitsSet
+            const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.9999999)
+            const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
+            if (errorRate <= subrate) {
+                //console.log(hammingWeights[bucketNum])
+                const percentMatch = 100*(1 - errorRate)
+                bigsiHits[bucketNum] = {'percent match': percentMatch}
+            }
         }
     }
 }
 
-function queryHexBigsi(hexBigsi, queryFragmentsBloomFilters, bloomFilterSize){
-    const bigsiHits = {}
-
-    const numFragments = queryFragmentsBloomFilters.length
-    //console.log('number of query fragments: ', numFragments)
-
-    for (const bloomFilter of queryFragmentsBloomFilters){
-        const queryBFSetBitsIndices = getBloomFilterSetBitsIndices(bloomFilter._filter)
-        
-        const querySubmatrix = getHexBigsiSubmatrix(hexBigsi, queryBFSetBitsIndices)
-
-        if (numFragments == 1){
-            computeQueryContainmentScores(querySubmatrix, bigsiHits, bloomFilterSize, subrate)
-        } else {
-            computeSubmatrixHits(querySubmatrix, bigsiHits, numCols)
-        }
-    }
-
-    for (const bucketId in bigsiHits) {
-        bigsiHits[bucketId]['score'] = `${bigsiHits[bucketId]['hits']}/${numFragments}`;
-    }
-
-    return bigsiHits
-}
 
 /** 
  * @param { array of bloom filters } queryFragmentsBloomFilters - an array of Bloom filters with fragment 
@@ -336,10 +296,8 @@ module.exports = {
     makeFragmentsBloomFilters: makeFragmentsBloomFilters,
     getBloomFilterSetBitsIndices: getBloomFilterSetBitsIndices,
     getBinaryBigsiSubmatrix: getBinaryBigsiSubmatrix,
-    getHexBigsiSubmatrix: getHexBigsiSubmatrix,
     computeSubmatrixHits: computeSubmatrixHits,
     computeQueryContainmentScores: computeQueryContainmentScores, 
     queryBinaryBigsi: queryBinaryBigsi,
-    queryHexBigsi: queryHexBigsi,
     main: main
 }
