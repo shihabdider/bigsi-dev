@@ -79,5 +79,5 @@ function error_benchmark() {
 #mammal_benchmark pan_trog && wait;
 #mammal_benchmark gorilla && wait;
 error_benchmark && wait;
-query_length_benchmark;
+#query_length_benchmark;
 
