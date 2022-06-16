@@ -26,7 +26,7 @@ function mammal_benchmark() {
                 -q seqs/${mammal_dir}/experiment_$j/${QUERY_LENGTHS[i]}.fasta \
                 -c scripts/hg38.office.config.json \
                 -o outputs/${mammal_dir}/experiment_$j/${QUERY_LENGTHS[i]} \
-                -i 95 \
+                -i 5 \
                 -m $MASHMAP_FLAG \
         &
         done
@@ -47,7 +47,7 @@ function query_length_benchmark() {
                 -q seqs/${HG38_QUERY_LEN}/experiment_$j/${QUERY_LENGTHS[i]}.fasta \
                 -c scripts/hg38.office.config.json \
                 -o outputs/${HG38_QUERY_LEN}/experiment_$j/${QUERY_LENGTHS[i]} \
-                -i 100 \
+                -i 0 \
                 -m $MASHMAP_FLAG \
         &
         done
