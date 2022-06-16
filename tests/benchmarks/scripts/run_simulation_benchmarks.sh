@@ -69,15 +69,15 @@ function error_benchmark() {
                 -q seqs/${HG38_SUB_RATE}/experiment_$j/${filename}.fasta \
                 -c scripts/hg38.office.config.json \
                 -o outputs/${HG38_SUB_RATE}/experiment_$j/${filename} \
-                -i ${SUB_RATES[i]} \
+                -i 5 \
                 -m $MASHMAP_FLAG \
         &
         done
     done
 }
 
-mammal_benchmark pan_trog && wait;
-mammal_benchmark gorilla && wait;
+#mammal_benchmark pan_trog && wait;
+#mammal_benchmark gorilla && wait;
 error_benchmark && wait;
 query_length_benchmark;
 
