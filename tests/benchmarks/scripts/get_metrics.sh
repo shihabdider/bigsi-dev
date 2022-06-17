@@ -1,31 +1,55 @@
+# Todo: add lengths to nanopore benchmark
 num_experiments=$1
-echo "Computing metrics for $num_experiments experiments..."
+query_config=$2
+echo "Computing metrics for $num_experiments experiments on $query_config BIGSI..."
+
+function run_benchmark() {
+    local benchmark_dir=$1
+    local metric=$2
+    shift
+    local parameters=("$@")
+    for param in "${parameters[@]}"; do
+        for i in $( seq 1 $num_experiments );
+        do
+            bigsi=outputs/${benchmark_dir}/experiment_$i/${param}.bigsi.json;
+            mashmap=outputs/${benchmark_dir}/experiment_$i/${param}.mashmap.out;
+            python3 scripts/compute_metric.py \
+                -b ${bigsi} -m ${mashmap}  -t ${metric} -c ${query_config}
+        done
+    done
+}
 
 function sub_rate_metrics() {
-    local METRIC=$1
-    HG38_SUB_RATE=hg38/simulation/substitution_rate
-    errs=( 001 002 003 004 005 006 007 008 009 010 )
-    for err in "${errs[@]}"; do
-        for i in $( seq 1 $num_experiments );
-        do
-            python3 scripts/compute_metric.py -b outputs/${HG38_SUB_RATE}/experiment_$i/${err}.bigsi.json -m outputs/${HG38_SUB_RATE}/experiment_$i/${err}.mashmap.out -t $METRIC
-        done
-    done
+    local benchmark_dir=hg38/simulation/substitution_rate
+    local errs=( 001 002 003 004 005 006 007 008 009 010 )
+    local output=$1
+    run_benchmark ${benchmark_dir} sensitivity ${errs[@]} > metrics/${output}_sensitivity.txt
+    run_benchmark ${benchmark_dir} specificity ${errs[@]} > metrics/${output}_specificity.txt
 }
-
 
 function query_length_metrics() {
-    local METRIC=$1
-    HG38_QUERY_LEN=hg38/simulation/query_length
-    lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
-    for length in "${lengths[@]}"; do
-        for i in $( seq 1 $num_experiments );
-        do
-            python3 scripts/compute_metric.py -b outputs/${HG38_QUERY_LEN}/experiment_$i/${length}.bigsi.json -m outputs/${HG38_QUERY_LEN}/experiment_$i/${length}.mashmap.out -t $METRIC
-        done
-    done
+    local benchmark_dir=hg38/simulation/query_length
+    local lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+    local output=$1
+    run_benchmark ${benchmark_dir} sensitivity ${lengths[@]} > metrics/${output}_sensitivity.txt
+    run_benchmark ${benchmark_dir} specificity ${lengths[@]} > metrics/${output}_specificity.txt
 }
 
+function pan_trog_metrics() {
+    local benchmark_dir=pan_trog/simulation/
+    local lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+    local output=$1
+    run_benchmark ${benchmark_dir} sensitivity ${lengths[@]} > metrics/${output}_sensitivity.txt
+    run_benchmark ${benchmark_dir} specificity ${lengths[@]} > metrics/${output}_specificity.txt
+}
+
+function gorilla_metrics() {
+    local benchmark_dir=gorilla/simulation/
+    local lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+    local output=$1
+    run_benchmark ${benchmark_dir} sensitivity ${lengths[@]} > metrics/${output}_sensitivity.txt
+    run_benchmark ${benchmark_dir} specificity ${lengths[@]} > metrics/${output}_specificity.txt
+}
 
 function nanopore_read_metrics() {
     local METRIC=$1
@@ -49,48 +73,13 @@ function pacbio_read_metrics() {
     done
 }
 
-function pan_trog_metrics() {
-    local METRIC=$1
-    pan_trog_dir=pan_trog/simulation/
-    lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
-    for length in "${lengths[@]}"; 
-    do
-        for i in $( seq 1 $num_experiments );
-        do
-            python3 scripts/compute_metric.py -b \
-            outputs/${pan_trog_dir}/experiment_$i/${length}.bigsi.json -m \
-            outputs/${pan_trog_dir}/experiment_$i/${length}.mashmap.out \
-            -t $METRIC
-        done
-    done
-}
+sub_rate_metrics sub_rate
+query_length_metrics query_length
 
-function gorilla_metrics() {
-    local METRIC=$1
-    gorilla_dir=gorilla/simulation/
-    lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
-    for length in "${lengths[@]}"; do
-        for i in $( seq 1 $num_experiments );
-        do
-            python3 scripts/compute_metric.py -b \
-            outputs/${gorilla_dir}/experiment_$i/${length}.bigsi.json -m \
-            outputs/${gorilla_dir}/experiment_$i/${length}.mashmap.out \
-            -t $METRIC
-        done
-    done
-}
-
-sub_rate_metrics sensitivity > metrics/adaptive_error_error_sensitivity_comp.txt
-sub_rate_metrics specificity > metrics/adaptive_error_error_specificity_comp.txt
-query_length_metrics sensitivity > metrics/adaptive_error_length_sensitivity_comp.txt
-query_length_metrics specificity > metrics/adaptive_error_length_specificity_comp.txt
+pan_trog_metrics pan_trog
+gorilla_metrics gorilla
 
 #nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities_003.txt;
 #nanopore_read_metrics specificity > metrics/nanopore_read_specificities_003.txt; 
 #pacbio_read_metrics sensitivity > metrics/pacbio_read_sensitivities_003.txt;
 #pacbio_read_metrics specificity > metrics/pacbio_read_specificities_003.txt
-
-pan_trog_metrics sensitivity > metrics/pan_trog_sensitivities_comp.txt;
-pan_trog_metrics specificity > metrics/pan_trog_specificities_comp.txt; 
-gorilla_metrics sensitivity > metrics/gorilla_sensitivities_comp.txt;
-gorilla_metrics specificity > metrics/gorilla_specificities_comp.txt
