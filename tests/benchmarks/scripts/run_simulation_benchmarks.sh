@@ -26,7 +26,7 @@ function mammal_benchmark() {
                 -q seqs/${mammal_dir}/experiment_$j/${QUERY_LENGTHS[i]}.fasta \
                 -c scripts/hg38.office.config.json \
                 -o outputs/${mammal_dir}/experiment_$j/${QUERY_LENGTHS[i]} \
-                -i 5 \
+                -i 3 \
                 -m $MASHMAP_FLAG \
         &
         done
@@ -69,15 +69,15 @@ function error_benchmark() {
                 -q seqs/${HG38_SUB_RATE}/experiment_$j/${filename}.fasta \
                 -c scripts/hg38.office.config.json \
                 -o outputs/${HG38_SUB_RATE}/experiment_$j/${filename} \
-                -i 5 \
+                -i ${SUB_RATES[i]} \
                 -m $MASHMAP_FLAG \
         &
         done
     done
 }
 
-#mammal_benchmark pan_trog && wait;
-#mammal_benchmark gorilla && wait;
+mammal_benchmark pan_trog && wait;
+mammal_benchmark gorilla && wait;
 error_benchmark && wait;
 query_length_benchmark;
 
