@@ -1,4 +1,6 @@
-# Todo: add lengths to nanopore benchmark
+# Todo: 
+# - add lengths to nanopore benchmark
+# - set up cmd argument for running specific benchmark
 num_experiments=$1
 query_config=$2
 echo "Computing metrics for $num_experiments experiments on $query_config BIGSI..."
