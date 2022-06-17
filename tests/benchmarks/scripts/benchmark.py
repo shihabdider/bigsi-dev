@@ -91,7 +91,7 @@ def main():
     )
     args = parser.parse_args()
 
-    config = ''
+    config = {}
     with open(args.config, 'r') as handle:
         config = json.load(handle)
 

@@ -1,18 +1,6 @@
-from Bio import Entrez
-from Bio import SeqIO
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
-
-import random
-import subprocess
-import pysam
 import json
-import pandas as pd
 import argparse
 import logging
-import importlib
-import numpy as np
-
 
 def is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
     '''Checks if a mashmap mapping is in any of the reported bigsi bins'''
@@ -28,7 +16,7 @@ def is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
     return False
 
 
-def compute_specificity(bigsi_results, mashmap_results):
+def compute_specificity(bigsi_results, mashmap_results, total_num_bins):
     '''Computes specificity = TN/(TN+FP)
     Params: bigsi_results and mashmap_results are dicts with the same key 
     format
@@ -37,7 +25,6 @@ def compute_specificity(bigsi_results, mashmap_results):
     not fall in a bin that is not reported by BIGSI. A false positive is when a
     query's mashmap mapping does not match the bucket reported by BIGSI.
     '''
-    total_num_bins = 384
     true_negatives = 0
     false_positives = 0
     for query in mashmap_results:
@@ -45,7 +32,7 @@ def compute_specificity(bigsi_results, mashmap_results):
         bigsi_mappings = bigsi_results[query]
 
         num_matches = 0
-        num_no_matches = 0 
+        num_no_matches = 0
         for mashmap_mapping in mashmap_mappings:
             if is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
                 num_matches += 1
@@ -61,19 +48,19 @@ def compute_specificity(bigsi_results, mashmap_results):
 
 def compute_sensitivity(bigsi_results, mashmap_results):
     '''Computes sensitivity = TP/(TP+FN)
-    Params: bigsi_results and mashmap_results are dicts with the same key 
+    Params: bigsi_results and mashmap_results are dicts with the same key
     format
 
     A true positive is when a mashmap mapping for a given query sequence is
-    found within one of the buckets returned by the BIGSI query. A false 
-    negative is when a mashmap mapping is not found in any of the buckets 
+    found within one of the buckets returned by the BIGSI query. A false
+    negative is when a mashmap mapping is not found in any of the buckets
     returned by the BIGSI query.
     '''
     true_positives = 0
     false_negatives = 0
     for query in mashmap_results:
         mashmap_mappings = mashmap_results[query]
-        bigsi_mappings = bigsi_results[query] 
+        bigsi_mappings = bigsi_results[query]
 
         for mashmap_mapping in mashmap_mappings:
             if is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
@@ -134,19 +121,24 @@ def main():
     parser = argparse.ArgumentParser(
         description="Compute metrics on benchmark results.")
     parser.add_argument(
-        "-b", "--bigsi", type=str, 
-        help="JSON with BIGSI results", 
+        "-b", "--bigsi", type=str,
+        help="JSON with BIGSI results",
         required=True
     )
     parser.add_argument(
-        "-m", "--mashmap", type=str, 
-        help="Mashmap output file (truth set) corresponding to BIGSI results", 
+        "-m", "--mashmap", type=str,
+        help="Mashmap output file (truth set) corresponding to BIGSI results",
         required=True
     )
     parser.add_argument(
-        "-t", "--metric", type=str, 
+        "-c", "--config", type=str,
+        help="Query configuration file containing BIGSI dimensions",
+        required=True
+    )
+    parser.add_argument(
+        "-t", "--metric", type=str,
         choices=['accuracy', 'sensitivity', 'specificity'],
-        help="Specifies which metric to compute", 
+        help="Specifies which metric to compute",
         required=True
     )
     args = parser.parse_args()
@@ -155,7 +147,10 @@ def main():
     with open(args.bigsi, 'r') as handle:
         bigsi_results = json.load(handle)
     mashmap_results = load_mashmap(args.mashmap)
-    #print(len(bigsi_results.keys()), len(mashmap_results.keys()))
+
+    config = {}
+    with open(args.config, 'r') as handle:
+        config = json.load(handle)
 
     if args.metric == 'accuracy':
         accuracy = compute_accuracy(bigsi_results, mashmap_results)
@@ -164,7 +159,9 @@ def main():
         sensitivity = compute_sensitivity(bigsi_results, mashmap_results)
         print(args.bigsi, sensitivity)
     elif args.metric == 'specificity':
-        specificity = compute_specificity(bigsi_results, mashmap_results)
+        total_num_bins = config.cols - config.padding
+        specificity = compute_specificity(bigsi_results, mashmap_results,
+                total_num_bins)
         print(args.bigsi, specificity)
     else:
         print('Invalid metric')
