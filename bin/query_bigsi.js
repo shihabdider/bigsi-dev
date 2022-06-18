@@ -23,48 +23,8 @@ const fs = require('fs')
 const utils = require('./utils.js')
 const quantile = require( '@stdlib/stats-base-dists-binomial-quantile' );
 
-// One function is used for fragmenting and winnowing to prevent double 
-// iteration
-async function winnowQueryFragments(querySeq, fragmentSize=5000){
-
-    const querySize = querySeq.length
-    const queryWindowSize = 100
-
-    const queryFragmentsMinimizers = []
-
-    if (fragmentSize == 0){ //for non-frag queries
-        const queryMinimizers = utils.extractMinimizers(querySeq, queryWindowSize)
-        queryFragmentsMinimizers.push(queryMinimizers)
-    } else {
-
-        if (querySize <= 300_000 && querySize >= fragmentSize){
-
-            for (let n=0; n < Math.floor(querySize/fragmentSize); n++){
-                const start = n*fragmentSize
-                const end = Math.min(start + fragmentSize, querySize)
-                const queryFragmentSeq = querySeq.slice(start, end)
-                const queryFragmentMinimizers = utils.extractMinimizers(queryFragmentSeq, 1000)
-                queryFragmentsMinimizers.push(queryFragmentMinimizers)
-            }
-        } else { console.error("Inappropriate query size") }
-    }
-
-    return queryFragmentsMinimizers
-}
-
-function makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize){
-
-    const fragmentsBloomFilters = []
-    for (let fragmentMinimizerSet of queryFragmentsMinimizers){
-        const bf = utils.makeMinimizersBloomFilter(fragmentMinimizerSet, bloomFilterSize)
-        fragmentsBloomFilters.push(bf)
-    }
-
-    return fragmentsBloomFilters
-}
-
-function getBloomFilterSetBitsIndices(queryBF){
-    return queryBF.reduce((indices, number, index) => {
+function getBloomFilterSetBitsIndices(bloomFilter){
+    return bloomFilter.reduce((indices, number, index) => {
         if (number != 0) indices.push(index)
         return indices
     }, [])
@@ -122,7 +82,6 @@ function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
 
 function computeLowerBoundContainmentScore(containmentScore, 
     numMinimizersInQuery, confidenceInterval) {
-    // begin search from x = s * containment score
     let x = quantile(confidenceInterval, numMinimizersInQuery, containmentScore)
 
     const lowerBoundContainmentScore = Math.min(x / numMinimizersInQuery, 1);
@@ -134,7 +93,7 @@ function computeLowerBoundContainmentScore(containmentScore,
 // number of minimizers inserted into query Bloom Filter
 function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, subrate) {
     const kmerLength = 16
-    const queryNumBitsSet = submatrix.size()[0]
+    const numMinimizersInQuery = submatrix.size()[0]
     const submatrix_T = submatrix.trans()
     const hammingWeights = []
     for (const row of submatrix_T){
@@ -144,10 +103,10 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
     }
 
     for (let bucketNum = 0; bucketNum < hammingWeights.length; bucketNum++){
-        let numIntersections = hammingWeights[bucketNum]
-        if (numIntersections > 0) {
-            const containmentScore = numIntersections/queryNumBitsSet
-            const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.9999999)
+        let numMatchingMinimizers = hammingWeights[bucketNum]
+        if (numMatchingMinimizers > 0) {
+            const containmentScore = numMatchingMinimizers/numMinimizersInQuery
+            const lowerContainment = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.9999999)
             const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
             if (errorRate <= subrate) {
                 //console.log(hammingWeights[bucketNum])
@@ -160,30 +119,21 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
 
 
 /** 
- * @param { array of bloom filters } queryFragmentsBloomFilters - an array of Bloom filters with fragment 
- * minimizers inserted
- * @param { string } numCols - number of columns in bigsi
+ * @param { Array } queryMask - bloom filter of the query sequence as an array
+ * @param { string } numBins - number of bins in bigsi (corresponding to number 
+ * of columns)
  *
  * @return { object } filteredBigsiHits - object containing fragment hits in the bigsi buckets
  */
-async function queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize, subrate){
+async function queryBinaryBigsi(bigsiArray, queryMask, numBins, subrate){
 
     const bigsiHits = {}
 
-    const numFragments = queryFragmentsBloomFilters.length
-    //console.log('number of query fragments: ', numFragments)
+    const queryMaskSize = queryMask.length
+    const queryBFSetBitsIndices = getBloomFilterSetBitsIndices(queryMask)
+    const querySubmatrix = await getBinaryBigsiSubmatrix(bigsiArray, queryBFSetBitsIndices, numBins)
 
-    for (const bloomFilter of queryFragmentsBloomFilters){
-        const queryBFSetBitsIndices = getBloomFilterSetBitsIndices(bloomFilter)
-        
-        const querySubmatrix = await getBinaryBigsiSubmatrix(bigsiArray, queryBFSetBitsIndices, numCols)
-
-        if (numFragments == 1){
-            computeQueryContainmentScores(querySubmatrix, bigsiHits, bloomFilterSize, subrate)
-        } else {
-            computeSubmatrixHits(querySubmatrix, bigsiHits, numCols)
-        }
-    }
+    computeQueryContainmentScores(querySubmatrix, bigsiHits, queryMaskSize, subrate)
 
     for (const bucketId in bigsiHits) {
         bigsiHits[bucketId]['score'] = `${bigsiHits[bucketId]['hits']}/${numFragments}`;
@@ -198,31 +148,24 @@ async function main(querySeq, bigsiPath, bigsiConfigPath, subrate) {
     //console.log('bigsiArray size: ', bigsiArray.length)
 
     const bigsiDims = require(bigsiConfigPath)
-    const numCols = bigsiDims.cols
+    const numBins = bigsiDims.cols
     const bloomFilterSize = bigsiDims.rows
-    //const queryFragmentsMinimizers = await winnowQueryFragments(querySeq)
-    // Test: non-frag query
-    const isQuerySeqRightSize = querySeq.length >= 1000 && querySeq.length <= 300000
-    if (true) {
-        const fragmentSizeZero = 0
-        const queryFragmentsMinimizers = await winnowQueryFragments(querySeq, fragmentSizeZero)
-        const queryFragmentsBloomFilters = await makeFragmentsBloomFilters(queryFragmentsMinimizers, bloomFilterSize)
-        //const queryMinimizers = queryFragmentsMinimizers[0]
-        //const numHashes = 5
-        //const queryRowFilters = await utils.makeQueryRowFilters(queryMinimizers, bloomFilterSize, numHashes)
+    const queryWindowSize = 100
 
-        const filteredBigsiHits = await queryBinaryBigsi(bigsiArray, queryFragmentsBloomFilters, numCols, bloomFilterSize, subrate)
+    const isQuerySeqRightSize = querySeq.length >= 1000 && querySeq.length <= 300000
+    if (isQuerySeqRightSize) {
+        const queryMinimizers = utils.extractMinimizers(querySeq, queryWindowSize)
+        const queryMask = utils.makeMinimizersBloomFilter(queryMinimizers, bloomFilterSize)
+        const filteredBigsiHits = await queryBinaryBigsi(bigsiArray, queryMask, numBins, subrate)
 
         return filteredBigsiHits
     } else {
-        console.log('Query must be of length between 5Kb and 300Kb')
+        console.log('Query must be of length between 5Kbp and 300Kbp')
     }
 }
 
 
 module.exports = {
-    winnowQueryFragments: winnowQueryFragments,
-    makeFragmentsBloomFilters: makeFragmentsBloomFilters,
     getBloomFilterSetBitsIndices: getBloomFilterSetBitsIndices,
     getBinaryBigsiSubmatrix: getBinaryBigsiSubmatrix,
     computeSubmatrixHits: computeSubmatrixHits,
