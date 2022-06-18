@@ -22,7 +22,7 @@ function mammal_benchmark() {
                 -c scripts/hg38.office.config.json \
                 -o outputs/${mammal_dir}/experiment_$j/${QUERY_LENGTHS[i]} \
                 -i 3 \
-                -m $MASHMAP_FLAG \
+                -m $mashmap_flag \
         &
         done
     done
@@ -43,7 +43,7 @@ function query_length_benchmark() {
                 -c scripts/hg38.office.config.json \
                 -o outputs/${HG38_QUERY_LEN}/experiment_$j/${QUERY_LENGTHS[i]} \
                 -i 0 \
-                -m $MASHMAP_FLAG \
+                -m $mashmap_flag \
         &
         done
     done
@@ -65,7 +65,7 @@ function error_benchmark() {
                 -c scripts/hg38.office.config.json \
                 -o outputs/${HG38_SUB_RATE}/experiment_$j/${filename} \
                 -i ${SUB_RATES[i]} \
-                -m $MASHMAP_FLAG \
+                -m $mashmap_flag \
         &
         done
     done
