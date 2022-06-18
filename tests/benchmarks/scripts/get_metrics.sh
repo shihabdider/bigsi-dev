@@ -4,14 +4,13 @@
 function run_benchmark() {
     local benchmark_dir=$1
     local metric=$2
-    echo "Computing $metric for benchmark $benchmark_dir";
-    shift
+    shift 2
     local parameters=("$@")
     for param in "${parameters[@]}"; do
         for i in $( seq 1 $num_experiments );
         do
-            bigsi=outputs/${benchmark_dir}/experiment_$i/${param}.bigsi.json;
-            mashmap=outputs/${benchmark_dir}/experiment_$i/${param}.mashmap.out;
+            local bigsi=outputs/${benchmark_dir}/experiment_$i/${param}.bigsi.json;
+            local mashmap=outputs/${benchmark_dir}/experiment_$i/${param}.mashmap.out;
             python3 scripts/compute_metric.py \
                 -b ${bigsi} -m ${mashmap}  -t ${metric} -c ${query_config}
         done
