@@ -1,8 +1,3 @@
-NUM_EXPERIMENTS=$1
-MASHMAP_FLAG=$2
-echo "Running $NUM_EXPERIMENTS experiments...";
-echo "Running mashmap query: $MASHMAP_FLAG"
-
 # Global parameters
 QUERY_LENGTHS=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
 SUB_RATES=( 001 002 003 004 005 006 007 008 009 010 )
@@ -11,7 +6,7 @@ function mammal_benchmark() {
     echo "Running $1 benchmark";
     mammal_dir=$1/simulation
 
-    for j in $( seq 1 $NUM_EXPERIMENTS );
+    for j in $( seq 1 $num_experiments );
     do
         mkdir -p outputs/${mammal_dir}/experiment_$j/;
     done
@@ -19,7 +14,7 @@ function mammal_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in $( seq 1 $NUM_EXPERIMENTS );
+        for j in $( seq 1 $num_experiments );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -40,7 +35,7 @@ function query_length_benchmark() {
     N=12
     for i in ${!QUERY_LENGTHS[@]};
     do
-        for j in $( seq 1 $NUM_EXPERIMENTS );
+        for j in $( seq 1 $num_experiments );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -62,7 +57,7 @@ function error_benchmark() {
     for i in ${!SUB_RATES[@]};
     do
         filename=${SUB_RATES[i]}
-        for j in $( seq 1 $NUM_EXPERIMENTS );
+        for j in $( seq 1 $num_experiments );
         do
             ((b=b%N)); ((b++==0)) && wait
             time python3 scripts/benchmark.py \
@@ -76,8 +71,4 @@ function error_benchmark() {
     done
 }
 
-mammal_benchmark pan_trog && wait;
-mammal_benchmark gorilla && wait;
-error_benchmark && wait;
-query_length_benchmark;
 
