@@ -147,7 +147,7 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
         let numIntersections = hammingWeights[bucketNum]
         if (numIntersections > 0) {
             const containmentScore = numIntersections/queryNumBitsSet
-            const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.9999999)
+            const lowerContainment = computeLowerBoundContainmentScore(containmentScore, queryNumBitsSet, 0.9995)
             const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
             if (errorRate <= subrate) {
                 //console.log(hammingWeights[bucketNum])
