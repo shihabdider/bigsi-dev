@@ -4,7 +4,7 @@ SUB_RATES=( 001 002 003 004 005 006 007 008 009 010 )
 
 function mammal_benchmark() {
     echo "Running $1 benchmark";
-    mammal_dir=$1/simulation
+    mammal_dir=$1/simulation/query_length
 
     for j in $( seq 1 $num_experiments );
     do
