@@ -1,7 +1,8 @@
 const murmur = require('murmurhash-js')
-const { BloomFilter, getDistinctIndices } = require('bloom-filters')
+const { BloomFilter } = require('bloom-filters')
 const { IndexedFasta } = require('@gmod/indexedfasta')
 const cdf = require('binomial-cdf');
+const fs = require('fs')
 
 function zeroPadBitstring(bitstring, places){
     const paddedString = bitstring.padStart(places, '0')
@@ -133,17 +134,6 @@ function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, 
     }
 }
 
-function makeQueryRowFilters(minimizers, bloomFilterSize, numHashes) {
-    const queryRowFilters = []
-//    const seed = 78187493520
-    for (const minimizer of minimizers){
-        const indexes = getDistinctIndices(minimizer.toString(), bloomFilterSize, numHashes)
-        queryRowFilters.push(indexes)
-    }
-    console.log(queryRowFilters)
-    return queryRowFilters
-}
-
 function makeMinimizersBloomFilter(minimizers, bloomFilterSize) {
     // adjust filter size based on number of inserted elements and desired false pos 
     // rate
@@ -181,7 +171,6 @@ module.exports = {
     computeNumMinimizers: computeNumMinimizers,
     computeBloomFilterSize: computeBloomFilterSize,
     makeMinimizersBloomFilter: makeMinimizersBloomFilter,
-    makeQueryRowFilters: makeQueryRowFilters,
     writeToJSON: writeToJSON,
 }
 
