@@ -71,7 +71,8 @@ def main():
     args = parser.parse_args()
 
     output_records = []
-    if args.rate <= 0:
+    sub_rate = int(args.rate) / 100
+    if sub_rate <= 0:
         logging.error(
             "Mutation rate must be greater than 0"
         )
@@ -80,7 +81,7 @@ def main():
     else: 
         with open(args.input, 'r') as handle:
             records = [record for record in SeqIO.parse(handle, 'fasta')]
-            output_records = mutate_records(records, args.rate)
+            output_records = mutate_records(records, sub_rate)
 
     records_to_fasta(output_records, args.output)
 
