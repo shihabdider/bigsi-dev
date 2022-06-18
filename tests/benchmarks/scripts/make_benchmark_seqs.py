@@ -12,42 +12,6 @@ import argparse
 import logging
 
 
-def get_read_by_name(bam, read_name, loct):
-    '''Gets a read filtered by its name and location'''
-
-    with pysam.AlignmentFile(bam, "rb") as samfile:
-        for read in samfile.fetch(loc['ref'], loc['start'], loc['end']):
-            if read.query_name == read_name:
-                return read
-
-
-def get_sequence(identifier, start, end):
-    '''Retrieves sequence from NCBI'''
-    Entrez.email = 'shihabdider@berkeley.edu'
-    fasta_handle = Entrez.efetch(db='nucleotide', id=identifier, 
-                                 rettype='fasta', retmode='text', 
-                                 seq_start=start, seq_stop=end)
-
-    fasta_record = SeqIO.read(fasta_handle, "fasta")
-    fasta_handle.close()
-
-    return str(fasta_record.seq)
-
-
-def get_gene_sequence(gene_id):
-    '''Retrieves sequence of gene from NCBI'''
-    Entrez.email = 'shihabdider@berkeley.edu'
-    # get the ref length
-    gene_handle = Entrez.efetch(db='gene', id=gene_id,
-                           rettype='gene_table', retmode='text')
-
-    #gene_record = SeqIO.read(gene_handle, "text")
-
-    for line in gene_handle:
-        print(line)
-    gene_handle.close()
-
-
 def get_random_sequence(identifier, query_len):
     '''Retrieves a random sequence record of specified length from NCBI'''
 
@@ -143,57 +107,12 @@ def convert_acn(identifier, target_ref_name_example, acn_file):
 
     return ref_name
 
-def get_species_seqs(seq_ids, seq_length, num_queries):
-    '''
-        Gets random subsequence records from NCBI genome
-
-        Args:
-            seq_ids - array of NCBI formatted sequence ids
-            seq_length - length of the sequence to be retrieved
-            num_queries - how many subsequences to retrieve for each sequence
-            id
-
-        Returns:
-            records - array of SeqIO records
-    '''
-    records = []
-    for _ in range(num_queries):
-        for seq_id in seq_ids:
-            random_query_record = get_random_sequence(
-                seq_id,
-                seq_length
-            )
-            records.append(random_query_record)
-
-    return records
-
 
 def get_pysam_record(fasta_path, identifier, start, end):
     ref = pysam.FastaFile(fasta_path)
     seq = ref.fetch(identifier, start, end).upper()
     record_id = '{0}:{1}-{2}'.format(identifier, start, end)
     fasta_record = SeqRecord(Seq(seq), record_id)
-    return fasta_record
-
-
-def get_fasta_record(fasta_handle, identifier, start, end):
-    for record in SeqIO.parse(fasta_handle, 'fasta'):
-        if identifier == record.id:
-            sequence = str(record.seq[start:end])
-            fasta_record = SeqRecord(Seq(sequence), record.id)
-            return fasta_record
-
-
-def get_ncbi_record(identifier, start, end):
-    '''Retrieves seq record from NCBI'''
-    Entrez.email = 'shihabdider@berkeley.edu'
-    fasta_handle = Entrez.efetch(db='nucleotide', id=identifier, 
-                                 rettype='fasta', retmode='text', 
-                                 seq_start=start, seq_stop=end)
-
-    fasta_record = SeqIO.read(fasta_handle, "fasta")
-    fasta_handle.close()
-
     return fasta_record
 
 
@@ -207,24 +126,6 @@ def make_random_fasta_interval(faidx, identifier, interval_length):
             ref_lengths[name] = length
 
     ref_length = ref_lengths[identifier]
-    # get the interval
-    interval_start = random.randint(0, ref_length - interval_length)
-    interval_end = interval_start + interval_length - 1
-
-    return interval_start, interval_end
-
-
-def make_random_interval(identifier, interval_length):
-    '''Generates random start-end for retriving from NCBI'''
-
-    # get the ref length
-    Entrez.email = 'shihabdider@berkeley.edu'
-    gb_handle = Entrez.efetch(db='nucleotide', id=identifier,
-                              rettype='gb', retmode='text')
-    gb_record = SeqIO.read(gb_handle, "genbank")
-    gb_handle.close()
-    ref_length = len(gb_record.seq)
-
     # get the interval
     interval_start = random.randint(0, ref_length - interval_length)
     interval_end = interval_start + interval_length - 1
