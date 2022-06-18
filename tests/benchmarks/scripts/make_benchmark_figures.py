@@ -1,16 +1,18 @@
+import numpy as np
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-whitegrid')
-import numpy as np
 
 error_rates = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
 seq_lengths = [1000, 2000, 3000, 4000, 5000, 10000, 20000, 40000, 80000,
-                160000, 200000, 250000, 300000]
+               160000, 200000, 250000, 300000]
+
 
 def chunked(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
-def get_parameter_metrics(file, num_trials, parameter)
+
+def get_parameter_metrics(file, num_trials, parameter):
     parameter_metrics = []
     with open(file, 'r') as handle:
         for lst in chunked(handle.readlines(), num_trials):
@@ -40,9 +42,9 @@ def get_simulation_stats(benchmark_name, num_trials, benchmark_parameters):
         'metrics/{0}_sensitivities.txt'.format(benchmark_name), num_trials)
 
     benchmark_sensitivity_means = [np.mean(sensitivities) for sensitivities in
-                                  benchmark_sensitivities]
+                                   benchmark_sensitivities]
     benchmark_sensitivity_stds = [np.std(sensitivities) for sensitivities in
-                                 benchmark_sensitivities]
+                                  benchmark_sensitivities]
 
     benchmark_sensitivity_errors_upper = []
     for i, mean in enumerate(benchmark_sensitivity_means):
@@ -60,11 +62,11 @@ def get_simulation_stats(benchmark_name, num_trials, benchmark_parameters):
         'metrics/{0}_specificities.txt'.format(benchmark_name), num_trials)
 
     benchmark_specificity_means = [np.mean(specificities) for specificities in
-            benchmark_specificities]
+                                   benchmark_specificities]
     benchmark_specificity_stds = [np.std(specificities) for specificities in
-            benchmark_specificities]
-    benchmark_specificity_errors = [2*std for std in
-            benchmark_specificity_stds]
+                                  benchmark_specificities]
+    benchmark_specificity_errors = [2*std for std in 
+                                    benchmark_specificity_stds]
 
     benchmark_stats = {
             'specificity_means': benchmark_specificity_means,
@@ -76,8 +78,10 @@ def get_simulation_stats(benchmark_name, num_trials, benchmark_parameters):
             'sensitivity_errors_lower': benchmark_sensitivity_errors_lower,
             }
 
+    return benchmark_stats
 
-def make_mammal_figure(figure_output=False):
+
+def make_mammal_figure(num_trials, figure_output=False):
     pan_trog = get_simulation_stats('pan_trog', num_trials, seq_lengths)
     gorilla = get_simulation_stats('gorilla', num_trials, seq_lengths)
 
@@ -126,25 +130,25 @@ def make_mammal_figure(figure_output=False):
         plt.show()
 
 
-def make_simulation_trials_figure(figure_output):
+def make_simulation_trials_figure(num_trials, figure_output):
     subs = get_simulation_stats('sub_rate', num_trials, error_rates)
     length = get_simulation_stats('query_length', num_trials, seq_lengths)
 
     # Theoritical Curve
-    error_rate_theory_sensitivities = [0.9999999999999992, 0.9999999973133248, 
-                                       0.999999035776888, 0.9999633461915861, 
-                                       0.9996118046476143, 0.9985398391125027, 
-                                       0.9951159587019267, 0.9887248080755489, 
-                                       0.9786179973528009, 0.9625853664976465]
-    error_rate_theory_specificities = [1.0, 1.0, 1.0, 0.9999999999630376, 
-                                       0.9999965025321311, 0.9881394058910561, 
-                                       0.2188627586201921, 
-                                       5.96189764223709e-14, 0.0, 0.0]
-    query_size_theory_sensitivities = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
-                                       1.0, 1.0, 1.0, 1.0, 1.0]
-    query_size_theory_specificities = [0.999999585864842, 0.9999999999999574, 
-                                       1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
-                                       1.0, 1.0, 1.0]
+    # error_rate_theory_sensitivities = [0.9999999999999992, 0.9999999973133248, 
+    #                                    0.999999035776888, 0.9999633461915861, 
+    #                                    0.9996118046476143, 0.9985398391125027, 
+    #                                    0.9951159587019267, 0.9887248080755489, 
+    #                                    0.9786179973528009, 0.9625853664976465]
+    # error_rate_theory_specificities = [1.0, 1.0, 1.0, 0.9999999999630376, 
+    #                                    0.9999965025321311, 0.9881394058910561, 
+    #                                    0.2188627586201921, 
+    #                                    5.96189764223709e-14, 0.0, 0.0]
+    # query_size_theory_sensitivities = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+    #                                    1.0, 1.0, 1.0, 1.0, 1.0]
+    # query_size_theory_specificities = [0.999999585864842, 0.9999999999999574, 
+    #                                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+    #                                    1.0, 1.0, 1.0]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
     fig.suptitle('Flashmap accuracy on simulated data')
@@ -340,6 +344,6 @@ def make_runtime_figure():
 
 #make_read_figure()
 #make_runtime_figure()
-#make_simulation_trials_figure()
-#make_mammal_figure()
+#make_simulation_trials_figure(100)
+#make_mammal_figure(100)
 #make_synth_figure()
