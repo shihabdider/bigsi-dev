@@ -197,7 +197,7 @@ async function main(fasta) {
         const bigsi = await mergeBigsis(bigsis)
         const paddingSize = config.intBits - (bigsi[0].length % config.intBits)
         const numColsPadded = bigsi[0].length + paddingSize
-        const bigsiDims = { 'rows': bigsi.length, 'cols': numColsPadded }
+        const bigsiDims = { 'rows': bigsi.length, 'cols': numColsPadded, 'padding': paddingSize }
         console.log(`Bigsis merged!`)
         console.log('Number of (rows, cols):', bigsiDims)
 
