@@ -5,18 +5,17 @@
  *  a) number of query fragments found in bucket
  *  b) number of minimizers found in bucket
  *
- *  A query fragment represents an exact match of length equal to the fragment 
- *  (e.g 2.5Kbp). 
+ *  A query fragment represents an exact match of length equal to the fragment
+ *  (e.g 2.5Kbp).
  *
- *  A minimizer represents an exact match of (w + k - 1) bp, i.e 
- *  an exact match of (w + k - 1) bps guarantees a shared minimizer with a 
- *  false positive rate equal to that of the Bloom Filter (generally too small 
- *  to be of concern). w, indicates the window size used to construct the 
+ *  A minimizer represents an exact match of (w + k - 1) bp, i.e
+ *  an exact match of (w + k - 1) bps guarantees a shared minimizer with a
+ *  false positive rate equal to that of the Bloom Filter (generally too small
+ *  to be of concern). w, indicates the window size used to construct the
  *  minimizer and is set 1000, meaning each minimizer "represents" 500 k-mers.
- *  
+ *
  */
 
-const cdf = require('binomial-cdf')
 const matrix = require('matrix-js')
 const BitSet = require('bitset')
 const fs = require('fs')
@@ -61,24 +60,6 @@ function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
     return submatrix
 }
 
-function computeSubmatrixHits(submatrix, bigsiHits, numBuckets) {
-    const numRows = submatrix.size()[0]
-    const submatrix_T = submatrix.trans()
-    const hammingWeights = []
-    for (rowNum=0; rowNum < numBuckets; rowNum++){
-        const row = submatrix_T[rowNum]
-        const bs = new BitSet(row.join(''))
-        const weight = bs.cardinality()
-        if (weight == numRows) {
-            //console.log('row num', weight)
-            if (rowNum in bigsiHits){
-                bigsiHits[rowNum]['hits'] += 1
-            } else {
-                bigsiHits[rowNum] = {'hits': 1}
-            }
-        }
-    }
-}
 
 function computeLowerBoundContainmentScore(containmentScore, 
     numMinimizersInQuery, confidenceInterval) {
@@ -135,10 +116,6 @@ async function queryBinaryBigsi(bigsiArray, queryMask, numBins, subrate){
 
     computeQueryContainmentScores(querySubmatrix, bigsiHits, queryMaskSize, subrate)
 
-    for (const bucketId in bigsiHits) {
-        bigsiHits[bucketId]['score'] = `${bigsiHits[bucketId]['hits']}/${numFragments}`;
-    }
-
     return bigsiHits
 }
 
@@ -168,7 +145,6 @@ async function main(querySeq, bigsiPath, bigsiConfigPath, subrate) {
 module.exports = {
     getBloomFilterSetBitsIndices: getBloomFilterSetBitsIndices,
     getBinaryBigsiSubmatrix: getBinaryBigsiSubmatrix,
-    computeSubmatrixHits: computeSubmatrixHits,
     computeQueryContainmentScores: computeQueryContainmentScores, 
     queryBinaryBigsi: queryBinaryBigsi,
     main: main
