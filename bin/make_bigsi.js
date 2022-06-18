@@ -57,11 +57,6 @@ function computeFalseHitProb(falsePosRate, minQueryMinimizers, errorRate){
     }
 }
 
-function computeNumHashes(bloomFilterSize, numElementsInserted) {
-    const numHashes = Math.ceil((bloomFilterSize/numElementsInserted)*Math.log(2))
-    return numHashes
-}
-
 function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize, numHashes){
     const falsePos = (1 - Math.exp(
         -1*numHashes*numElementsInserted/bloomFilterSize
@@ -71,7 +66,7 @@ function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize, nu
 
 function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBuckets){
     // initialize set parameters
-    const minQueryMinimizers = 2*config.minQuerySize/config.windowSize
+    const minQueryMinimizers = estimateNumMinimizers(config.minQuerySize)
     const falseHitThresh = 1e-2
     // iterate over a array size range...
     for ( let bloomFilterSize = 0; bloomFilterSize <= 5e7; bloomFilterSize += 1e3 ){
@@ -93,8 +88,13 @@ function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBucke
     }
 }
 
+function computeNumBuckets(seqLength) {
+    const numBuckets = Math.ceil(seqLength/config.bucketSize)
+    return numBuckets
+}
+
 /* estimate bloom filter size using minimizer count computed from bucket size 
- * of longest sequence + bucket overhang
+ * of longest sequence + bucket overhangs
 */ 
 function estimateBloomFilterSize(seqSizes, bucketSize){
     const numElementsInserted = estimateNumMinimizers(bucketSize)
@@ -118,10 +118,6 @@ function estimateBloomFilterSize(seqSizes, bucketSize){
     return bloomFilterSize
 }
 
-function computeNumBuckets(seqLength) {
-    const numBuckets = Math.ceil(seqLength/config.bucketSize)
-    return numBuckets
-}
 
 function computeBucketCoords(seqLength) {
     const bucketCoords = []
