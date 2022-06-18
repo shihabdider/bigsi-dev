@@ -21,8 +21,8 @@ source "${script_dir}/get_metrics.sh";
 # mammal_benchmark "pan_trog" && wait;
 # mammal_benchmark "gorilla" && wait;
 
-# sub_rate_metrics "sub_rate";
-# query_length_metrics "query_length";
+sub_rate_metrics "sub_rate";
+query_length_metrics "query_length";
 mammal_metrics "pan_trog";
 mammal_metrics "gorilla";
 

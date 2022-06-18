@@ -159,7 +159,7 @@ def main():
         sensitivity = compute_sensitivity(bigsi_results, mashmap_results)
         print(args.bigsi, sensitivity)
     elif args.metric == 'specificity':
-        total_num_bins = config.cols - config.padding
+        total_num_bins = config['cols'] - config['padding']
         specificity = compute_specificity(bigsi_results, mashmap_results,
                 total_num_bins)
         print(args.bigsi, specificity)
