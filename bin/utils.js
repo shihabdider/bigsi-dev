@@ -1,7 +1,8 @@
 const murmur = require('murmurhash-js')
-const { BloomFilter, getDistinctIndices } = require('bloom-filters')
+const { BloomFilter } = require('bloom-filters')
 const { IndexedFasta } = require('@gmod/indexedfasta')
 const cdf = require('binomial-cdf');
+const fs = require('fs')
 
 function zeroPadBitstring(bitstring, places){
     const paddedString = bitstring.padStart(places, '0')
@@ -90,60 +91,6 @@ function extractMinimizers(seq, windowSize){
     return minimizers
 }
 
-function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize){
-    const numHashes = 1
-
-    const falsePos = (1 - Math.exp(
-        -1*numHashes*numElementsInserted/bloomFilterSize
-    ))**numHashes
-    return falsePos
-}
-
-function computeFalseHitProb(falsePosRate, minQueryMinimizers, containmentScoreThresh){
-    const numMatching = minQueryMinimizers*containmentScoreThresh
-    const falseHitProb = 1 - cdf(numMatching, minQueryMinimizers, falsePosRate)
-    return falseHitProb
-}
-
-function computeNumMinimizers(seqLength, windowSize=100){
-    const numMinimizers = Math.ceil(seqLength/windowSize * 2)
-    return numMinimizers
-}
-
-function computeBloomFilterSize(maxNumElementsInserted, containmentScoreThresh, totalNumBuckets){
-    // initialize set parameters
-    const minQueryMinimizers = 100  // 5Kbp min query = 100 minimizers
-    const falseHitThresh = 1e-2
-    // iterate over a array size range...
-    for ( let bloomFilterSize = 0; bloomFilterSize <= 1e6; bloomFilterSize += 1e3 ){
-        const falsePosRate = computeBloomFilterFalsePosRate(maxNumElementsInserted, bloomFilterSize)
-        const falseHitProb = computeFalseHitProb(
-            falsePosRate, 
-            minQueryMinimizers, 
-            containmentScoreThresh
-        )
-
-        // accounting for all buckets in bigsi
-        const falseHitProbUpper = falseHitProb*totalNumBuckets
-        // break if false hit rate less than threshold and return
-        if ( falseHitProbUpper <= falseHitThresh ) {
-            console.log(`optimal bloom filter size: ${bloomFilterSize}`)
-            return bloomFilterSize
-        }
-    }
-}
-
-function makeQueryRowFilters(minimizers, bloomFilterSize, numHashes) {
-    const queryRowFilters = []
-//    const seed = 78187493520
-    for (const minimizer of minimizers){
-        const indexes = getDistinctIndices(minimizer.toString(), bloomFilterSize, numHashes)
-        queryRowFilters.push(indexes)
-    }
-    console.log(queryRowFilters)
-    return queryRowFilters
-}
-
 function makeMinimizersBloomFilter(minimizers, bloomFilterSize) {
     // adjust filter size based on number of inserted elements and desired false pos 
     // rate
@@ -176,12 +123,8 @@ module.exports = {
     loadFasta: loadFasta,
     getFilteredGenomeSeqs: getFilteredGenomeSeqs,
     extractMinimizers: extractMinimizers,
-    computeBloomFilterFalsePosRate: computeBloomFilterFalsePosRate,
-    computeFalseHitProb: computeFalseHitProb,
     computeNumMinimizers: computeNumMinimizers,
-    computeBloomFilterSize: computeBloomFilterSize,
     makeMinimizersBloomFilter: makeMinimizersBloomFilter,
-    makeQueryRowFilters: makeQueryRowFilters,
     writeToJSON: writeToJSON,
 }
 
