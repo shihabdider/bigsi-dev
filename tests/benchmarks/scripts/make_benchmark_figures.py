@@ -342,15 +342,15 @@ def make_runtime_figure():
     plt.savefig('figures/flashmap_runtimes.png')
 
 
-def make_jaccard_test_figure(figure_output):
+def make_jaccard_test_figure(window_size, savefig=False):
     # Todos: fix titles (exact_match -> 000), super title should be 
     # substitution rates, super x-axis should be reference size
-    sub_rates = ['exact_match', '001', '002', '003', '004', '005', '006', 
+    sub_rates = ['000', '001', '002', '003', '004', '005', '006', 
                  '007', '008', '009', '010']
     ref_sizes = [0.05, 0.1, 0.2, 0.4, 0.8, 1.6, 3]
 
     fig, axs = plt.subplots(1, 11, sharey=True, 
-                            figsize=(4 * len(sub_rates), 8))
+                            figsize=(8 * len(sub_rates), 4))
     x_axis_text = 'Target Sequence Size (Mbp)'
     y_axis_text = 'True Jaccard Containment - Winnowed Jaccard Containment'
     fig.text(0.5, 0.04, x_axis_text, ha='center')
@@ -360,15 +360,19 @@ def make_jaccard_test_figure(figure_output):
     for rate_index, rate in enumerate(sub_rates):
         jaccard_sizes_diffs = []
         for size in ref_sizes:
-            filename = 'metrics/jaccard_test_{0}_{1}.txt'.format(size, rate)
+            filename = 'metrics/jaccard/{0}_{1}_w{2}.txt'.format(size, rate, 
+                                                                 window_size)
             jaccard_diffs = []
             with open(filename, 'r') as handle:
                 for line in handle:
                     jaccard_diffs.append(float(line.strip()))
             jaccard_sizes_diffs.append(jaccard_diffs)
 
-        means = [sum(diffs)/len(diffs) for diffs in jaccard_sizes_diffs]
-        mean = (sum(means)/len(means))
+        means = [np.mean(diffs) for diffs in jaccard_sizes_diffs]
+        mean = (np.mean(means))
+        stds = [np.std(diffs) for diffs in jaccard_sizes_diffs]
+        upper_95 = mean + 2*np.mean(stds)
+        lower_95 = mean - 2*np.mean(stds)
 
         for i, ref_size in enumerate(ref_sizes):
             axs[rate_index].set_title(rate)
@@ -377,8 +381,11 @@ def make_jaccard_test_figure(figure_output):
 
             axs[rate_index].set_xscale('log')
             axs[rate_index].axhline(y=mean)
+            axs[rate_index].axhline(y=upper_95)
+            axs[rate_index].axhline(y=lower_95)
         
-    if figure_output:
+    figure_output = 'figures/jaccard_deviation_w{0}'.format(window_size)
+    if savefig:
         plt.savefig(figure_output)
     else:
         plt.show()
@@ -388,4 +395,4 @@ def make_jaccard_test_figure(figure_output):
 #make_simulation_trials_figure(100)
 #make_mammal_figure(100)
 #make_synth_figure()
-make_jaccard_test_figure(figure_output='figures/jaccard_deviation_w25.png')
+make_jaccard_test_figure(100)

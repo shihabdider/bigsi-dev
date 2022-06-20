@@ -372,7 +372,7 @@ def main():
 
     hg38 = {
         'bin_seq_len': 16e6,
-        'window_size': 100,
+        'window_size': 50,
         'min_query_len': 5000,
         'error_rate': 0.07,
         'false_hit_thresh': 1e-2,

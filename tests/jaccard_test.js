@@ -103,7 +103,7 @@ async function main() {
 
     const targetMinimizers = utils.extractMinimizers(targetSeq, argv.windowSize)
     const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length)
-    const targetWinnowedBloomFilter = insertElementsIntoBloomFilter(targetMinimizers, bloomFilterSize)
+    const targetWinnowedBloomFilter = insertElementsIntoBloomFilter(targetMinimizers, bloomFilterSizeMinimizers)
 
     const queryFai = `${argv.query}.fai`
     const query = await utils.loadFasta(argv.query, queryFai)
