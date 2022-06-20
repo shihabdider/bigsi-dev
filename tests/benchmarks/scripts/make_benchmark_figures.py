@@ -342,8 +342,20 @@ def make_runtime_figure():
     plt.savefig('figures/flashmap_runtimes.png')
 
 
+def make_jaccard_test_figure():
+    jaccard_tests_diffs = []
+    ref_sizes = [0.05, 
+    with open(data, 'r') as handle:
+        for line in handle:
+            jaccard_diffs.append(float(line.strip()))
+
+    x = [i for i in range(len(jaccard_diffs))]
+    plt.scatter(x, jaccard_diffs)
+    plt.show()
+
 #make_read_figure()
 #make_runtime_figure()
 #make_simulation_trials_figure(100)
 #make_mammal_figure(100)
 #make_synth_figure()
+make_jaccard_test_figure()
