@@ -5,7 +5,7 @@ function printResults(filteredBigsiHits, binMapPath) {
     // import the associated map json file as dictionary
     const binMap = require(binMapPath)
     // iterate through filtered hits keys
-    for (key in filteredBigsiHits) {
+    for (const key in filteredBigsiHits) {
         const {refName, bucketStart, bucketEnd}  = binMap[key]
         const outputString = `${refName} ${bucketStart} ${bucketEnd}`
         console.log(outputString) 
@@ -62,7 +62,7 @@ async function run() {
             const query = await utils.loadFasta(argv.query, fai)
             const seqNames = await query.getSequenceList()
             //console.log('Query sequence name: ', seqNames)
-            for (seqName of seqNames) {
+            for (const seqName of seqNames) {
                 const querySeq = await query.getSequence(seqName)
                 const hits = await queryBigsi.main(querySeq, bigsiPath, bigsiConfigPath);
                 printResults(hits, binMapPath)
