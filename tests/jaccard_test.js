@@ -49,20 +49,14 @@ function computeBloomFilterSize(n) {
     return Math.ceil((n * Math.log(p)) / Math.log(1 / Math.pow(2, Math.log(2))));
 }
 
-function computeJaccardDiff(targetSeq, querySeq, windowSize) {
+function computeJaccardDiff(targetBloomFilter, targetWinnowedBloomFilter, querySeq, windowSize) {
 
-    const targetKmers = extractKmers(targetSeq)
     const queryKmers = extractKmers(querySeq)
-    const bloomFilterSize = computeBloomFilterSize(targetKmers.length)
-    const targetBloomFilter = insertElementsIntoBloomFilter(targetKmers, bloomFilterSize)
     const numMatching = getNumMatching(targetBloomFilter, queryKmers)
     const numInQuery = queryKmers.length 
     const true_j = computeJaccardContainment(numMatching, numInQuery)
 
-    const targetMinimizers = utils.extractKmers(targetSeq, windowSize)
     const queryMinimizers = utils.extractMinimizers(querySeq, windowSize)
-    const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length)
-    const targetWinnowedBloomFilter = insertElementsIntoBloomFilter(targetMinimizers, bloomFilterSizeMinimizers)
     const numMinimizersMatching = getNumMatching(targetWinnowedBloomFilter, queryMinimizers)
     const numMinimizersInQuery = queryMinimizers.length
     const winnowed_j = computeJaccardContainment(numMinimizersMatching, numMinimizersInQuery)
@@ -102,7 +96,14 @@ async function main() {
     const target = await utils.loadFasta(argv.ref, targetFai)
     const targetSeqNames = await target.getSequenceList()
     const targetSeq = await target.getSequence(targetSeqNames[0])
-    console.log('Target sequence loaded...')
+
+    const targetKmers = extractKmers(targetSeq)
+    const bloomFilterSize = computeBloomFilterSize(targetKmers.length)
+    const targetBloomFilter = insertElementsIntoBloomFilter(targetKmers, bloomFilterSize)
+
+    const targetMinimizers = utils.extractMinimizers(targetSeq, argv.windowSize)
+    const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length)
+    const targetWinnowedBloomFilter = insertElementsIntoBloomFilter(targetMinimizers, bloomFilterSize)
 
     const queryFai = `${argv.query}.fai`
     const query = await utils.loadFasta(argv.query, queryFai)
@@ -115,7 +116,7 @@ async function main() {
 
     const jaccard_diffs = []
     for (const querySeq of querySeqs) {
-        const jaccard_diff = computeJaccardDiff(targetSeq, querySeq, argv.windowSize)
+        const jaccard_diff = computeJaccardDiff(targetBloomFilter, targetWinnowedBloomFilter, querySeq, argv.windowSize)
         jaccard_diffs.push(jaccard_diff)
         console.log(jaccard_diff)
     }

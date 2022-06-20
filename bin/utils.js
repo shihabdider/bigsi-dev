@@ -123,7 +123,6 @@ module.exports = {
     loadFasta: loadFasta,
     getFilteredGenomeSeqs: getFilteredGenomeSeqs,
     extractMinimizers: extractMinimizers,
-    computeNumMinimizers: computeNumMinimizers,
     makeMinimizersBloomFilter: makeMinimizersBloomFilter,
     writeToJSON: writeToJSON,
 }
