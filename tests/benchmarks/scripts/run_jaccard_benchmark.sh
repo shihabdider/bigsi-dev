@@ -12,7 +12,7 @@ function jaccard_benchmark() {
         query="seqs/synthetic/jaccard/${size}_query.fasta"
         node ~/Research/bigsi-dev/tests/jaccard_test.js \
             -r ${ref} -q ${query} -w ${window_size} > \
-            metrics/jaccard_test_${size}_exact_match.txt
+            metrics/jaccard_test_${size}_000.txt
 
         # iterate through all mutated queries for that ref
         for rate in ${sub_rates[@]};
