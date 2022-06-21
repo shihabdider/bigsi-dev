@@ -1,7 +1,7 @@
-
+query_size=300000
 function jaccard_benchmark() {
-    sub_rates=( 000 001 002 003 004 005 006 007 008 009 010 )
-    ref_sizes=( 0.05 0.1 0.2 0.4 0.8 1.6 3 )
+    local sub_rates=( 000 001 002 003 004 005 006 007 008 009 010 )
+    local ref_sizes=( 16 )
     window_size=$1
     N=12
     # iterate through all refs
@@ -12,10 +12,10 @@ function jaccard_benchmark() {
         do
             ((b=b%N)); ((b++==0)) && wait
             ref="seqs/synthetic/jaccard/${size}.fasta"
-            query="seqs/synthetic/jaccard/${size}_query_${rate}.fasta"
+            query="seqs/synthetic/jaccard/${size}_${query_size}_query_${rate}.fasta"
             node ~/Research/bigsi-dev/tests/jaccard_test.js \
                 -r ${ref} -q ${query} -w ${window_size} > \
-                metrics/jaccard/${size}_${rate}_w${window_size}.txt \
+                metrics/jaccard/${size}_${query_size}_${rate}_w${window_size}.txt \
         &
         done
         echo "Benchmarks for $size reference complete!"

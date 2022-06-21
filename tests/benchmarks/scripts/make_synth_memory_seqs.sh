@@ -1,5 +1,7 @@
 #BIGSI_SIZES=( 100 400 800 1200 1600 2000 2500 3000)
-SIZES_MB=( 0.05 0.1 0.2 0.4 0.8 1.6 3 )
+#SIZES_MB=( 0.05 0.1 0.2 0.4 0.8 1.6 3 )
+SIZES_MB=( 16 )
+query_size=300000
 
 function make_synth_seq() {
     # Make the synthetic reference seqs
@@ -15,20 +17,20 @@ function make_synth_seq() {
 }
 
 function make_synth_query() {
-    local query_size=1000
-    local num_queries_per_seq=20
+    local num_queries_per_seq=1000
     local dir=$1
 
     for size in ${SIZES_MB[@]};
     do
+        output=seqs/synthetic/${1}/${size}_${query_size}_query_000.fasta
         python3 scripts/make_benchmark_seqs.py \
             -i scripts/synth_acn.txt \
             -l ${query_size} \
             -n ${num_queries_per_seq} \
-            -o seqs/synthetic/${1}/${size}_query.fasta \
+            -o ${output}\
             -f seqs/synthetic/$1/${size}.fasta \
             -x seqs/synthetic/$1/${size}.fasta.fai;
-        samtools faidx seqs/synthetic/${1}/${size}_query.fasta;
+        samtools faidx ${output};
     done
 }
 
@@ -41,16 +43,17 @@ function mutate_synth_seq() {
         for i in ${!sub_rates[@]};
         do
             ((job=job%N)); ((job++==0)) && wait
+            output=seqs/synthetic/${1}/${size}_${query_size}_query_${sub_rates[i]}.fasta;
             python3 scripts/mutate_seqs.py \
-                -i seqs/synthetic/${1}/${size}_query.fasta \
+                -i seqs/synthetic/${1}/${size}_${query_size}_query_000.fasta \
                 -r ${sub_rates[i]} \
-                -o seqs/synthetic/${1}/${size}_query_${sub_rates[i]}.fasta;
-            samtools faidx seqs/synthetic/${1}/${size}_query_${sub_rates[i]}.fasta \
+                -o ${output};
+            samtools faidx ${output} \
             &
         done
     done
 }
 
-#make_synth_seq jaccard;
-#make_synth_query jaccard;
+make_synth_seq jaccard;
+make_synth_query jaccard;
 mutate_synth_seq jaccard;
