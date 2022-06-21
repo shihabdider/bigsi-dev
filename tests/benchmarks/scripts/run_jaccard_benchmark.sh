@@ -1,4 +1,4 @@
-query_size=300000
+query_size=5000
 function jaccard_benchmark() {
     local sub_rates=( 000 001 002 003 004 005 006 007 008 009 010 )
     local ref_sizes=( 16 )
@@ -18,10 +18,9 @@ function jaccard_benchmark() {
                 metrics/jaccard/${size}_${query_size}_${rate}_w${window_size}.txt \
         &
         done
-        echo "Benchmarks for $size reference complete!"
     done
 }
 
-jaccard_benchmark 25;
+#jaccard_benchmark 25;
 jaccard_benchmark 50;
 jaccard_benchmark 100;
