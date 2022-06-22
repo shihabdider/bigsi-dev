@@ -342,12 +342,12 @@ def make_runtime_figure():
     plt.savefig('figures/flashmap_runtimes.png')
 
 
-def make_jaccard_test_figure(window_size, savefig=False):
+def make_jaccard_test_figure(window_size, query_size, savefig=False):
     # Todos: fix titles (exact_match -> 000), super title should be 
     # substitution rates, super x-axis should be reference size
     sub_rates = ['000', '001', '002', '003', '004', '005', '006', 
                  '007', '008', '009', '010']
-    ref_sizes = [0.05, 0.1, 0.2, 0.4, 0.8, 1.6, 3]
+    ref_sizes = [16]
 
     fig, axs = plt.subplots(1, 11, sharey=True, 
                             figsize=(8 * len(sub_rates), 4))
@@ -360,8 +360,8 @@ def make_jaccard_test_figure(window_size, savefig=False):
     for rate_index, rate in enumerate(sub_rates):
         jaccard_sizes_diffs = []
         for size in ref_sizes:
-            filename = 'metrics/jaccard/{0}_{1}_w{2}.txt'.format(size, rate, 
-                                                                 window_size)
+            filename = 'metrics/jaccard/{0}_{1}_{2}_w{3}.txt'.format(
+                size, query_size, rate, window_size)
             jaccard_diffs = []
             with open(filename, 'r') as handle:
                 for line in handle:
@@ -375,7 +375,7 @@ def make_jaccard_test_figure(window_size, savefig=False):
         lower_95 = mean - 2*np.mean(stds)
 
         for i, ref_size in enumerate(ref_sizes):
-            axs[rate_index].set_title(rate)
+            axs[rate_index].set_title(int(rate)/100)
             axs[rate_index].scatter([ref_size]*len(jaccard_sizes_diffs[i]), 
                                     jaccard_sizes_diffs[i], marker='o')
 
@@ -395,4 +395,4 @@ def make_jaccard_test_figure(window_size, savefig=False):
 #make_simulation_trials_figure(100)
 #make_mammal_figure(100)
 #make_synth_figure()
-make_jaccard_test_figure(100)
+make_jaccard_test_figure(100, 5000)
