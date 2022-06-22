@@ -1,7 +1,7 @@
 # Todo: 
 # - add lengths to nanopore benchmark
 
-function run_benchmark() {
+function get_metric() {
     local benchmark_dir=$1
     local metric=$2
     shift 2
@@ -21,24 +21,24 @@ function sub_rate_metrics() {
     local benchmark_dir=hg38/simulation/substitution_rate
     local errs=( 001 002 003 004 005 006 007 008 009 010 )
     local output=$1
-    run_benchmark ${benchmark_dir} sensitivity ${errs[@]} > metrics/${output}_sensitivity.txt
-    run_benchmark ${benchmark_dir} specificity ${errs[@]} > metrics/${output}_specificity.txt
+    get_metric ${benchmark_dir} sensitivity ${errs[@]} > metrics/${output}_sensitivity.txt
+    get_metric ${benchmark_dir} specificity ${errs[@]} > metrics/${output}_specificity.txt
 }
 
 function query_length_metrics() {
     local benchmark_dir=hg38/simulation/query_length
     local lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     local output=$1
-    run_benchmark ${benchmark_dir} sensitivity ${lengths[@]} > metrics/${output}_sensitivity.txt
-    run_benchmark ${benchmark_dir} specificity ${lengths[@]} > metrics/${output}_specificity.txt
+    get_metric ${benchmark_dir} sensitivity ${lengths[@]} > metrics/${output}_sensitivity.txt
+    get_metric ${benchmark_dir} specificity ${lengths[@]} > metrics/${output}_specificity.txt
 }
 
 function mammal_metrics() {
     local benchmark_dir=$1/simulation/
     local lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     local output=$1
-    run_benchmark ${benchmark_dir} sensitivity ${lengths[@]} > metrics/${output}_sensitivity.txt
-    run_benchmark ${benchmark_dir} specificity ${lengths[@]} > metrics/${output}_specificity.txt
+    get_metric ${benchmark_dir} sensitivity ${lengths[@]} > metrics/${output}_sensitivity.txt
+    get_metric ${benchmark_dir} specificity ${lengths[@]} > metrics/${output}_specificity.txt
 }
 
 function nanopore_read_metrics() {
