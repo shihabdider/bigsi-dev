@@ -1,7 +1,7 @@
 #BIGSI_SIZES=( 100 400 800 1200 1600 2000 2500 3000)
 #SIZES_MB=( 0.05 0.1 0.2 0.4 0.8 1.6 3 )
 SIZES_MB=( 16 )
-query_size=300000
+query_size=5000
 
 function make_synth_seq() {
     # Make the synthetic reference seqs
@@ -22,7 +22,7 @@ function make_synth_query() {
 
     for size in ${SIZES_MB[@]};
     do
-        output=seqs/synthetic/${1}/${size}_${query_size}_query_000.fasta
+        local output=seqs/synthetic/${1}/${size}_${query_size}_query_000.fasta
         python3 scripts/make_benchmark_seqs.py \
             -i scripts/synth_acn.txt \
             -l ${query_size} \
