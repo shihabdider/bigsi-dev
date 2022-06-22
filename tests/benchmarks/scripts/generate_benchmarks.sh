@@ -1,6 +1,6 @@
 #!/bin/bash
 
-num_experiments=1;
+num_experiments=100;
 query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_var_bins_test_query_config.json";
 mashmap_flag=0;
 script_dir="/Users/shihabdider/Research/bigsi-dev/tests/benchmarks/scripts";
@@ -15,15 +15,15 @@ source "${script_dir}/get_metrics.sh";
 
 # Simulation benchmarks
 
-# error_benchmark && wait;
-# query_length_benchmark && wait;
+error_benchmark && wait;
+query_length_benchmark && wait;
 mammal_benchmark "pan_trog" && wait;
 mammal_benchmark "gorilla" && wait;
 
-# sub_rate_metrics "sub_rate";
-# query_length_metrics "query_length";
-# mammal_metrics "pan_trog";
-# mammal_metrics "gorilla";
+sub_rate_metrics "sub_rate";
+query_length_metrics "query_length";
+mammal_metrics "pan_trog";
+mammal_metrics "gorilla";
 
 #nanopore_read_metrics sensitivity > metrics/nanopore_read_sensitivities_003.txt;
 #nanopore_read_metrics specificity > metrics/nanopore_read_specificities_003.txt; 
