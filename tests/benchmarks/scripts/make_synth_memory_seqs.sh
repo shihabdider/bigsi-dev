@@ -19,10 +19,11 @@ function make_synth_seq() {
 function make_synth_query() {
     local num_queries_per_seq=1000
     local dir=$1
+    local ref_size=16
 
-    for size in ${SIZES_MB[@]};
+    for query_size in ${query_sizes[@]};
     do
-        local output=seqs/synthetic/${1}/${size}_${query_size}_query_000.fasta
+        local output=seqs/synthetic/${1}/${ref_size}_${query_size}_query_000.fasta
         python3 scripts/make_benchmark_seqs.py \
             -i scripts/synth_acn.txt \
             -l ${query_size} \
@@ -38,6 +39,7 @@ function mutate_synth_seq() {
     sub_rates=( 001 002 003 004 005 006 007 008 009 010 )
     local ref=$1
     local N=12
+    local ref_size=16
     for query_size in ${query_sizes[@]};
     do
         for i in ${!sub_rates[@]};

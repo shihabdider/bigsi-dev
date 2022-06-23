@@ -1,4 +1,5 @@
-query_sizes=( 5000 300000 )
+#query_sizes=( 5000 300000 )
+query_sizes=( 20000 40000 80000 160000 )
 
 function jaccard_benchmark() {
     local sub_rates=( 000 001 002 003 004 005 006 007 008 009 010 )
