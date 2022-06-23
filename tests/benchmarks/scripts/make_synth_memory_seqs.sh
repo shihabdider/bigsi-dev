@@ -1,7 +1,7 @@
 #BIGSI_SIZES=( 100 400 800 1200 1600 2000 2500 3000)
 #SIZES_MB=( 0.05 0.1 0.2 0.4 0.8 1.6 3 )
 SIZES_MB=( 16 )
-query_size=5000
+query_size=10000
 
 function make_synth_seq() {
     # Make the synthetic reference seqs
@@ -54,6 +54,6 @@ function mutate_synth_seq() {
     done
 }
 
-make_synth_seq jaccard;
+#make_synth_seq jaccard;
 make_synth_query jaccard;
 mutate_synth_seq jaccard;
