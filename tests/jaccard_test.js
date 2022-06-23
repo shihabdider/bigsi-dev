@@ -1,4 +1,5 @@
 const utils = require('../bin/utils.js')
+const murmur = require('murmurhash-js')
 const { BloomFilter } = require('bloom-filters')
 
 function extractKmers(sequence) {
@@ -10,6 +11,19 @@ function extractKmers(sequence) {
     }
 
     return kmers
+}
+
+function insertElementsIntoHashTable(elements) {
+    const hashtable = {}
+    for (const element of elements) {
+        let elementHash = murmur.murmur3(element, seed=42)
+        const elementNotInHashtable = !(elementHash in hashtable)
+        if (elementNotInHashtable) {
+            hashtable[elementHash] = true
+        }
+    }
+
+    return hashtable
 }
 
 function insertElementsIntoBloomFilter(elements, bloomFilterSize){
@@ -25,7 +39,22 @@ function insertElementsIntoBloomFilter(elements, bloomFilterSize){
     return bf
 }
 
-function getNumMatching(targetBloomFilter, queryElements) {
+function getNumMatchingKmers(targetHashtable, queryKmers) {
+    let numMatching = 0
+    for (let element of queryKmers) {
+        if (typeof element != 'string') {
+            element = element.toString()
+        }
+        const elementHash = murmur.murmur3(element, seed=42)
+        if (elementHash in targetHashtable) {
+            numMatching += 1
+        }
+    }
+
+    return numMatching
+}
+
+function getNumMatchingMinimizers(targetBloomFilter, queryElements) {
     let numMatching = 0
     for (let element of queryElements) {
         if (typeof element != 'string') {
@@ -43,21 +72,20 @@ function computeJaccardContainment(elementsShared, elementsInQuery) {
     return elementsShared/elementsInQuery
 }
 
-function computeBloomFilterSize(n) {
-    const p = 0.17495
+function computeBloomFilterSize(n, p) {
 
     return Math.ceil((n * Math.log(p)) / Math.log(1 / Math.pow(2, Math.log(2))));
 }
 
-function computeJaccardDiff(targetBloomFilter, targetWinnowedBloomFilter, querySeq, windowSize) {
+function computeJaccardDiff(targetHashtable, targetWinnowedBloomFilter, querySeq, windowSize) {
 
     const queryKmers = extractKmers(querySeq)
-    const numMatching = getNumMatching(targetBloomFilter, queryKmers)
+    const numMatching = getNumMatchingKmers(targetHashtable, queryKmers)
     const numInQuery = queryKmers.length 
     const true_j = computeJaccardContainment(numMatching, numInQuery)
 
     const queryMinimizers = utils.extractMinimizers(querySeq, windowSize)
-    const numMinimizersMatching = getNumMatching(targetWinnowedBloomFilter, queryMinimizers)
+    const numMinimizersMatching = getNumMatchingMinimizers(targetWinnowedBloomFilter, queryMinimizers)
     const numMinimizersInQuery = queryMinimizers.length
     const winnowed_j = computeJaccardContainment(numMinimizersMatching, numMinimizersInQuery)
     const jaccard_diff = true_j - winnowed_j
@@ -98,12 +126,12 @@ async function main() {
     const targetSeq = await target.getSequence(targetSeqNames[0])
 
     const targetKmers = extractKmers(targetSeq)
-    const bloomFilterSize = computeBloomFilterSize(targetKmers.length)
-    const targetBloomFilter = insertElementsIntoBloomFilter(targetKmers, bloomFilterSize)
+    const targetHashtable = insertElementsIntoHashTable(targetKmers)
 
     const targetMinimizers = utils.extractMinimizers(targetSeq, argv.windowSize)
-    const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length)
+    const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length, p = 0.1749)
     const targetWinnowedBloomFilter = insertElementsIntoBloomFilter(targetMinimizers, bloomFilterSizeMinimizers)
+    //const targetWinnowedHashtable = insertElementsIntoHashTable(targetMinimizers)
 
     const queryFai = `${argv.query}.fai`
     const query = await utils.loadFasta(argv.query, queryFai)
@@ -116,7 +144,7 @@ async function main() {
 
     const jaccard_diffs = []
     for (const querySeq of querySeqs) {
-        const jaccard_diff = computeJaccardDiff(targetBloomFilter, targetWinnowedBloomFilter, querySeq, argv.windowSize)
+        const jaccard_diff = computeJaccardDiff(targetHashtable, targetWinnowedBloomFilter, querySeq, argv.windowSize)
         jaccard_diffs.push(jaccard_diff)
         console.log(jaccard_diff)
     }
