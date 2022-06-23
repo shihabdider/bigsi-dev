@@ -1,4 +1,4 @@
-query_size=5000
+query_size=10000
 function jaccard_benchmark() {
     local sub_rates=( 000 001 002 003 004 005 006 007 008 009 010 )
     local ref_sizes=( 16 )
