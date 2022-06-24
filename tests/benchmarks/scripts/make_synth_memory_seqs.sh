@@ -1,7 +1,8 @@
 #BIGSI_SIZES=( 100 400 800 1200 1600 2000 2500 3000)
 #SIZES_MB=( 0.05 0.1 0.2 0.4 0.8 1.6 3 )
 SIZES_MB=( 16 )
-query_sizes=( 20000 40000 80000 160000 )
+#query_sizes=( 20000 40000 80000 160000 )
+query_sizes=( 5000 10000 300000 )
 
 function make_synth_seq() {
     # Make the synthetic reference seqs
@@ -29,8 +30,8 @@ function make_synth_query() {
             -l ${query_size} \
             -n ${num_queries_per_seq} \
             -o ${output}\
-            -f seqs/synthetic/$1/${size}.fasta \
-            -x seqs/synthetic/$1/${size}.fasta.fai;
+            -f seqs/synthetic/$1/${ref_size}.fasta \
+            -x seqs/synthetic/$1/${ref_size}.fasta.fai;
         samtools faidx ${output};
     done
 }
@@ -56,6 +57,6 @@ function mutate_synth_seq() {
     done
 }
 
-make_synth_seq jaccard;
+#make_synth_seq jaccard;
 make_synth_query jaccard;
 mutate_synth_seq jaccard;
