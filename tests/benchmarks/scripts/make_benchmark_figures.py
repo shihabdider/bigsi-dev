@@ -342,24 +342,25 @@ def make_runtime_figure():
     plt.savefig('figures/flashmap_runtimes.png')
 
 
-def make_jaccard_test_figure(window_size, query_size, savefig=False):
-    query_sizes = [5000, 10000, 20000, 40000, 80000, 160000, 300000]
+def make_jaccard_test_figure(window_size, savefig=False):
+    #query_sizes = [5000, 10000, 20000, 40000, 80000, 160000, 300000]
+    query_sizes = [5000, 20000, 80000, 300000]
     sub_rates = ['000', '001', '002', '003', '004', '005', '006', 
                  '007', '008', '009', '010']
     ref_size = 16
 
-    fig, ax = plt.subplots(sharey='row')
-    fig.suptitle(
-        'Containment Score Deviation For {0}kb Query'.format(query_size/1000))
+    fig, axs = plt.subplots(len(query_sizes), sharey='row')
+    plt.subplots_adjust(hspace=0.8)
+    fig.suptitle('Deviation From True Containment Score')
     x_axis_text = 'Substitution Rate'
     y_axis_text = 'True Jaccard Containment - Winnowed Jaccard Containment'
     fig.text(0.5, 0.04, x_axis_text, ha='center')
     fig.text(0.04, 0.5, y_axis_text, va='center', rotation='vertical')
 
-    for query_size in query_sizes:
+    for i, query_size in enumerate(query_sizes):
         jaccard_sizes_diffs = []
         for rate_index, rate in enumerate(sub_rates):
-            filename = 'metrics/jaccard/{0}_{1}_{2}_w{3}.txt'.format(
+            filename = 'metrics/jaccard/{0}_{1}_{2}_w{3}_hashtable.txt'.format(
                 ref_size, query_size, rate, window_size)
             jaccard_diffs = []
             with open(filename, 'r') as handle:
@@ -374,11 +375,13 @@ def make_jaccard_test_figure(window_size, query_size, savefig=False):
         #upper_95 = mean + 2*np.mean(stds)
         #lower_95 = mean - 2*np.mean(stds)
 
-        ax.plot(sub_rates_floats, means, marker='o')
-        ax.errorbar(sub_rates_floats, means,
-                    yerr=[2*std for std in stds], 
-                    fmt='-')
-        ax.axhline(y=0)
+        axs[i].set_title('{}kb Query'.format(int(query_size)/1000))
+        #axs[i].set_ylim(ymin=-0.3, ymax=0.15)
+        axs[i].plot(sub_rates_floats, means, marker='o')
+        axs[i].errorbar(sub_rates_floats, means,
+                        yerr=[2*std for std in stds], 
+                        fmt='-')
+        axs[i].axhline(y=0)
 
     figure_output = 'figures/jaccard_deviation_{0}_{1}_w{2}.txt'.format(
                 ref_size, query_size, window_size)
@@ -392,4 +395,4 @@ def make_jaccard_test_figure(window_size, query_size, savefig=False):
 #make_simulation_trials_figure(100)
 #make_mammal_figure(100)
 #make_synth_figure()
-make_jaccard_test_figure(100, 10000)
+make_jaccard_test_figure(50)
