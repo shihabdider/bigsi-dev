@@ -1,6 +1,6 @@
 #!/bin/bash
 
-num_experiments=10;
+num_experiments=1;
 query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_var_bins_test_query_config.json";
 mashmap_flag=0;
 script_dir="/Users/shihabdider/Research/bigsi-dev/tests/benchmarks/scripts";
