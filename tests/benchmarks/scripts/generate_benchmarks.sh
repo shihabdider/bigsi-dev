@@ -15,8 +15,8 @@ source "${script_dir}/get_metrics.sh";
 
 # Simulation benchmarks
 
-# error_benchmark && wait;
-# query_length_benchmark && wait;
+error_benchmark && wait;
+query_length_benchmark && wait;
 mammal_benchmark "pan_trog" && wait;
 mammal_benchmark "gorilla" && wait;
 
