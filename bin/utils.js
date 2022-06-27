@@ -1,7 +1,6 @@
 const murmur = require('murmurhash-js')
 const { BloomFilter } = require('bloom-filters')
 const { IndexedFasta } = require('@gmod/indexedfasta')
-const cdf = require('binomial-cdf');
 const fs = require('fs')
 
 function zeroPadBitstring(bitstring, places){

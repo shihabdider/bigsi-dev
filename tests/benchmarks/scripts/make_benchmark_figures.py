@@ -12,7 +12,7 @@ def chunked(lst, n):
         yield lst[i:i + n]
 
 
-def get_parameter_metrics(file, num_trials, parameter):
+def get_parameter_metrics(file, num_trials):
     parameter_metrics = []
     with open(file, 'r') as handle:
         for lst in chunked(handle.readlines(), num_trials):
@@ -39,7 +39,7 @@ def get_read_metrics(file):
 def get_simulation_stats(benchmark_name, num_trials, benchmark_parameters):
     # Sensitivity
     benchmark_sensitivities = get_parameter_metrics(
-        'metrics/{0}_sensitivities.txt'.format(benchmark_name), num_trials)
+        'metrics/{0}_sensitivities.txt'.format(benchmark_name), num_trials, )
 
     benchmark_sensitivity_means = [np.mean(sensitivities) for sensitivities in
                                    benchmark_sensitivities]
@@ -342,8 +342,57 @@ def make_runtime_figure():
     plt.savefig('figures/flashmap_runtimes.png')
 
 
+def make_jaccard_test_figure(window_size, savefig=False):
+    #query_sizes = [5000, 10000, 20000, 40000, 80000, 160000, 300000]
+    query_sizes = [5000, 20000, 80000, 300000]
+    sub_rates = ['000', '001', '002', '003', '004', '005', '006', 
+                 '007', '008', '009', '010']
+    ref_size = 16
+
+    fig, axs = plt.subplots(len(query_sizes), sharey='row')
+    plt.subplots_adjust(hspace=0.8)
+    fig.suptitle('Deviation From True Containment Score')
+    x_axis_text = 'Substitution Rate'
+    y_axis_text = 'True Jaccard Containment - Winnowed Jaccard Containment'
+    fig.text(0.5, 0.04, x_axis_text, ha='center')
+    fig.text(0.04, 0.5, y_axis_text, va='center', rotation='vertical')
+
+    for i, query_size in enumerate(query_sizes):
+        jaccard_sizes_diffs = []
+        for rate_index, rate in enumerate(sub_rates):
+            filename = 'metrics/jaccard/{0}_{1}_{2}_w{3}.txt'.format(
+                ref_size, query_size, rate, window_size)
+            jaccard_diffs = []
+            with open(filename, 'r') as handle:
+                for line in handle:
+                    jaccard_diffs.append(float(line.strip()))
+            jaccard_sizes_diffs.append(jaccard_diffs)
+
+        sub_rates_floats = [int(rate)/100 for rate in sub_rates]
+        means = [np.mean(diffs) for diffs in jaccard_sizes_diffs]
+        #mean = (np.mean(means))
+        stds = [np.std(diffs) for diffs in jaccard_sizes_diffs]
+        #upper_95 = mean + 2*np.mean(stds)
+        #lower_95 = mean - 2*np.mean(stds)
+
+        axs[i].set_title('{}kb Query'.format(int(query_size)/1000))
+        #axs[i].set_ylim(ymin=-0.3, ymax=0.15)
+        axs[i].plot(sub_rates_floats, means, marker='o')
+        axs[i].errorbar(sub_rates_floats, means,
+                        yerr=[2*std for std in stds], 
+                        fmt='-')
+        axs[i].axhline(y=0)
+
+    figure_output = 'figures/jaccard_deviation_{0}_{1}_w{2}.txt'.format(
+                ref_size, query_size, window_size)
+    if savefig:
+        plt.savefig(figure_output)
+    else:
+        plt.show()
+
 #make_read_figure()
 #make_runtime_figure()
 #make_simulation_trials_figure(100)
 #make_mammal_figure(100)
 #make_synth_figure()
+make_jaccard_test_figure(50)
