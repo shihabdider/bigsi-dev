@@ -32,7 +32,7 @@ def make_synthetic_seq(alphabet, seq_length):
 
 
 def main():
-    seq_length = int(sys.argv[1])*1e6
+    seq_length = float(sys.argv[1])*1e6
     fasta = sys.argv[2]
     print('Generating sequence of length: {0}'.format(seq_length))
     genome = make_synthetic_genome(seq_length)
