@@ -12,7 +12,7 @@ def chunked(lst, n):
         yield lst[i:i + n]
 
 
-def get_parameter_metrics(file, num_trials, parameter):
+def get_parameter_metrics(file, num_trials):
     parameter_metrics = []
     with open(file, 'r') as handle:
         for lst in chunked(handle.readlines(), num_trials):
@@ -39,7 +39,7 @@ def get_read_metrics(file):
 def get_simulation_stats(benchmark_name, num_trials, benchmark_parameters):
     # Sensitivity
     benchmark_sensitivities = get_parameter_metrics(
-        'metrics/{0}_sensitivities.txt'.format(benchmark_name), num_trials)
+        'metrics/{0}_sensitivities.txt'.format(benchmark_name), num_trials, )
 
     benchmark_sensitivity_means = [np.mean(sensitivities) for sensitivities in
                                    benchmark_sensitivities]
@@ -360,7 +360,7 @@ def make_jaccard_test_figure(window_size, savefig=False):
     for i, query_size in enumerate(query_sizes):
         jaccard_sizes_diffs = []
         for rate_index, rate in enumerate(sub_rates):
-            filename = 'metrics/jaccard/{0}_{1}_{2}_w{3}_hashtable.txt'.format(
+            filename = 'metrics/jaccard/{0}_{1}_{2}_w{3}.txt'.format(
                 ref_size, query_size, rate, window_size)
             jaccard_diffs = []
             with open(filename, 'r') as handle:

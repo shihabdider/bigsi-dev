@@ -1,72 +1,5 @@
 '''
 Complexity calculations for BIGSI and Mashmap
-
-Questions:
-    - What are all the parameters involved in constructing the sketch bigsi?
-        - Reference size
-        - Containment threshold
-        - Sensitivity threshold
-        - Bloom filter length
-        - Number of elements inserted into Bloom filter
-        - Number of bins
-        - Length of sequence for each bin
-        - Window size for sketching
-        - Min fragment size for fragment search
-    - Which of those parameters are exposed?
-        - Reference size
-        - Containment threshold
-        - Sensitivity threshold
-        - Window size
-        - Min fragment size
-        - Number of bins
-    - What is the relationship between the internal parameters and those
-      exposed to the user?
-    - How do you compute the sensitivity of a query?
-    - How do you interpret a query? In terms of the size of the sequences?
-    - What are some possible irl queries?
-        - Anti-biotic resistance genes
-        - Viruses in human genomes
-        - Gene fusions
-        - Segmental duplications
-        - Cancer copy number variants
-        - HIV integration sites
-    - What are the sizes of possible irl queries?
-        - For antibiotic resistance genes:
-            - Source: CARD
-            - Range: 162-4359bp
-            - Average (std): 957 (320)
-            - Number of genomes: 586
-            - Number of representative bacterial sequences in RefSeq: 14,906
-            - Bigsi sizes (linear in both resolution and number of genomes; the 
-            following assumes fixed 30mb bin sizes and exact matches):
-                - 100bp resolution, 1000 genomes: 101Mb
-                - 500bp resolution, 1000 genomes: 20Mb
-                - 100bp resolution, 15k genomes: 1.5Gb
-                - 500bp resolution, 15k genomes: 300Mb
-        - For viruses:
-            - Source: NCBI
-            - Range: 162-4359bp
-            - Average (std): 957 (320)
-            - Number of genomes: 586
-            - Number of representative bacterial sequences in RefSeq: 14,906
-            - Bigsi sizes (linear in both resolution and number of genomes; the 
-            following assumes fixed 30mb bin sizes and exact matches):
-                - 100bp resolution, 1000 genomes: 101Mb
-                - 500bp resolution, 1000 genomes: 20Mb
-                - 100bp resolution, 15k genomes: 1.5Gb
-                - 500bp resolution, 15k genomes: 300Mb
-        - For gene fusions:
-            - Source: FusionGDB
-            - Range: 162-4359bp
-            - Average (std): 957 (320)
-            - Number of genomes: 586
-            - Number of representative bacterial sequences in RefSeq: 14,906
-            - Bigsi sizes (linear in both resolution and number of genomes; the 
-            following assumes fixed 30mb bin sizes and exact matches):
-                - 100bp resolution, 1000 genomes: 101Mb
-                - 500bp resolution, 1000 genomes: 20Mb
-                - 100bp resolution, 15k genomes: 1.5Gb
-                - 500bp resolution, 15k genomes: 300Mb
 '''
 
 import math
@@ -312,6 +245,19 @@ def compute_minimizer_index_size(seq_length, window_size):
     return minimizer_index_size
 
 
+def compute_containment_diff_bound(delta, window_size, query_size, 
+                                   bf_false_pos, true_jaccard_containment):
+    scaling_factor = 2/window_size
+    num_minimizers_query = scaling_factor*query_size
+    exponent_term = (
+        (true_jaccard_containment / 
+         (true_jaccard_containment + bf_false_pos))**2 
+        * delta**2 
+        * num_minimizers_query
+        * (true_jaccard_containment + bf_false_pos)/3
+    )
+    return 2*math.exp(-exponent_term)
+
 def main():
     # ar_genes_parameters = {
     #     'bin_seq_len': 7e6,
@@ -372,16 +318,18 @@ def main():
 
     hg38 = {
         'bin_seq_len': 16e6,
-        'window_size': 50,
+        'window_size': 100,
         'min_query_len': 5000,
-        'error_rate': 0.07,
+        'error_rate': 0.05,
         'false_hit_thresh': 1e-2,
-        'num_cols': 3e9/16e6,
+        'num_cols': 206,
         'kmer_len': 16,
     }
 
-    bigsi_stats = compute_bigsi_stats(hg38)
-    print(bigsi_stats)
+    # bigsi_stats = compute_bigsi_stats(hg38)
+    # print(hg38, '\n', bigsi_stats)
+
+    print(compute_containment_diff_bound(0.18, 50, 5000, 0.1749, 0.45))
 
     # print('hg38')
     # false_negative_prob = compute_winnow_false_neg(
