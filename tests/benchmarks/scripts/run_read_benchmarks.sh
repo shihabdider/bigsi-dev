@@ -7,7 +7,7 @@ function nanopore_benchmark() {
                 -q seqs/${NANOPORE_READ_DIR}/experiment_${j}_sample_reads.fasta \
                 -c scripts/hg38.office.config.json \
                 -o outputs/${NANOPORE_READ_DIR}/experiment_${j} \
-                -i 95 \
+                -i 5 \
                 -m $MASHMAP_FLAG \
             &
     done
@@ -21,11 +21,9 @@ PACBIO_READ_DIR=hg38/reads/pacbio
                 -q seqs/${PACBIO_READ_DIR}/experiment_${j}_sample_reads.fasta \
                 -c scripts/hg38.office.config.json \
                 -o outputs/${PACBIO_READ_DIR}/experiment_${j} \
-                -i 95 \
+                -i 5 \
                 -m $MASHMAP_FLAG \
             &
     done
 }
 
-pacbio_benchmark && wait;
-nanopore_benchmark
