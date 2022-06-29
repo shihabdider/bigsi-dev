@@ -4904,3 +4904,12 @@ Wrote to outputs/gorilla/simulation/query_length/experiment_99/300000.bigsi.json
 Wrote to outputs/gorilla/simulation/query_length/experiment_97/300000.bigsi.json
 Wrote to outputs/gorilla/simulation/query_length/experiment_98/300000.bigsi.json
 Wrote to outputs/gorilla/simulation/query_length/experiment_100/300000.bigsi.json
+[master 089177db] add metrics for 100 experiments
+ 10 files changed, 14450 insertions(+), 4 deletions(-)
+ create mode 100644 tests/benchmarks/benchmark_log.txt
+ create mode 100644 tests/benchmarks/metrics/pan_trog_sensitivity.txt
+ create mode 100644 tests/benchmarks/metrics/pan_trog_specificity.txt
+ create mode 100644 tests/benchmarks/metrics/query_length_w50_bound_sensitivity.txt
+ create mode 100644 tests/benchmarks/metrics/query_length_w50_bound_specificity.txt
+ create mode 100644 tests/benchmarks/metrics/sub_rate_w50_bound_sensitivity.txt
+ create mode 100644 tests/benchmarks/metrics/sub_rate_w50_bound_specificity.txt
