@@ -18,7 +18,7 @@ function jaccard_benchmark() {
             query="seqs/synthetic/jaccard/${ref_size}_${query_size}_query_${rate}.fasta"
             node ~/Research/bigsi-dev/tests/jaccard_test.js \
                 -r ${ref} -q ${query} -w ${window_size} > \
-                metrics/jaccard/${ref_size}_${query_size}_${rate}_w${window_size}_hashtable.txt \
+                metrics/jaccard/${ref_size}_${query_size}_${rate}_w${window_size}_bloom_filter.txt \
         &
         done
     done
