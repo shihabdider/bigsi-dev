@@ -1,7 +1,7 @@
 #!/bin/bash
 
-num_experiments=10;
-query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_w50_query_config.json";
+num_experiments=100;
+query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_var_bins_test_query_config.json";
 mashmap_flag=0;
 script_dir="/Users/shihabdider/Research/bigsi-dev/tests/benchmarks/scripts";
 commit_msg="add metrics for ${num_experiments} experiments";
