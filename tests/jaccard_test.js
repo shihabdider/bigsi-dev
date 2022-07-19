@@ -13,6 +13,18 @@ function extractKmers(sequence) {
     return kmers
 }
 
+function extractKmersAsHashes(sequence) {
+    const kmerSize = 16
+    const kmerHashes = []
+    for (let i = 0; i < (sequence.length - kmerSize + 1); i++) {
+        const kmer = sequence.slice(i, i + kmerSize)
+        const kmerHash = murmur.murmur3(kmer, seed=42)
+        kmerHashes.push(kmerHash)
+    }
+
+    return kmerHashes
+}
+
 function insertElementsIntoHashTable(elements) {
     const hashtable = {}
     for (const element of elements) {
@@ -77,7 +89,26 @@ function computeBloomFilterSize(n, p) {
     return Math.ceil((n * Math.log(p)) / Math.log(1 / Math.pow(2, Math.log(2))));
 }
 
-function computeJaccardDiff(targetHashtable, targetWinnowedBloomFilter, querySeq, windowSize) {
+function getExperimentTarget(targetSeq, windowSize, experiment) {
+    const targetMinimizers = utils.extractMinimizers(targetSeq, windowSize);
+    if (experiment === 'real query') {
+        const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length, p = 0.1749);
+        const targetWinnowedBloomFilter = insertElementsIntoBloomFilter(targetMinimizers, bloomFilterSizeMinimizers);
+        return targetWinnowedBloomFilter
+    }
+    else if (experiment === 'bloom filter') {
+        const targetKmerMinimizers = utils.extractMinimizers(targetSeq, windowSize=1)
+        const bloomFilterSize = computeBloomFilterSize(targetKmerMinimizers.length, p = 0.1749)
+        const targetBloomFilter = insertElementsIntoBloomFilter(targetKmerMinimizers, bloomFilterSize)
+        return targetBloomFilter
+    }
+    else if (experiment === 'hashtable') {
+        const targetWinnowedHashtable = insertElementsIntoHashTable(targetMinimizers)
+        return targetWinnowedHashtable
+    }
+}
+
+function computeJaccardDiff(targetHashtable, experimentTarget, querySeq, windowSize) {
 
     const queryKmers = extractKmers(querySeq)
     const numMatching = getNumMatchingKmers(targetHashtable, queryKmers)
@@ -85,13 +116,15 @@ function computeJaccardDiff(targetHashtable, targetWinnowedBloomFilter, querySeq
     const true_j = computeJaccardContainment(numMatching, numInQuery)
 
     const queryMinimizers = utils.extractMinimizers(querySeq, windowSize)
-    const numMinimizersMatching = getNumMatchingMinimizers(targetWinnowedBloomFilter, queryMinimizers)
+    const numMinimizersMatching = getNumMatchingMinimizers(experimentTarget, queryMinimizers)
     const numMinimizersInQuery = queryMinimizers.length
     const winnowed_j = computeJaccardContainment(numMinimizersMatching, numMinimizersInQuery)
     const jaccard_diff = true_j - winnowed_j
 
     return jaccard_diff
 }
+
+
 
 
 async function main() {
@@ -127,11 +160,9 @@ async function main() {
 
     const targetKmers = extractKmers(targetSeq)
     const targetHashtable = insertElementsIntoHashTable(targetKmers)
-
-    const targetMinimizers = utils.extractMinimizers(targetSeq, argv.windowSize)
-    const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length, p = 0.1749)
-    const targetWinnowedBloomFilter = insertElementsIntoBloomFilter(targetMinimizers, bloomFilterSizeMinimizers)
-    //const targetWinnowedHashtable = insertElementsIntoHashTable(targetMinimizers)
+    
+    const experiment = 'bloom filter'
+    const experimentTarget = getExperimentTarget(targetSeq, argv.windowSize, experiment)
 
     const queryFai = `${argv.query}.fai`
     const query = await utils.loadFasta(argv.query, queryFai)
@@ -144,7 +175,7 @@ async function main() {
 
     const jaccard_diffs = []
     for (const querySeq of querySeqs) {
-        const jaccard_diff = computeJaccardDiff(targetHashtable, targetWinnowedBloomFilter, querySeq, argv.windowSize)
+        const jaccard_diff = computeJaccardDiff(targetHashtable, experimentTarget, querySeq, argv.windowSize)
         jaccard_diffs.push(jaccard_diff)
         console.log(jaccard_diff)
     }

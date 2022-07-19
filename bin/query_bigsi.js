@@ -60,6 +60,10 @@ function getBinaryBigsiSubmatrix(bigsi, rowFilter, numCols){
     return submatrix
 }
 
+function errorToContainment(errorRate, kmerLength) {
+    const containment_score = Math.exp(-1*errorRate*kmerLength)
+    return containment_score
+}
 
 function computeLowerBoundContainmentScore(containmentScore, 
     numMinimizersInQuery, confidenceInterval) {
@@ -87,12 +91,19 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
         let numMatchingMinimizers = hammingWeights[bucketNum]
         if (numMatchingMinimizers > 0) {
             let containmentScore = numMatchingMinimizers/numMinimizersInQuery
-            const containmentBias = -0.10
-            containmentScore += containmentBias
-            containmenScore = Math.max(containmentScore, 0)
-            const lowerContainment = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.95)
-            const errorRate = Math.max(-1/kmerLength * Math.log(lowerContainment), 0)
+            let containmentBias = 0
+            if (subrate !== 0) {
+                const [a, b] = [-2.0911970758203355, 0.05456005792583899]
+                //const [a, b, c] = [-10.159424125733166, -0.8279679052074231, 0.022233300308392268]
+                //containmentBias = a*subrate**2 + b*subrate + c            
+                //containmentBias = a*subrate + b
+                //containmentScore += containmentBias
+                containmentScore = Math.max(containmentScore, 0)
+                containmentScore = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.999995)
+            }
+            const errorRate = Math.max(-1/kmerLength * Math.log(containmentScore), 0)
             if (errorRate <= subrate) {
+            //if (errorRate <= adjustedSubrate) {
                 //console.log(hammingWeights[bucketNum])
                 const percentMatch = 100*(1 - errorRate)
                 bigsiHits[bucketNum] = {'percent match': percentMatch}
@@ -132,7 +143,7 @@ async function main(querySeq, bigsiPath, bigsiConfigPath, subrate) {
     const bloomFilterSize = bigsiDims.rows
     const queryWindowSize = 100
 
-    const isQuerySeqRightSize = querySeq.length >= 1000 && querySeq.length <= 300000
+    const isQuerySeqRightSize = querySeq.length >= 500 && querySeq.length <= 300000
     if (isQuerySeqRightSize) {
         const queryMinimizers = utils.extractMinimizers(querySeq, queryWindowSize)
         const queryMask = utils.makeMinimizersBloomFilter(queryMinimizers, bloomFilterSize)
