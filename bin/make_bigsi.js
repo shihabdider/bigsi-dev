@@ -14,15 +14,16 @@ const matrix = require('matrix-js')
 const cdf = require('binomial-cdf');
 const config = require('../bigsi.config.json')
 const writeBigsi = require('./write_bigsi.js')
+const quantile = require( '@stdlib/stats-base-dists-binomial-quantile' );
 
-function makeBucketBloomFilter(sequence, bloomFilterSize){
-    const bucketMinimizers = utils.extractMinimizers(sequence, config.windowSize)
-    const bucketBloomFilter = utils.makeMinimizersBloomFilter(
-            bucketMinimizers, 
+function makeSeqBloomFilter(sequence, bloomFilterSize){
+    const seqMinimizers = utils.extractMinimizers(sequence, config.windowSize)
+    const seqBloomFilter = utils.makeMinimizersBloomFilter(
+            seqMinimizers, 
             bloomFilterSize
         )
 
-    return bucketBloomFilter
+    return seqBloomFilter
 }
 
 async function buildBigsi(sequence, bloomFilterSize, bucketCoords){
@@ -64,10 +65,32 @@ function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize, nu
     return falsePos
 }
 
+function errorToContainment(errorRate, kmerLength) {
+    const containment_score = Math.exp(-1*errorRate*kmerLength)
+    return containment_score
+}
+
+function containmentToError(containmentScore, kmerLength) {
+    const errorRate = -1/kmerLength * Math.log(containmentScore)
+}
+
+function computeLowerBoundErrorRate(errorRate, numMinimizersInQuery, 
+    confidenceInterval) {
+    const containmentScore = errorToContainment(errorRate, config.kmer)
+    let x = quantile(confidenceInterval, numMinimizersInQuery, containmentScore)
+
+    const lowerBoundContainmentScore = Math.min(x / numMinimizersInQuery, 1);
+    const lowerBoundError = containmentToError(lowerBoundContainmentScore, config.kmer)
+    return lowerBoundError 
+}
+
 function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBuckets){
     // initialize set parameters
     const minQueryMinimizers = estimateNumMinimizers(config.minQuerySize)
     const falseHitThresh = 1e-2
+    const errorRateLower = computeLowerBoundErrorRate(errorRate, minQueryMinimizers, 
+                                         confidenceInterval=0.99)
+    const adjustedErrorRate = errorRate + (errorRate - errorRateLower)
     // iterate over a array size range...
     for ( let bloomFilterSize = 0; bloomFilterSize <= 5e7; bloomFilterSize += 1e3 ){
         const numHashes = 1
@@ -75,7 +98,7 @@ function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBucke
         const falseHitProb = computeFalseHitProb(
             falsePosRate, 
             minQueryMinimizers, 
-            errorRate
+            adjustedErrorRate
         )
 
         // accounting for all buckets in bigsi
@@ -93,21 +116,17 @@ function computeNumBuckets(seqLength) {
     return numBuckets
 }
 
-/* estimate bloom filter size using minimizer count computed from bucket size 
- * of longest sequence + bucket overhangs
+/* estimate bloom filter size using minimizer count computed from largest 
+ * sequencee
 */ 
-function estimateBloomFilterSize(seqSizes, bucketSize){
-    const numElementsInserted = estimateNumMinimizers(bucketSize)
+function estimateBloomFilterSize(seqSizes){
+    const seqSizesArr = Object.values(seqSizes)
+    const numElementsInserted = estimateNumMinimizers(Math.max(seqSizesArr))
     console.log('number of minimizers: ', numElementsInserted)
     const errorRate = config.errorRate
     console.log('max error rate:', errorRate)
-    let totalNumBuckets = 0
-    const seqSizesArr = Object.values(seqSizes)
-    for (const seqSize of seqSizesArr) {
-        const numBucketsInSeq = computeNumBuckets(seqSize)
-        totalNumBuckets += numBucketsInSeq
-    }
 
+    const totalNumBuckets = seqSizesArr.length
     const bloomFilterSize = computeBloomFilterSize(
         numElementsInserted, 
         errorRate,
@@ -118,54 +137,36 @@ function estimateBloomFilterSize(seqSizes, bucketSize){
     return bloomFilterSize
 }
 
-
-function computeBucketCoords(seqLength) {
-    const bucketCoords = []
-    const numBuckets = computeNumBuckets(seqLength)
-    for (let bucketNum=0; bucketNum < numBuckets; bucketNum++){
-        const bucketStart = Math.max(bucketNum*config.bucketSize - config.bucketOverhang, 0)
-        let bucketEnd = Math.min(bucketStart + config.bucketSize + 2*config.bucketOverhang, seqLength)
-
-        if (bucketStart === 0) { // handle first bucket 
-            bucketEnd -= config.bucketOverhang
-        }
-
-        const coord = { bucketStart, bucketEnd }
-        bucketCoords.push(coord)
-    }
-
-    return bucketCoords
-}
-
 /**
  * @param { IndexedFasta } fasta - indexedFasta object
  *
- * @returns { string[][] } fastaBigsis - array for each seq in fasta in 
+ * @returns { string[] } fastaBigsi - array for each seq in fasta in 
  * bitstring format (each element is a bitstring corresponding to the bigsi row 
  * for each sequence)
  */
-async function makeFastaBigsis(fasta){
+async function makeFastaBigsi(fasta){
     const seqNames = await fasta.getSequenceList()
     console.log('seqNames: ', seqNames)
 
     const seqSizes = await fasta.getSequenceSizes()
-    const fullBucketSize = config.bucketSize + 2*config.bucketOverhang
-    const bloomFilterSize = estimateBloomFilterSize(seqSizes, fullBucketSize)
+    const bloomFilterSize = estimateBloomFilterSize(seqSizes)
 
-    const fastaBigsis = []
+    const seqBloomFilters = []
     for (const seqName of seqNames){
         const sequence = await fasta.getSequence(seqName)
-        const bucketCoords = computeBucketCoords(sequence.length, config.bucketSize)
-        const seqBigsi = await buildBigsi(sequence, bloomFilterSize, bucketCoords)
-        const bigsiBitstrings = writeBigsi.bigsiToBitstrings(seqBigsi)
+        const seqBloomFilter = makeSeqBloomFilter(sequence, bloomFilterSize)
+        seqBloomFilters.push(seqBloomFilter)
         //console.log('seqBigsi', seqBigsi)
         console.log(`Bigsi of ${seqName} built...`)
-        fastaBigsis.push(bigsiBitstrings)
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process used ${memoryUsed} MB`)
     }
 
-    return fastaBigsis
+    let bigsi = matrix(seqBloomFilters)
+    bigsi = matrix(bigsi.trans()) // transpose to make bloom filters into columns of matrix
+
+    const fastaBigsi = writeBigsi.bigsiToBitstrings(bigsi)
+    return fastaBigsi
 }
 
 function mergeBigsis(bigsis){
@@ -187,14 +188,10 @@ async function main(fasta) {
     const seqSizes = Object.values(await fasta.getSequenceSizes())
     const areFastaSeqsValidSize = Math.min(...seqSizes) > minSeqLength 
 
-    if (areFastaSeqsValidSize && config.bucketSize > 0) {
-        const bigsis = await makeFastaBigsis(fasta)
-        console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
-        const bigsi = await mergeBigsis(bigsis)
-        const paddingSize = config.intBits - (bigsi[0].length % config.intBits)
-        const numColsPadded = bigsi[0].length + paddingSize
-        const bigsiDims = { 'rows': bigsi.length, 'cols': numColsPadded, 'padding': paddingSize }
-        console.log(`Bigsis merged!`)
+    if (areFastaSeqsValidSize) {
+        const bigsi = await makeFastaBigsi(fasta)
+        console.log(`Bigsi for ${bigsi.length} sequences created, merging...`)
+        const bigsiDims = { 'rows': bigsi.length, 'cols': seqSizes.length }
         console.log('Number of (rows, cols):', bigsiDims)
 
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;

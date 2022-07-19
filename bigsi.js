@@ -35,9 +35,6 @@ async function main(){
     writeBigsi.writeBinaryBigsi(binaryBigsi, `${argv.output}.bin`)
     writeBigsi.writeQueryConfigToJSON(bigsiDims, `${argv.output}_query_config.json`)
             
-    const bucketToPosition = await writeBigsi.makeBucketToPositionMap(fasta)
-    writeBigsi.writeBucketMapToJSON(bucketToPosition, `${argv.output}_bucket_map.json`)
-
 }
 
 main()

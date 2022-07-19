@@ -164,14 +164,14 @@ def compute_bigsi_metrics(bigsi_parameters, query_size, query_sub_rate):
     target_size = bigsi_parameters['bin_seq_len']
     window_size = bigsi_parameters['window_size']
     num_query_minimizers = compute_num_minimizers(query_size, window_size)
-    #query_sub_rate_lower = error_lower_bound(query_sub_rate, 
-    #                                         num_query_minimizers, 
-    #                                         conf_interval=0.9999)
-    #query_sub_rate = query_sub_rate + (query_sub_rate - query_sub_rate_lower)
-    false_pos_prob = compute_false_hit(bf_false_pos, num_query_minimizers, 
-                                       query_sub_rate+0.02, 
+    query_sub_rate_lower = error_lower_bound(query_sub_rate, 
+                                             num_query_minimizers, 
+                                             conf_interval=0.9999)
+    query_sub_rate = query_sub_rate + (query_sub_rate - query_sub_rate_lower)
+    false_pos_prob = compute_false_hit(bf_false_pos, num_query_minimizers,
+                                       query_sub_rate,
                                        kmer_length=16)
-    false_positive_rate = (1 - (1 - false_pos_prob)**384)
+    false_positive_rate = (1 - (1 - false_pos_prob)**bigsi_parameters['num_cols'])
 
     # false_negative_rate = compute_winnow_false_neg(query_size, target_size, 
     #                                                window_size, query_sub_rate)
@@ -192,10 +192,10 @@ def compute_bigsi_stats(parameters):
     num_minimizers_query = compute_num_minimizers(parameters['min_query_len'],
                                                   window_size)
     error_rate = parameters['error_rate']
-    # Take the 90% upper CI of error rate to account for variance in estimate
-    # error_rate_lower = error_lower_bound(error_rate, num_minimizers_query, 
-    #                                      conf_interval=0.9995)
-    # error_rate = error_rate + (error_rate - error_rate_lower)
+    # Take the 99% upper CI of error rate to account for variance in estimate
+    error_rate_lower = error_lower_bound(error_rate, num_minimizers_query, 
+                                         conf_interval=0.99)
+    error_rate = error_rate + (error_rate - error_rate_lower)
     # print(error_rate)
 
     false_hit_thresh = parameters['false_hit_thresh']
@@ -317,19 +317,19 @@ def main():
 
 
     hg38 = {
-        'bin_seq_len': 16e6,
+        'bin_seq_len': 250e6,
         'window_size': 100,
         'min_query_len': 5000,
         'error_rate': 0.05,
         'false_hit_thresh': 1e-2,
-        'num_cols': 206,
+        'num_cols': 24,
         'kmer_len': 16,
     }
 
-    # bigsi_stats = compute_bigsi_stats(hg38)
-    # print(hg38, '\n', bigsi_stats)
+    bigsi_stats = compute_bigsi_stats(hg38)
+    print(hg38, '\n', bigsi_stats)
 
-    print(compute_containment_diff_bound(0.18, 50, 5000, 0.1749, 0.45))
+    # print(compute_containment_diff_bound(0.18, 50, 5000, 0.1749, 0.45))
 
     # print('hg38')
     # false_negative_prob = compute_winnow_false_neg(
