@@ -16,13 +16,13 @@ source "${script_dir}/get_metrics.sh";
 
 # Simulation benchmarks
 
-#error_benchmark && wait;
-#query_length_benchmark && wait;
-sub_rate_metrics "sub_rate_no_bins";
-query_length_metrics "query_length_no_bins";
+error_benchmark && wait;
+query_length_benchmark && wait;
+sub_rate_metrics "sub_rate_no_bins_99";
+query_length_metrics "query_length_no_bins_99";
 
-#mammal_benchmark "pan_trog" && wait;
-#mammal_benchmark "gorilla" && wait;
+mammal_benchmark "pan_trog" && wait;
+mammal_benchmark "gorilla" && wait;
 mammal_metrics "pan_trog";
 mammal_metrics "gorilla";
 
