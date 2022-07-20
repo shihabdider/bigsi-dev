@@ -1,7 +1,7 @@
 #!/bin/bash
 
 num_experiments=10;
-query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_var_bins_test_query_config.json";
+query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_no_bins_query_config.json";
 mashmap_flag=0;
 script_dir="/Users/shihabdider/Research/bigsi-dev/tests/benchmarks/scripts";
 commit_msg="add metrics for ${num_experiments} experiments";
@@ -18,8 +18,8 @@ source "${script_dir}/get_metrics.sh";
 
 error_benchmark && wait;
 query_length_benchmark && wait;
-sub_rate_metrics "sub_rate_w100_adaptive_bias";
-query_length_metrics "query_length_w100_adaptive_bias";
+sub_rate_metrics "sub_rate_no_bins";
+query_length_metrics "query_length_no_bins";
 
 mammal_benchmark "pan_trog" && wait;
 mammal_benchmark "gorilla" && wait;
