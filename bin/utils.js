@@ -9,14 +9,15 @@ function zeroPadBitstring(bitstring, places){
 }
 
 function reverseComplement(sequence){
-    var reverseSeq=sequence.split('').reverse().join('')
-
-    let COMPLEMENT_BASES = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'},
-        re = /[ATCG]/g;
-
-    var revComplementSeq = reverseSeq.replace(re, function (sequence) {
-        return COMPLEMENT_BASES[sequence]
-    });
+    let revComplementSeq = "";
+    let complementBases = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+    for (var i = sequence.length - 1; i >= 0; i--) {
+        if (sequence[i] in complementBases) {
+            revComplementSeq += complementBases[sequence[i]];
+        } else {
+            revComplementSeq += sequence[i];
+        }
+    }
 
     return revComplementSeq
 }
@@ -55,13 +56,15 @@ async function getFilteredGenomeSeqs(genome, seqSizeThreshold=10**7){
 // Based on MashMap's winnowing algorithm
 function extractMinimizers(seq, windowSize){
     seq = seq.toUpperCase()
+    console.log('seq', seq.length)
 
     const kmerSize = 16
     const seed = 42
 
     let minimizers = []
     let deque = [] // array of {hash, offset}
-    let revSequence = reverseComplement(seq)
+    const revSequence = reverseComplement(seq)
+    console.log('rev', revSequence.length)
     for (let i = 0; i < (seq.length - kmerSize + 1); i++){
         let currentWindowIndex = i - windowSize + 1
         let kmerHashFwd = murmur.murmur3(seq.slice(i,i+kmerSize), seed)

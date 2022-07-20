@@ -26,22 +26,6 @@ function makeSeqBloomFilter(sequence, bloomFilterSize){
     return seqBloomFilter
 }
 
-async function buildBigsi(sequence, bloomFilterSize, bucketCoords){
-    const seqBloomFilters = [] // Bloom filters as arrays
-    for (const coord of bucketCoords){
-        const ithBucketSequence = sequence.slice(coord.bucketStart, coord.bucketEnd);
-        console.log(coord['bucketStart'], coord['bucketEnd'], ithBucketSequence.length)
-        const bucketBloomFilter = makeBucketBloomFilter(ithBucketSequence, bloomFilterSize)
-        seqBloomFilters.push(bucketBloomFilter)
-    }
-
-    let bigsi = matrix(seqBloomFilters)
-    bigsi = matrix(bigsi.trans()) // transpose to make bloom filters into columns of matrix
-
-    return bigsi
-
-}
-
 function estimateNumMinimizers(seqLength){
     const numMinimizers = Math.ceil(seqLength/config.windowSize * 2)
     return numMinimizers
@@ -72,6 +56,7 @@ function errorToContainment(errorRate, kmerLength) {
 
 function containmentToError(containmentScore, kmerLength) {
     const errorRate = -1/kmerLength * Math.log(containmentScore)
+    return errorRate
 }
 
 function computeLowerBoundErrorRate(errorRate, numMinimizersInQuery, 
@@ -89,8 +74,9 @@ function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBucke
     const minQueryMinimizers = estimateNumMinimizers(config.minQuerySize)
     const falseHitThresh = 1e-2
     const errorRateLower = computeLowerBoundErrorRate(errorRate, minQueryMinimizers, 
-                                         confidenceInterval=0.99)
+                                         confidenceInterval=0.999995)
     const adjustedErrorRate = errorRate + (errorRate - errorRateLower)
+    console.log('adjusted error rate: ', adjustedErrorRate)
     // iterate over a array size range...
     for ( let bloomFilterSize = 0; bloomFilterSize <= 5e7; bloomFilterSize += 1e3 ){
         const numHashes = 1
@@ -121,7 +107,7 @@ function computeNumBuckets(seqLength) {
 */ 
 function estimateBloomFilterSize(seqSizes){
     const seqSizesArr = Object.values(seqSizes)
-    const numElementsInserted = estimateNumMinimizers(Math.max(seqSizesArr))
+    const numElementsInserted = estimateNumMinimizers(Math.max(...seqSizesArr))
     console.log('number of minimizers: ', numElementsInserted)
     const errorRate = config.errorRate
     console.log('max error rate:', errorRate)

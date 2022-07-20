@@ -3,58 +3,30 @@
 const config = require('../bigsi.config.json')
 const fs = require('fs')
 
-function computeNumBuckets(seqLength) {
-    const numBuckets = Math.ceil(seqLength/config.bucketSize)
-    return numBuckets
-}
-
-/** Makes the bucket map to retrieve sequence intervals from bucket number
- */
-function makeBucketMap(seqName, seqSize, currentBucketNum, numBuckets){
-    const bucketSize = config.bucketSize
-    const bucketMap = {} 
-    for (let bucketNum=0; bucketNum < numBuckets; bucketNum++){
-
-        const intervalStart = Math.max(bucketNum*config.bucketSize - config.bucketOverhang, 0)
-        let intervalEnd = Math.min(intervalStart + config.bucketSize + 2*config.bucketOverhang, seqSize)
-
-        if (intervalStart === 0) { // handle first bucket 
-            intervalEnd -= config.bucketOverhang
-        }
-        
-        const adjustedBucketNum = bucketNum + currentBucketNum
-        bucketMap[adjustedBucketNum] = {
-            refName: seqName,
-            bucketStart: intervalStart,
-            bucketEnd: intervalEnd,
-        }
-    }
-
-    return bucketMap
-}
-
 /** 
  * fasta - indexFasta of entire genome/sequence
  */
-async function makeBucketToPositionMap(fasta){
+async function makeSeqToPositionMap(fasta){
     const seqSizes = await fasta.getSequenceSizes()
 
-    let bucketToPositionMap = {}
+    const seqToPositionMap = {}
     let currentBucketNum = 0
-    for (seqName in seqSizes) {
+    for (let seqName in seqSizes) {
         const seqSize = seqSizes[seqName]
-        const numBuckets = computeNumBuckets(seqSize)
-        const bucketMap = makeBucketMap(seqName, seqSize, currentBucketNum, numBuckets)
-        bucketToPositionMap = { ...bucketToPositionMap, ...bucketMap }
-        currentBucketNum += numBuckets
+        seqToPositionMap[currentBucketNum] = { 
+            "refName": seqName,
+            "bucketStart": 0,
+            "bucketEnd": seqSize
+        }
+        currentBucketNum += 1
     }
 
-    return bucketToPositionMap
+    return seqToPositionMap
  }
 
-function writeBucketMapToJSON(bucketMap, output){
+function writeSeqMapToJSON(seqMap, output){
     // convert JSON object to string
-    const json = JSON.stringify(bucketMap);
+    const json = JSON.stringify(seqMap);
 
     // write JSON string to a file
     fs.writeFile(output, json, (err) => {
@@ -186,9 +158,8 @@ function makeHexBigsi(bigsi){
 }
 
 module.exports = {
-    makeBucketMap: makeBucketMap,
-    makeBucketToPositionMap: makeBucketToPositionMap,
-    writeBucketMapToJSON: writeBucketMapToJSON,
+    makeSeqToPositionMap: makeSeqToPositionMap,
+    writeSeqMapToJSON: writeSeqMapToJSON,
     writeQueryConfigToJSON: writeQueryConfigToJSON,
     bitstringsToInts: bitstringsToInts,
     bigsiToBitstrings: bigsiToBitstrings,
