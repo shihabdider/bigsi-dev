@@ -4,7 +4,7 @@ query_sizes=( 5000 10000 20000 40000 80000 160000 300000 )
 
 function jaccard_benchmark() {
     local sub_rates=( 000 001 002 003 004 005 006 007 008 009 010 )
-    local ref_size=16
+    local ref_size=1
     window_size=$1
     N=12
     # iterate through all query sizes
@@ -18,12 +18,12 @@ function jaccard_benchmark() {
             query="seqs/synthetic/jaccard/${ref_size}_${query_size}_query_${rate}.fasta"
             node ~/Research/bigsi-dev/tests/jaccard_test.js \
                 -r ${ref} -q ${query} -w ${window_size} > \
-                metrics/jaccard/${ref_size}_${query_size}_${rate}_w${window_size}_bloom_filter.txt \
+                metrics/jaccard/${ref_size}_${query_size}_${rate}_w${window_size}_real_query.txt \
         &
         done
     done
 }
 
 #jaccard_benchmark 25;
-jaccard_benchmark 50;
+#jaccard_benchmark 50;
 jaccard_benchmark 100;
