@@ -2,7 +2,7 @@
 
 num_experiments=10;
 query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_no_bins_query_config.json";
-mashmap_flag=0;
+mashmap_flag=1;
 script_dir="/Users/shihabdider/Research/bigsi-dev/tests/benchmarks/scripts";
 commit_msg="add metrics for ${num_experiments} experiments";
 
@@ -18,13 +18,13 @@ source "${script_dir}/get_metrics.sh";
 
 error_benchmark && wait;
 query_length_benchmark && wait;
-sub_rate_metrics "sub_rate_no_bins_99";
-query_length_metrics "query_length_no_bins_99";
+sub_rate_metrics "sub_rate_no_bins_99_no_filter";
+query_length_metrics "query_length_no_bins_99_no_filter";
 
-mammal_benchmark "pan_trog" && wait;
-mammal_benchmark "gorilla" && wait;
-mammal_metrics "pan_trog";
-mammal_metrics "gorilla";
+# mammal_benchmark "pan_trog" && wait;
+# mammal_benchmark "gorilla" && wait;
+# mammal_metrics "pan_trog";
+# mammal_metrics "gorilla";
 
 #pacbio_benchmark && wait;
 #nanopore_benchmark;
