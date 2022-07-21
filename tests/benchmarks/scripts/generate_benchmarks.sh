@@ -18,8 +18,8 @@ source "${script_dir}/get_metrics.sh";
 
 error_benchmark && wait;
 query_length_benchmark && wait;
-sub_rate_metrics "sub_rate_many_bins_adaptive_9995";
-query_length_metrics "query_length_many_bins_adaptive_9995";
+sub_rate_metrics "sub_rate_many_bins_adaptive_99999995";
+query_length_metrics "query_length_many_bins_adaptive_99999995";
 
 #mammal_benchmark "pan_trog" && wait;
 #mammal_benchmark "gorilla" && wait;
