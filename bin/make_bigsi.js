@@ -83,6 +83,7 @@ function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBucke
         // break if false hit rate less than threshold and return
         if ( falseHitProbUpper <= falseHitThresh ) {
             console.log('num hashes:', numHashes)
+            console.log('bf false positive rate:', falsePosRate)
             return bloomFilterSize
         }
     }
