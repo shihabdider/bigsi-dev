@@ -33,7 +33,7 @@ def run_mashmap(query, config, identity, seq_length, output='mashmap.out'):
         " -q {1} -r {2} -o {3}"
         " -s {4} --pi {5}"
     ).format(config['mashmap'], query, config['ref'], output,
-             seq_length, identity, filter_mode)
+             seq_length, identity)
 
     p = subprocess.Popen(mashmap_cmd, shell=True)
     p.communicate()
