@@ -28,11 +28,10 @@ def run_bigsi_query(query_seq, config, subrate):
 def run_mashmap(query, config, identity, seq_length, output='mashmap.out'):
     '''Runs mashmap on a set of query seqs vs. ref and outputs to file'''
 
-    filter_mode = 'none'
     mashmap_cmd = (
         r"{0}"
         " -q {1} -r {2} -o {3}"
-        " -s {4} --pi {5} -f {6}"
+        " -s {4} --pi {5}"
     ).format(config['mashmap'], query, config['ref'], output,
              seq_length, identity, filter_mode)
 

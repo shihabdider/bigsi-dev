@@ -18,8 +18,8 @@ source "${script_dir}/get_metrics.sh";
 
 error_benchmark && wait;
 query_length_benchmark && wait;
-sub_rate_metrics "sub_rate_no_bins_99_no_filter";
-query_length_metrics "query_length_no_bins_99_no_filter";
+sub_rate_metrics "sub_rate_no_bins_9995";
+query_length_metrics "query_length_no_bins_9995";
 
 # mammal_benchmark "pan_trog" && wait;
 # mammal_benchmark "gorilla" && wait;
