@@ -64,10 +64,33 @@ function computeBloomFilterFalsePosRate(numElementsInserted, bloomFilterSize, nu
     return falsePos
 }
 
+function errorToContainment(errorRate, kmerLength) {
+    const containment_score = Math.exp(-1*errorRate*kmerLength)
+    return containment_score
+}
+
+function containmentToError(containmentScore, kmerLength) {
+    const errorRate = -1/kmerLength * Math.log(containmentScore)
+    return errorRate
+}
+
+function computeLowerBoundErrorRate(errorRate, numMinimizersInQuery,
+    confidenceInterval) {
+    const containmentScore = errorToContainment(errorRate, config.kmer)
+    let x = quantile(confidenceInterval, numMinimizersInQuery, containmentScore)
+
+    const lowerBoundContainmentScore = Math.min(x / numMinimizersInQuery, 1);
+    const lowerBoundError = containmentToError(lowerBoundContainmentScore, config.kmer)
+    return lowerBoundError
+}
+
 function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBuckets){
     // initialize set parameters
     const minQueryMinimizers = estimateNumMinimizers(config.minQuerySize)
     const falseHitThresh = 1e-2
+    const errorRateLower = computeLowerBoundErrorRate(errorRate, minQueryMinimizers,
+                                         confidenceInterval=0.999995)
+    const adjustedErrorRate = errorRate + (errorRate - errorRateLower)
     // iterate over a array size range...
     for ( let bloomFilterSize = 0; bloomFilterSize <= 5e7; bloomFilterSize += 1e3 ){
         const numHashes = 1
@@ -75,7 +98,7 @@ function computeBloomFilterSize(maxNumElementsInserted, errorRate, totalNumBucke
         const falseHitProb = computeFalseHitProb(
             falsePosRate, 
             minQueryMinimizers, 
-            errorRate
+            adjustedErrorRate
         )
 
         // accounting for all buckets in bigsi
