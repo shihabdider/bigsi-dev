@@ -317,19 +317,19 @@ def main():
 
 
     hg38 = {
-        'bin_seq_len': 16e6,
+        'bin_seq_len': 1e6,
         'window_size': 100,
         'min_query_len': 5000,
         'error_rate': 0.05,
         'false_hit_thresh': 1e-2,
-        'num_cols': 206,
+        'num_cols': 3102,
         'kmer_len': 16,
     }
 
-    # bigsi_stats = compute_bigsi_stats(hg38)
-    # print(hg38, '\n', bigsi_stats)
+    bigsi_stats = compute_bigsi_stats(hg38)
+    print(hg38, '\n', bigsi_stats)
 
-    print(compute_containment_diff_bound(0.18, 50, 5000, 0.1749, 0.45))
+    # print(compute_containment_diff_bound(0.18, 50, 5000, 0.1749, 0.45))
 
     # print('hg38')
     # false_negative_prob = compute_winnow_false_neg(

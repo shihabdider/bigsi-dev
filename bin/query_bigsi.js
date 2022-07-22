@@ -93,13 +93,13 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
             let containmentScore = numMatchingMinimizers/numMinimizersInQuery
             let containmentBias = 0
             if (subrate !== 0) {
-                const [a, b] = [-2.0911970758203355, 0.05456005792583899]
+                const [a, b] = [-2.0, 0.06]
                 //const [a, b, c] = [-10.159424125733166, -0.8279679052074231, 0.022233300308392268]
                 //containmentBias = a*subrate**2 + b*subrate + c            
-                //containmentBias = a*subrate + b
-                //containmentScore += containmentBias
+                containmentBias = a*subrate + b
+                containmentScore += containmentBias
                 containmentScore = Math.max(containmentScore, 0)
-                containmentScore = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.999995)
+                containmentScore = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.9999995)
             }
             const errorRate = Math.max(-1/kmerLength * Math.log(containmentScore), 0)
             if (errorRate <= subrate) {

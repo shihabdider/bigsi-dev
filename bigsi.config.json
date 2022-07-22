@@ -1,9 +1,9 @@
 {
     "bucketOverhang": 150000,
-    "bucketSize": 16000000,
+    "bucketSize": 1000000,
     "intBits": 16,
     "windowSize": 100,
     "minQuerySize": 5000,
     "kmer":16,
-    "errorRate": 0.07
+    "errorRate": 0.05
 }

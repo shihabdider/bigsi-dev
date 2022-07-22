@@ -89,16 +89,16 @@ function computeBloomFilterSize(n, p) {
     return Math.ceil((n * Math.log(p)) / Math.log(1 / Math.pow(2, Math.log(2))));
 }
 
-function getExperimentTarget(targetSeq, windowSize, experiment) {
+function getExperimentTarget(targetSeq, windowSize, experiment, bfFalsePos) {
     const targetMinimizers = utils.extractMinimizers(targetSeq, windowSize);
     if (experiment === 'real query') {
-        const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length, p = 0.1749);
+        const bloomFilterSizeMinimizers = computeBloomFilterSize(targetMinimizers.length, p = bfFalsePos)
         const targetWinnowedBloomFilter = insertElementsIntoBloomFilter(targetMinimizers, bloomFilterSizeMinimizers);
         return targetWinnowedBloomFilter
     }
     else if (experiment === 'bloom filter') {
         const targetKmerMinimizers = utils.extractMinimizers(targetSeq, windowSize=1)
-        const bloomFilterSize = computeBloomFilterSize(targetKmerMinimizers.length, p = 0.1749)
+        const bloomFilterSize = computeBloomFilterSize(targetKmerMinimizers.length, p = bfFalsePos)
         const targetBloomFilter = insertElementsIntoBloomFilter(targetKmerMinimizers, bloomFilterSize)
         return targetBloomFilter
     }
@@ -161,8 +161,9 @@ async function main() {
     const targetKmers = extractKmers(targetSeq)
     const targetHashtable = insertElementsIntoHashTable(targetKmers)
     
-    const experiment = 'bloom filter'
-    const experimentTarget = getExperimentTarget(targetSeq, argv.windowSize, experiment)
+    const experiment = 'real query'
+    const bfFalsePos = 0.1535
+    const experimentTarget = getExperimentTarget(targetSeq, argv.windowSize, experiment, bfFalsePos)
 
     const queryFai = `${argv.query}.fai`
     const query = await utils.loadFasta(argv.query, queryFai)
