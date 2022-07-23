@@ -14,24 +14,56 @@ const matrix = require('matrix-js')
 const cdf = require('binomial-cdf');
 const config = require('../bigsi.config.json')
 const writeBigsi = require('./write_bigsi.js')
+const quantile = require( '@stdlib/stats-base-dists-binomial-quantile' );
 
-function makeBucketBloomFilter(sequence, bloomFilterSize){
-    const bucketMinimizers = utils.extractMinimizers(sequence, config.windowSize)
-    const bucketBloomFilter = utils.makeMinimizersBloomFilter(
-            bucketMinimizers, 
-            bloomFilterSize
-        )
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var topKFrequent = function (nums, k) {
+    let map = new Map();
+    let res = [];
+    let bucket = Array.from({ length: nums.length + 1 }, () => []); // to create unique arrays
 
-    return bucketBloomFilter
-}
+    // storing frequency of numbers in a map
+    for (let n of nums) {
+        map.set(n, map.has(n) ? 1 + map.get(n) : 1);
+    }
 
-async function buildBigsi(sequence, bloomFilterSize, bucketCoords){
+    // Poppulate the bucket with numbers in frequency
+    // as the index of the bucket
+    for (const [key, value] of map.entries()) {
+        bucket[value].push(key);
+    }
+
+    for (let i = bucket.length - 1; i >= 0; i--) {
+        if (bucket[i].length > 0) {
+            for (let n of bucket[i]) {
+                res.push(n);
+                if (res.length === k) return res;
+            }
+        }
+    }
+};
+
+async function buildBigsi(sequence, bloomFilterSize, bucketCoords, currentBucketNum, ignoreMinimizers){
     const seqBloomFilters = [] // Bloom filters as arrays
     for (const coord of bucketCoords){
         const ithBucketSequence = sequence.slice(coord.bucketStart, coord.bucketEnd);
         console.log(coord['bucketStart'], coord['bucketEnd'], ithBucketSequence.length)
-        const bucketBloomFilter = makeBucketBloomFilter(ithBucketSequence, bloomFilterSize)
+        const bucketMinimizers = utils.extractMinimizers(ithBucketSequence, config.windowSize)
+        const k = Math.ceil(bucketMinimizers.length * 0.001/100)
+        if (k >= 1) {
+            const ignoreMinimizersBucket = topKFrequent(bucketMinimizers, k)
+            ignoreMinimizers[currentBucketNum] = ignoreMinimizersBucket
+        }
+        const bucketBloomFilter = utils.makeMinimizersBloomFilter(
+                bucketMinimizers, 
+                bloomFilterSize
+        )
         seqBloomFilters.push(bucketBloomFilter)
+        currentBucketNum++
     }
 
     let bigsi = matrix(seqBloomFilters)
@@ -167,6 +199,8 @@ function computeBucketCoords(seqLength) {
  * @returns { string[][] } fastaBigsis - array for each seq in fasta in 
  * bitstring format (each element is a bitstring corresponding to the bigsi row 
  * for each sequence)
+ * @returns { Object } ignoreMinimizers - high freq minimizers to ignore for 
+ * each bucket
  */
 async function makeFastaBigsis(fasta){
     const seqNames = await fasta.getSequenceList()
@@ -177,10 +211,12 @@ async function makeFastaBigsis(fasta){
     const bloomFilterSize = estimateBloomFilterSize(seqSizes, fullBucketSize)
 
     const fastaBigsis = []
+    const ignoreMinimizers = {}
+    let currentBucketNum = 0
     for (const seqName of seqNames){
         const sequence = await fasta.getSequence(seqName)
         const bucketCoords = computeBucketCoords(sequence.length, config.bucketSize)
-        const seqBigsi = await buildBigsi(sequence, bloomFilterSize, bucketCoords)
+        const seqBigsi = await buildBigsi(sequence, bloomFilterSize, bucketCoords, currentBucketNum, ignoreMinimizers)
         const bigsiBitstrings = writeBigsi.bigsiToBitstrings(seqBigsi)
         //console.log('seqBigsi', seqBigsi)
         console.log(`Bigsi of ${seqName} built...`)
@@ -189,7 +225,7 @@ async function makeFastaBigsis(fasta){
         console.log(`Process used ${memoryUsed} MB`)
     }
 
-    return fastaBigsis
+    return [fastaBigsis, ignoreMinimizers]
 }
 
 function mergeBigsis(bigsis){
@@ -212,7 +248,7 @@ async function main(fasta) {
     const areFastaSeqsValidSize = Math.min(...seqSizes) > minSeqLength 
 
     if (areFastaSeqsValidSize && config.bucketSize > 0) {
-        const bigsis = await makeFastaBigsis(fasta)
+        const [bigsis, ignoreMinimizers] = await makeFastaBigsis(fasta)
         console.log(`Bigsis for ${bigsis.length} sequences created, merging...`)
         const bigsi = await mergeBigsis(bigsis)
         const paddingSize = config.intBits - (bigsi[0].length % config.intBits)
@@ -224,7 +260,7 @@ async function main(fasta) {
         const memoryUsed = process.memoryUsage().rss / 1024 / 1024;
         console.log(`Process uses ${memoryUsed}`)
 
-        return [bigsi, bigsiDims]
+        return [bigsi, bigsiDims, ignoreMinimizers]
 
     } else { 
         if (!areFastaSeqsValidSize) { 

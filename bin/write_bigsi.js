@@ -52,29 +52,16 @@ async function makeBucketToPositionMap(fasta){
     return bucketToPositionMap
  }
 
-function writeBucketMapToJSON(bucketMap, output){
+function writeToJSON(data, output) {
     // convert JSON object to string
-    const json = JSON.stringify(bucketMap);
+    const json = JSON.stringify(data);
 
     // write JSON string to a file
     fs.writeFile(output, json, (err) => {
         if (err) {
             throw err;
         }
-        console.log("Saved JSON of bucket map.");
-    });
-}
-
-function writeQueryConfigToJSON(bigsiDims, output) {
-    // convert JSON object to string
-    const json = JSON.stringify(bigsiDims);
-
-    // write JSON string to a file
-    fs.writeFile(output, json, (err) => {
-        if (err) {
-            throw err;
-        }
-        console.log("Saved JSON of query configuration.");
+        console.log(`Saved JSON to ${output}.`);
     });
 }
 
@@ -188,8 +175,7 @@ function makeHexBigsi(bigsi){
 module.exports = {
     makeBucketMap: makeBucketMap,
     makeBucketToPositionMap: makeBucketToPositionMap,
-    writeBucketMapToJSON: writeBucketMapToJSON,
-    writeQueryConfigToJSON: writeQueryConfigToJSON,
+    writeToJSON: writeToJSON,
     bitstringsToInts: bitstringsToInts,
     bigsiToBitstrings: bigsiToBitstrings,
     bigsiToInts: bigsiToInts,

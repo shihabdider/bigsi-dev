@@ -28,15 +28,16 @@ async function main(){
     const fasta = await utils.loadFasta(argv.ref, fai)
     console.log('Sequence loaded...')
 
-    const [bigsi, bigsiDims] = await makeBigsi.main(fasta)
+    const [bigsi, bigsiDims, ignoreMinimizers] = await makeBigsi.main(fasta)
     const bigsiInts = writeBigsi.bitstringsToInts(bigsi)
     const binaryBigsi = writeBigsi.makeBinaryBigsi(bigsiInts)
     console.log(`Converted bigsi matrix to binary TypedArray format, writing to file...`)
     writeBigsi.writeBinaryBigsi(binaryBigsi, `${argv.output}.bin`)
-    writeBigsi.writeQueryConfigToJSON(bigsiDims, `${argv.output}_query_config.json`)
-            
+    writeBigsi.writeToJSON(bigsiDims, `${argv.output}_query_config.json`)
+    writeBigsi.writeToJSON(ignoreMinimizers, `${argv.output}_ignore_minimizers.json`)
+
     const bucketToPosition = await writeBigsi.makeBucketToPositionMap(fasta)
-    writeBigsi.writeBucketMapToJSON(bucketToPosition, `${argv.output}_bucket_map.json`)
+    writeBigsi.writeToJSON(bucketToPosition, `${argv.output}_bucket_map.json`)
 
 }
 
