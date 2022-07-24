@@ -16,8 +16,8 @@ source "${script_dir}/get_metrics.sh";
 
 # Simulation benchmarks
 
-# error_benchmark && wait;
-# query_length_benchmark && wait;
+error_benchmark && wait;
+query_length_benchmark && wait;
 sub_rate_metrics "sub_rate_32M_999995_005";
 query_length_metrics "query_length_32M_999995_005";
 
