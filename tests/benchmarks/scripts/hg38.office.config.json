@@ -1,7 +1,7 @@
 {
     "bigsi": "/Users/shihabdider/Research/bigsi-dev/bin/query_bigsi_cmd.js",
-    "bigsi_path": "/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_32M_bins.bin",
-    "bigsi_config_path": "~/Research/bigsi-dev/bigsis/hg38_32M_bins_query_config.json",
+    "bigsi_path": "/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_var_bins_test.bin",
+    "bigsi_config_path": "~/Research/bigsi-dev/bigsis/hg38_var_bins_test_query_config.json",
     "mashmap": "/Users/shihabdider/Research/MashMap/mashmap",
     "ref": "/Users/shihabdider/Research/seqs/hg38.fna"
 }
