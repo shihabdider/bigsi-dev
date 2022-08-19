@@ -49,6 +49,7 @@ function make_error_rate_dataset() {
 
 function make_error_and_length_dataset() {
     local sub_rates=( 001 002 003 004 005 )
+    local num_experiments=100
 
     for n in $( seq 1 $num_experiments );
     do
@@ -61,9 +62,9 @@ function make_error_and_length_dataset() {
             local filename=${QUERY_LENGTHS[i]}_${sub_rates[j]}
             for k in $( seq 1 $num_experiments ); do
                 ((b=b%N)); ((b++==0)) && wait
-                python scripts/mutate_seqs.py \
+                python3 scripts/mutate_seqs.py \
                     -i seqs/hg38/simulation/query_length/experiment_${k}/${QUERY_LENGTHS[i]}.fasta \
-                    -r ${sub_rate[j]} \
+                    -r ${sub_rates[j]} \
                     -o seqs/hg38/simulation/error_and_query_length/experiment_${k}/${filename}.fasta \
                 &
             done
@@ -71,9 +72,10 @@ function make_error_and_length_dataset() {
     done
 }
 
-function make_synth_dataset() {
-}
+#function make_synth_dataset() {
+#}
 
+make_error_and_length_dataset
 #mammal_dataset "pan_trog";
 #mammal_dataset "gorilla";
 
