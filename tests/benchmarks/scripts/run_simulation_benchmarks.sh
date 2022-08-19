@@ -49,6 +49,31 @@ function query_length_benchmark() {
     done
 }
 
+function error_and_length_benchmark() {
+    echo "Running variable error rate x query length benchmark";
+    HG38_SUB_RATE=hg38/simulation/error_and_query_length
+
+    local sub_rates=( 001 002 003 004 005 )
+
+    N=12
+    for i in ${!QUERY_LENGTHS[@]}; do
+        for i in ${!sub_rates[@]};
+        do
+            filename=${QUERY_LENGTHS[i]}_${sub_rates[i]}
+            for j in $( seq 1 $num_experiments );
+            do
+                ((b=b%N)); ((b++==0)) && wait
+                time python3 scripts/benchmark.py \
+                    -q seqs/${HG38_SUB_RATE}/experiment_$j/${filename}.fasta \
+                    -c scripts/hg38.office.config.json \
+                    -o outputs/${HG38_SUB_RATE}/experiment_$j/${filename} \
+                    -i ${sub_rates[i]} \
+                    -m $mashmap_flag \
+            &
+            done
+        done
+    done
+}
 function error_benchmark() {
     echo "Running error rate benchmark";
     HG38_SUB_RATE=hg38/simulation/substitution_rate

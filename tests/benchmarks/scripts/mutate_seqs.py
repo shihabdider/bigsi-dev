@@ -51,7 +51,7 @@ def records_to_fasta(records, output):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Create sequence FASTA for running benchmarks"
+        description="Create mutated sequence FASTA for running benchmarks"
     )
     parser.add_argument(
         "-i", "--input", type=str, 
@@ -59,8 +59,8 @@ def main():
         required=True
     )
     parser.add_argument(
-        "-r", "--rate", type=float, 
-        help=("rate to mutate sequence (from 0.01 to 0.05)"),
+        "-r", "--rate", type=int, 
+        help=("rate to mutate sequence (as percent 001-005)"),
         required=True
     )
     parser.add_argument(
