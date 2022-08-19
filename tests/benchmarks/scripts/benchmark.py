@@ -25,6 +25,19 @@ def run_bigsi_query(query_seq, config, subrate):
         return mappings
 
 
+def run_sketched_mashmap(query, config, identity, seq_length, output='mashmap.out'):
+    '''Runs mashmap on a set of query seqs vs. sketched ref and outputs to file'''
+
+    mashmap_cmd = (
+        r"{0}"
+        " -q {1} --rs {2} -o {3}"
+        " -s {4} --pi {5} -m 0"
+    ).format(config['mashmap_sketch'], query, config['ref_sketch'], output,
+             seq_length, identity)
+
+    p = subprocess.Popen(mashmap_cmd, shell=True)
+    p.communicate()
+
 def run_mashmap(query, config, identity, seq_length, output='mashmap.out'):
     '''Runs mashmap on a set of query seqs vs. ref and outputs to file'''
 
@@ -33,7 +46,7 @@ def run_mashmap(query, config, identity, seq_length, output='mashmap.out'):
         " -q {1} -r {2} -o {3}"
         " -s {4} --pi {5}"
     ).format(config['mashmap'], query, config['ref'], output,
-             seq_length, identity, filter_mode)
+             seq_length, identity)
 
     p = subprocess.Popen(mashmap_cmd, shell=True)
     p.communicate()

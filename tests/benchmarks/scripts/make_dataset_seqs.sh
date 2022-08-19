@@ -50,14 +50,22 @@ function make_error_rate_dataset() {
 function make_error_and_length_dataset() {
     local sub_rates=( 001 002 003 004 005 )
 
+    for n in $( seq 1 $num_experiments );
+    do
+        mkdir -p seqs/hg38/simulation/error_and_query_length/experiment_${n};
+    done
+
+    N=12;
     for i in ${!QUERY_LENGTHS[@]}; do
         for j in ${!sub_rates[@]}; do
+            local filename=${QUERY_LENGTHS[i]}_${sub_rates[j]}
             for k in $( seq 1 $num_experiments ); do
-                local filename=${QUERY_LENGTHS[i]}_${sub_rates[j]}
+                ((b=b%N)); ((b++==0)) && wait
                 python scripts/mutate_seqs.py \
                     -i seqs/hg38/simulation/query_length/experiment_${k}/${QUERY_LENGTHS[i]}.fasta \
                     -r ${sub_rate[j]} \
                     -o seqs/hg38/simulation/error_and_query_length/experiment_${k}/${filename}.fasta \
+                &
             done
         done
     done

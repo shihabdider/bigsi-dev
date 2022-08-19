@@ -3,5 +3,7 @@
     "bigsi_path": "/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_32M_bins.bin",
     "bigsi_config_path": "~/Research/bigsi-dev/bigsis/hg38_32M_bins_query_config.json",
     "mashmap": "/Users/shihabdider/Research/MashMap/mashmap",
-    "ref": "/Users/shihabdider/Research/seqs/hg38.fna"
+    "mashmap_sketch": "/Users/shihabdider/Research/mashmap-sketch/mashmap",
+    "ref": "/Users/shihabdider/Research/seqs/hg38.fna",
+    "ref_sketch": "/Users/shihabdider/Research/seqs/hg38.sketch.95pi"
 }
