@@ -6,15 +6,35 @@ function get_metric() {
     local metric=$2
     shift 2
     local parameters=("$@")
+    N=12
     for param in "${parameters[@]}"; do
         for i in $( seq 1 $num_experiments );
         do
+            ((b=b%N)); ((b++==0)) && wait
             local bigsi=outputs/${benchmark_dir}/experiment_$i/${param}.bigsi.json;
             local mashmap=outputs/${benchmark_dir}/experiment_$i/${param}.mashmap.out;
             python3 scripts/compute_metric.py \
-                -b ${bigsi} -m ${mashmap}  -t ${metric} -c ${query_config}
+                -b ${bigsi} -m ${mashmap}  -t ${metric} -c ${query_config} \
+        &
         done
     done
+}
+
+function error_and_length_metrics() {
+    local benchmark_dir=hg38/simulation/error_and_query_length
+    local errs=( 001 002 003 004 005 )
+    local lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+    local params=( )
+    for err in ${errs[@]}; do
+        for length in ${lengths[@]}; do
+            param="${length}_${err}"
+            params+=filename
+        done
+    done
+
+    local output=$1
+    get_metric ${benchmark_dir} sensitivity ${params[@]} > metrics/${output}_sensitivity.txt
+    get_metric ${benchmark_dir} specificity ${params[@]} > metrics/${output}_specificity.txt
 }
 
 function sub_rate_metrics() {
