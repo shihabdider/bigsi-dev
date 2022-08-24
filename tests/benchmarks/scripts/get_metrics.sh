@@ -28,7 +28,7 @@ function error_and_length_metrics() {
     for err in ${errs[@]}; do
         for length in ${lengths[@]}; do
             param="${length}_${err}"
-            params+=filename
+            params+=$param
         done
     done
 
