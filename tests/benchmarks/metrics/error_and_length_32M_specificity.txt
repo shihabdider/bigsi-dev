@@ -6494,3 +6494,7 @@ outputs/hg38/simulation/error_and_query_length/experiment_90/300000_005.bigsi.js
 outputs/hg38/simulation/error_and_query_length/experiment_96/300000_005.bigsi.json 1.1253260611809344
 outputs/hg38/simulation/error_and_query_length/experiment_93/300000_005.bigsi.json 1.1216711458587834
 outputs/hg38/simulation/error_and_query_length/experiment_94/300000_005.bigsi.json 1.128902554399243
+outputs/hg38/simulation/error_and_query_length/experiment_97/300000_005.bigsi.json 1.1175539042514313
+outputs/hg38/simulation/error_and_query_length/experiment_98/300000_005.bigsi.json 1.1267007864186742
+outputs/hg38/simulation/error_and_query_length/experiment_99/300000_005.bigsi.json 1.1348056963552982
+outputs/hg38/simulation/error_and_query_length/experiment_100/300000_005.bigsi.json 1.1357505259250094
