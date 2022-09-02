@@ -91,15 +91,18 @@ function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, su
         let numMatchingMinimizers = hammingWeights[bucketNum]
         if (numMatchingMinimizers > 0) {
             let containmentScore = numMatchingMinimizers/numMinimizersInQuery
-            let containmentBias = 0
+            //const containmentBias = {0: 0, 0.01: 0.025, 0.02: 0.019, 0.03: 0, 
+            //    0.04: -0.02, 0.05: -0.05, 0.06: -0.07, 0.07: -0.09, 0.08: 
+            //    -0.11, 0.09: -0.13, 0.10: -0.15}
+            //let containmentBias = 0
             if (subrate !== 0) {
-                const [a, b] = [-2.0, 0.06]
                 //const [a, b, c] = [-10.159424125733166, -0.8279679052074231, 0.022233300308392268]
                 //containmentBias = a*subrate**2 + b*subrate + c            
-                containmentBias = a*subrate + b
-                containmentScore += containmentBias
+                //const [a, b] = [-2.0, 0.06]
+                //containmentBias = a*subrate + b
+                //containmentScore += containmentBias[subrate]
                 containmentScore = Math.max(containmentScore, 0)
-                containmentScore = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.9999995)
+                containmentScore = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.99999995)
             }
             const errorRate = Math.max(-1/kmerLength * Math.log(containmentScore), 0)
             if (errorRate <= subrate) {
