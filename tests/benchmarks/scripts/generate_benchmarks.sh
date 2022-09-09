@@ -7,7 +7,7 @@ script_dir="/Users/shihabdider/Research/bigsi-dev/tests/benchmarks/scripts";
 commit_msg="add metrics for ${num_experiments} experiments";
 
 echo "Computing metrics for $num_experiments experiments on $query_config BIGSI...";
-echo "Running mashmap query: $mashmap_flag";
+echo "Running mashmap query?: $mashmap_flag";
 
 # Load functions from scripts
 source "${script_dir}/run_simulation_benchmarks.sh";
