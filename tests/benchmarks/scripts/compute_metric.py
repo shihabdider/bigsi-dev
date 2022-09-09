@@ -42,44 +42,50 @@ class Interval:
 
 def is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
     '''Checks if a mashmap mapping is in any of the reported bigsi bins'''
-    map_ref, map_start, map_end = mashmap_mapping.split(' ')
     for bigsi_mapping in bigsi_mappings:
-        if bigsi_mapping:
-            bin_ref, bin_start, bin_end = bigsi_mapping.split(' ')
-            if (map_ref == bin_ref and
-                int(map_start) >= int(bin_start) and
-                int(map_end) <= int(bin_end)):
+        for mashmap_bin in mashmap_mapping.containing_bins:
+            if mashmap_bin in bigsi_mapping.containing_bins:
                 return True
 
-    return False
-
-
-def compute_specificity(mashmap_mappings, bigsi_mappings):
+def compute_specificity(bigsi_results, mashmap_results):
     '''Computes specificity = TN/(TN+FP)
     Params: mashmap_mappings and uigsi_mappings are dicts with the same key 
     format
 
-    A true negative is when a mashmap mapping for a given query sequence does
-    not fall in a bin that is not reported by BIGSI. A false positive is when a
-    query's mashmap mapping does not match the bucket reported by BIGSI.
+    A true negative is when BIGSI correctly does not report the bins in which
+    the mashmap mapping is not found (i.e intersection of the non-containing 
+    bins). A false positive is when a query's mashmap mapping does not match 
+    the bucket reported by BIGSI.
     '''
 
     true_negatives = 0
     false_positives = 0
+    for query in mashmap_results:
+        mashmap_containing_bins = set()
+        mashmap_non_containing_bins = set()
 
-    non_containing_bins_mashmap = []
-    non_containing_bins_bigsi = []
-    for interval in mashmap_mappings:
-        non_containing_bins = interval.non_containing_bins
-        for b in non_containing_bins:
+        bigsi_containing_bins = set()
+        bigsi_non_containing_bins = set()
 
-        if is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
-            num_matches += 1
-        else:
-            num_no_matches += 1
+        mashmap_mappings = mashmap_results[query]
+        bigsi_mappings = bigsi_results[query]
+        for mashmap_mapping in mashmap_mappings:
+           mashmap_containing_bins.update(mashmap_mapping.containing_bins)
+           mashmap_non_containing_bins.update(mashmap_mapping.non_containing_bins)
 
-    false_positives += len(bigsi_mappings) - num_matches
-    true_negatives += total_num_bins - len(bigsi_mappings) - num_no_matches
+        for bigsi_mapping in bigsi_mappings:
+           bigsi_containing_bins.update(bigsi_mapping.containing_bins)
+           bigsi_non_containing_bins.update(bigsi_mapping.non_containing_bins)
+
+        # Remove the containing bins from non-containing bins
+        mashmap_non_containing_bins = mashmap_non_containing_bins - mashmap_containing_bins
+        bigsi_non_containing_bins = bigsi_non_containing_bins - bigsi_containing_bins
+
+        query_tn = len(mashmap_non_containing_bins.intersection(bigsi_non_containing_bins))
+        true_negatives += query_tn
+
+        query_fp = len(bigsi_containing_bins - mashmap_containing_bins)
+        false_positives += query_fp
 
     specificity = true_negatives / (true_negatives + false_positives)
     return specificity
@@ -112,17 +118,32 @@ def compute_sensitivity(bigsi_results, mashmap_results):
     negative is when a mashmap mapping is not found in any of the buckets
     returned by the BIGSI query.
     '''
+
     true_positives = 0
     false_negatives = 0
     for query in mashmap_results:
+        mashmap_containing_bins = set()
+
+        bigsi_containing_bins = set()
+        bigsi_non_containing_bins = set()
+
         mashmap_mappings = mashmap_results[query]
         bigsi_mappings = bigsi_results[query]
-
         for mashmap_mapping in mashmap_mappings:
-            if is_in_bigsi_bin(mashmap_mapping, bigsi_mappings):
-                true_positives += 1
-            else:
-                false_negatives += 1
+           mashmap_containing_bins.update(mashmap_mapping.containing_bins)
+
+        for bigsi_mapping in bigsi_mappings:
+           bigsi_containing_bins.update(bigsi_mapping.containing_bins)
+           bigsi_non_containing_bins.update(bigsi_mapping.non_containing_bins)
+
+        # Remove the containing bins from non-containing bins
+        bigsi_non_containing_bins = bigsi_non_containing_bins - bigsi_containing_bins
+
+        query_tp = len(mashmap_containing_bins.intersection(bigsi_containing_bins))
+        true_positives += query_tp
+
+        query_fn = len(bigsi_non_containing_bins.intersection(mashmap_containing_bins))
+        false_negatives += query_fn
 
     sensitivity = true_positives / (true_positives + false_negatives)
     return sensitivity
@@ -156,7 +177,7 @@ def compute_accuracy(bigsi_results, mashmap_results):
 
 def load_bigsi_results(bigsi_output, bin_map):
     bigsi_results = {}
-    with open(args.bigsi, 'r') as handle:
+    with open(bigsi_output, 'r') as handle:
         bigsi_results = json.load(handle)
 
     for query in bigsi_results:
@@ -168,7 +189,7 @@ def load_bigsi_results(bigsi_output, bin_map):
                 bin_start = split_line[1]
                 bin_end = split_line[2]
                 bin_interval = Interval(
-                        bin_ref, int(bin_start), int(bin_end)
+                        bin_ref, int(bin_start), int(bin_end),
                         bin_map)
                 bin_intervals.append(bin_interval)
         bigsi_results[query] = bin_intervals
@@ -186,7 +207,7 @@ def load_mashmap(mashmap_output, bin_map):
             mapping_start = split_line[-3]
             mapping_end = split_line[-2]
             mapping = Interval(
-                    mapping_ref, int(mapping_start), int(mapping_end)
+                    mapping_ref, int(mapping_start), int(mapping_end),
                     bin_map)
             if record_id in mashmap_results:
                 mashmap_results[record_id].append(mapping)
@@ -198,7 +219,8 @@ def load_mashmap(mashmap_output, bin_map):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Compute metrics on benchmark results.")
+        description="Compute metrics on benchmark results."
+    )
     parser.add_argument(
         "-b", "--bigsi", type=str,
         help="JSON with BIGSI results",
@@ -220,14 +242,14 @@ def main():
         help="Specifies which metric to compute",
         required=True
     )
+
     args = parser.parse_args()
     bin_map = {}
-    with open(args.bin_map, 'r') as handle:
+    with open(args.config, 'r') as handle:
         bin_map = json.load(handle)
 
     bigsi_results = load_bigsi_results(args.bigsi, bin_map)
     mashmap_results = load_mashmap(args.mashmap, bin_map)
-
 
     if args.metric == 'accuracy':
         accuracy = compute_accuracy(bigsi_results, mashmap_results)
@@ -236,9 +258,7 @@ def main():
         sensitivity = compute_sensitivity(bigsi_results, mashmap_results)
         print(args.bigsi, sensitivity)
     elif args.metric == 'specificity':
-        total_num_bins = config['cols'] - config['padding']
-        specificity = compute_specificity(bigsi_results, mashmap_results,
-                total_num_bins)
+        specificity = compute_specificity(bigsi_results, mashmap_results)
         print(args.bigsi, specificity)
     else:
         print('Invalid metric')
