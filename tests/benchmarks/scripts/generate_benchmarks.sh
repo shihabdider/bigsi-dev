@@ -2,6 +2,7 @@
 
 num_experiments=100;
 query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_32M_bins_query_config.json";
+bin_map="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_32M_bins_bucket_map.json"
 mashmap_flag=0;
 script_dir="/Users/shihabdider/Research/bigsi-dev/tests/benchmarks/scripts";
 commit_msg="add metrics for ${num_experiments} experiments";
