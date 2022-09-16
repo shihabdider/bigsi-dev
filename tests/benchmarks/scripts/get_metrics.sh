@@ -47,7 +47,8 @@ function sub_rate_metrics() {
 
 function query_length_metrics() {
     local benchmark_dir=hg38/simulation/query_length
-    local lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+    local lengths=( 1000 2000 3000 4000 5000 7500 10000 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
+    #local lengths=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
     local output=$1
     get_metric ${benchmark_dir} sensitivity ${lengths[@]} > metrics/${output}_sensitivity.txt
     get_metric ${benchmark_dir} specificity ${lengths[@]} > metrics/${output}_specificity.txt
