@@ -143,9 +143,6 @@ def compute_sensitivity(bigsi_results, mashmap_results):
         true_positives += query_tp
 
         query_fn = len(bigsi_non_containing_bins.intersection(mashmap_containing_bins))
-        print(bigsi_containing_bins)
-        print(mashmap_containing_bins)
-        print(query_fn)
         false_negatives += query_fn
 
     sensitivity = true_positives / (true_positives + false_negatives)
