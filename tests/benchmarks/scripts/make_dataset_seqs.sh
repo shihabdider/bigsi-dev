@@ -1,4 +1,5 @@
-QUERY_LENGTHS=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
+QUERY_LENGTHS=( 7500 12500 15000 17500 ) # 40000 80000 160000 200000 250000 300000 )
+#QUERY_LENGTHS=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
 num_experiments=100
 num_queries_per_seq=4
 
@@ -75,11 +76,11 @@ function make_error_and_length_dataset() {
 #function make_synth_dataset() {
 #}
 
-make_error_and_length_dataset
+#make_error_and_length_dataset
 #mammal_dataset "pan_trog";
 #mammal_dataset "gorilla";
 
-#mammal_dataset "hg38";
+mammal_dataset "hg38";
 #make_error_rate_dataset()
 
 #pacbio_read_dir="https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/PacBio_SequelII_CCS_11kb/HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam"
