@@ -98,3 +98,13 @@ outputs/hg38/simulation/query_length/experiment_7/250000.bigsi.json 0.9905480033
 outputs/hg38/simulation/query_length/experiment_10/250000.bigsi.json 0.9898141342014071
 outputs/hg38/simulation/query_length/experiment_9/250000.bigsi.json 0.9901291609786832
 outputs/hg38/simulation/query_length/experiment_8/250000.bigsi.json 0.9903243540406816
+outputs/hg38/simulation/query_length/experiment_1/300000.bigsi.json 0.9906542056074766
+outputs/hg38/simulation/query_length/experiment_2/300000.bigsi.json 0.9904418011894648
+outputs/hg38/simulation/query_length/experiment_4/300000.bigsi.json 0.9906542056074766
+outputs/hg38/simulation/query_length/experiment_6/300000.bigsi.json 0.9906542056074766
+outputs/hg38/simulation/query_length/experiment_5/300000.bigsi.json 0.990139687756779
+outputs/hg38/simulation/query_length/experiment_3/300000.bigsi.json 0.9902478667208452
+outputs/hg38/simulation/query_length/experiment_8/300000.bigsi.json 0.9905491966817179
+outputs/hg38/simulation/query_length/experiment_7/300000.bigsi.json 0.9904343045629467
+outputs/hg38/simulation/query_length/experiment_9/300000.bigsi.json 0.9905480033984707
+outputs/hg38/simulation/query_length/experiment_10/300000.bigsi.json 0.9906542056074766
