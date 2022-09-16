@@ -14,7 +14,7 @@ function get_metric() {
             local bigsi=outputs/${benchmark_dir}/experiment_$i/${param}.bigsi.json;
             local mashmap=outputs/${benchmark_dir}/experiment_$i/${param}.mashmap.out;
             python3 scripts/compute_metric.py \
-                -b ${bigsi} -m ${mashmap}  -t ${metric} -c ${query_config} \
+                -b ${bigsi} -m ${mashmap}  -t ${metric} -c ${bin_map} \
         &
         done
     done
@@ -69,7 +69,7 @@ function nanopore_read_metrics() {
             python3 scripts/compute_metric.py -b \
             outputs/${nanopore}/experiment_$i.bigsi.json -m \
             outputs/${nanopore}/experiment_$i.mashmap.out -t $METRIC \
-            -c ${query_config}
+            -c ${bin_map}
     done
 }
 
@@ -81,7 +81,7 @@ function pacbio_read_metrics() {
             python3 scripts/compute_metric.py -b \
             outputs/${pacbio}/experiment_$i.bigsi.json -m \
             outputs/${pacbio}/experiment_$i.mashmap.out -t $METRIC \
-            -c ${query_config}
+            -c ${bin_map}
     done
 }
 
