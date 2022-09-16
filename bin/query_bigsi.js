@@ -76,7 +76,7 @@ function computeLowerBoundContainmentScore(containmentScore,
 // Containment score is the Jaccard containment identity:
 // Hamming weight of submatrix columns divided by
 // number of minimizers inserted into query Bloom Filter
-function computeQueryContainmentScores(submatrix, bigsiHits, bloomFilterSize, subrate) {
+function computeQueryContainmentScores(submatrix, bigsiHits, subrate) {
     const kmerLength = 16
     const numMinimizersInQuery = submatrix.size()[0]
     const submatrix_T = submatrix.trans()
@@ -128,7 +128,7 @@ async function queryBinaryBigsi(bigsiArray, queryMask, numBins, subrate){
     const queryBFSetBitsIndices = getBloomFilterSetBitsIndices(queryMask)
     const querySubmatrix = await getBinaryBigsiSubmatrix(bigsiArray, queryBFSetBitsIndices, numBins)
 
-    computeQueryContainmentScores(querySubmatrix, bigsiHits, queryMaskSize, subrate)
+    computeQueryContainmentScores(querySubmatrix, bigsiHits, subrate)
 
     return bigsiHits
 }
