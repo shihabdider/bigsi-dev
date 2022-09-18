@@ -102,3 +102,9 @@ outputs/hg38/simulation/query_length/experiment_2/20000.bigsi.json 0.99962607503
 outputs/hg38/simulation/query_length/experiment_1/20000.bigsi.json 1.0
 outputs/hg38/simulation/query_length/experiment_4/20000.bigsi.json 0.9994301344882608
 outputs/hg38/simulation/query_length/experiment_3/20000.bigsi.json 0.9997438852605968
+outputs/hg38/simulation/query_length/experiment_8/20000.bigsi.json 1.0
+outputs/hg38/simulation/query_length/experiment_5/20000.bigsi.json 1.0
+outputs/hg38/simulation/query_length/experiment_7/20000.bigsi.json 0.9995814732142857
+outputs/hg38/simulation/query_length/experiment_6/20000.bigsi.json 1.0
+outputs/hg38/simulation/query_length/experiment_9/20000.bigsi.json 1.0
+outputs/hg38/simulation/query_length/experiment_10/20000.bigsi.json 0.9997692130163859

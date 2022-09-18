@@ -21,8 +21,8 @@ source "${script_dir}/get_metrics.sh";
 #error_and_length_metrics "error_and_length_32M";
 error_benchmark && wait;
 query_length_benchmark && wait;
-sub_rate_metrics "sub_rate_995_32M";
-query_length_metrics "query_length_995_32M";
+sub_rate_metrics "sub_rate_95_32M";
+query_length_metrics "query_length_95_32M";
 
 #mammal_benchmark "pan_trog" && wait;
 #mammal_benchmark "gorilla" && wait;
