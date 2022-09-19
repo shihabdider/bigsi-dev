@@ -102,7 +102,7 @@ function computeQueryContainmentScores(submatrix, bigsiHits, subrate) {
                 //containmentBias = a*subrate + b
                 //containmentScore += containmentBias[subrate]
                 containmentScore = Math.max(containmentScore, 0)
-                containmentScore = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.99999995)
+                containmentScore = computeLowerBoundContainmentScore(containmentScore, numMinimizersInQuery, 0.95)
             }
             const errorRate = Math.max(-1/kmerLength * Math.log(containmentScore), 0)
             if (errorRate <= subrate) {
