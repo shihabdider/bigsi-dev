@@ -7,7 +7,7 @@ plt.style.use('seaborn-whitegrid')
 # Globals
 ERROR_RATES = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
 SEQ_LENGTHS = [1000, 2000, 3000, 4000, 5000, 7500, 10000, 12500, 15000, 17500,
-               20000]
+               20000, 40000, 80000]
 
 
 def make_simulation_df(file, parameter_name, metric_name):
@@ -16,7 +16,7 @@ def make_simulation_df(file, parameter_name, metric_name):
         for line in handle:
             split_line = line.rstrip().split()
             experiment = int(split_line[0].split('/')[-2].split('_')[1])
-            parameter = split_line[0].split('/')[-1].split('.')[0]
+            parameter = int(split_line[0].split('/')[-1].split('.')[0])
             metric = float(split_line[1])
             data_row = {
                 'experiment number': experiment,
@@ -31,7 +31,33 @@ def make_simulation_df(file, parameter_name, metric_name):
     df.columns = df.columns.droplevel(0)
     return df
 
+
+def compute_errorbars(means, stds):
+    lower_errors = []
+    upper_errors = []
+    for i, mean in enumerate(means):
+        lower_error = stds.iloc[i]*2
+        if (mean - lower_error) < 0:
+            lower_error = mean
+        lower_errors.append(lower_error)
+
+        upper_error = stds.iloc[i]*2
+        if upper_error + mean > 1.0:
+            upper_error = 1.0 - mean
+        upper_errors.append(upper_error)
+
+    errors = pd.DataFrame(
+        {
+            'lower': lower_errors,
+            'upper': upper_errors
+        }
+    )
+
+    return errors
+
+
 def get_simulation_stats(benchmark_name, parameter_name):
+
     metrics = ['sensitivity', 'specificity']
 
     benchmark_stats = {}
@@ -44,12 +70,7 @@ def get_simulation_stats(benchmark_name, parameter_name):
 
         means = metrics.mean(axis=0)
         stds = metrics.std(axis=0)
-        errors = pd.DataFrame(
-            {
-                'upper': stds.apply(lambda x: x*2),
-                'lower': stds.apply(lambda x: -x*2)
-            }
-        )
+        errors = compute_errorbars(means, stds)
 
         stat_names = ['means', 'stds', 'errors']
         stats = dict(zip(stat_names, [means, stds, errors]))
@@ -58,11 +79,51 @@ def get_simulation_stats(benchmark_name, parameter_name):
 
     return benchmark_stats
 
+def make_experiments_figure(xs, ys, metrics):
+    '''
+    Generates template figure for experiments
+
+    args:
+        xs: list of parameters (e.g substitution rates and query lengths)
+        ys: list of benchmark statistics (e.g pan trog and gorilla)
+
+    returns: figure and axis objects
+    '''
+
+    fig, axs = plt.subplots(1, 2, sharey='row', figsize=(8, 6))
+
+    for i, ax in enumerate(axs):
+        for metric in metrics:
+            ax.plot(
+                xs[i] if i < len(xs) else xs[0],
+                ys[i]['{0}_means'.format(metric['name'])],
+                label=metric['name'] if i == 0 else "",
+                marker='o'
+            )
+            ax.errorbar(
+                xs[i] if i < len(xs) else xs[0],
+                ys[i]['{0}_means'.format(metric['name'])],
+                yerr=[
+                    ys[i]['{0}_errors'.format(metric['name'])].lower,
+                    ys[i]['{0}_errors'.format(metric['name'])].upper
+                ],
+                fmt='-',
+                color=metric['color'],
+            )
+
+    return fig, axs
 
 def make_simulation_trials_figure(figure_output=False):
     sub_stats = get_simulation_stats('sub_rate_95_32M', 'sub_rate')
-    length_stats = get_simulation_stats( 'query_length_95_32M', 'query_length')
-    #length = {key: value[:7] for (key, value) in length.items()}
+    length_stats = get_simulation_stats('query_length_95_32M', 'query_length')
+    xs = [ERROR_RATES, SEQ_LENGTHS]
+    ys = [sub_stats, length_stats]
+    metrics = [
+        {'name': 'sensitivity', 'color': 'blue'},
+        {'name': 'specificity', 'color': 'orange'}
+    ]
+
+    fig, axs = make_experiments_figure(xs, ys, metrics)
 
     # Theoritical Curve
     error_rate_theory_sensitivities = [0.9999999999999992, 0.9999999973133248,
@@ -80,8 +141,6 @@ def make_simulation_trials_figure(figure_output=False):
                                        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
                                        1.0, 1.0, 1.0]
 
-    fig, axs = plt.subplots(1, 2, sharey='row', figsize=(12, 8))
-    fig.suptitle('Flashmap accuracy on simulated human genome sequences')
 
     # Theoritical Curves
     axs[0].plot(
@@ -104,47 +163,9 @@ def make_simulation_trials_figure(figure_output=False):
         query_size_theory_specificities[:11],
     )
 
-    xs = [ERROR_RATES, SEQ_LENGTHS]
-    ys = [sub_stats, length_stats]
-
-    for i, ax in enumerate(axs):
-        ax.plot(
-            xs[i],
-            ys[i]['sensitivity_means'],
-            label="sensitivity" if i == 0 else "",
-            marker='o'
-        )
-        ax.errorbar(
-            xs[i],
-            ys[i]['sensitivity_means'],
-            # yerr=ys[i]_sensitivity_errors,
-            yerr=[
-                ys[i]['sensitivity_errors'].lower,
-                ys[i]['sensitivity_errors'].upper
-            ],
-            fmt='-',
-            color='blue',
-        )
-
-        ax.plot(
-            xs[i],
-            ys[i]['specificity_means'],
-            label="specificity" if i == 0 else "",
-            marker='o'
-        )
-        ax.errorbar(
-            xs[i],
-            ys[i]['specificity_means'],
-            yerr=[
-                ys[i]['specificity_errors'].lower,
-                ys[i]['specificity_errors'].upper
-            ],
-            fmt='-',
-            color='orange'
-        )
-
     # Substitution Rate
     # ax1.axhline(y=0.95, linestyle='--', color='grey')
+    fig.suptitle('Flashmap accuracy on simulated human genome sequences')
     axs[0].axvline(x=0.05, linestyle='--', color='grey')
     axs[0].text(0.045, 0.1, '0.05 substitution rate threshold', rotation=90)
     axs[0].set_xlabel('Substitutions per site')
@@ -162,11 +183,6 @@ def make_simulation_trials_figure(figure_output=False):
     else:
         plt.show()
 
-def test():
-    #file = './metrics/sub_rate_995_32M_sensitivity.txt'
-    make_simulation_trials_figure()
-
-test()
 
 def get_read_metrics(file):
     metrics = []
@@ -177,55 +193,50 @@ def get_read_metrics(file):
 
     return metrics
 
-def make_mammal_figure(num_trials, figure_output=False):
-    pan_trog = get_simulation_stats('pan_trog', num_trials, seq_lengths)
-    gorilla = get_simulation_stats('gorilla', num_trials, seq_lengths)
+def make_mammal_figure(figure_output=False):
+    pan_trog = get_simulation_stats('pan_trog', 'query_length')
+    gorilla = get_simulation_stats('gorilla', 'query_length')
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
-    fig.suptitle('Flashmap accuracy on mammalian genomes')
+    xs = [SEQ_LENGTHS]
+    ys = [pan_trog, gorilla]
+    metrics = [
+        {'name': 'sensitivity', 'color': 'blue'},
+        {'name': 'specificity', 'color': 'orange'}
+    ]
+
+    fig, axs = make_experiments_figure(xs, ys, metrics)
+    fig.suptitle(
+        ('Flashmap accuracy for mammalian genomes '
+         'mapped to human reference hg38')
+    )
 
     # Pan Trog
-    ax1.set_title('Chimpanzee')
-    ax1.plot(seq_lengths, pan_trog['sensitivity_means'], label='sensitivity',
-             marker='o')
-    ax1.errorbar(seq_lengths, pan_trog['sensitivity_means'],
-                 yerr=[pan_trog['sensitivity_errors_lower'],
-                       pan_trog['sensitivity_errors_upper']],
-                 fmt='-', color='blue')
-
-    ax1.plot(seq_lengths, pan_trog['specificity_means'], label='specificity',
-             marker='o')
-    ax1.errorbar(seq_lengths, pan_trog['specificity_means'],
-                 yerr=pan_trog['specificity_errors'], fmt='-', color='orange')
-    ax1.axvline(x=5000, linestyle='--', color='grey')
-    ax1.text(5500, 0.2, '5kb query threshold', rotation=90)
-    ax1.set_xscale('log')
-    ax1.set_xlabel('Query length (kb)')
-    #ax1.set_ylim(ymin=0)
+    axs[0].set_title('Chimpanzee')
+    axs[0].axvline(x=5000, linestyle='--', color='grey')
+    axs[0].text(5500, 0.2, '5kb query threshold', rotation=90)
+    axs[0].set_xscale('log')
+    axs[0].set_xlabel('Query length (kb)')
 
     # Gorilla
-    ax2.set_title('Gorilla')
-    ax2.plot(seq_lengths, gorilla['sensitivity_means'], label='sensitivity',
-             marker='o')
-    ax2.errorbar(seq_lengths, gorilla['sensitivity_means'],
-                 yerr=[gorilla['sensitivity_errors_lower'],
-                       gorilla['sensitivity_errors_upper']],
-                 fmt='-', color='blue')
+    # axs[1].set_ylim(ymin=0)
+    axs[1].set_title('Gorilla')
+    axs[1].text(5500, 0.2, '5kb query threshold', rotation=90)
+    axs[1].axvline(x=5000, linestyle='--', color='grey')
+    axs[1].set_xscale('log')
+    axs[1].set_xlabel('Query length (kb)')
 
-    ax2.plot(seq_lengths, gorilla['specificity_means'], label='specificity',
-             marker='o')
-    ax2.errorbar(seq_lengths, gorilla['specificity_means'],
-                 yerr=gorilla['specificity_errors'], fmt='-', color='orange')
-    ax2.text(5500, 0.2, '5kb query threshold', rotation=90)
-    ax2.axvline(x=5000, linestyle='--', color='grey')
-    ax2.set_xscale('log')
-    ax2.set_xlabel('Query length (kb)')
     if figure_output:
         plt.savefig(figure_output)
     else:
         plt.show()
 
 
+def test():
+    # file = './metrics/sub_rate_995_32M_sensitivity.txt'
+    # make_simulation_trials_figure()
+    make_mammal_figure()
+
+test()
 
 
 def make_synth_figure():
