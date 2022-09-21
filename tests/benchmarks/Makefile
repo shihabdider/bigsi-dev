@@ -1,4 +1,4 @@
-#all: figures/%.png
+#all: metrics/%.txt
 
 .PHONY: all clean
 

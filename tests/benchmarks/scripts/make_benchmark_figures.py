@@ -1,30 +1,172 @@
 import numpy as np
+import math
+import pandas as pd
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-whitegrid')
 
-error_rates = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
-seq_lengths = [1000, 2000, 3000, 4000, 5000, 10000, 20000, 40000, 80000,
-               160000, 200000, 250000, 300000]
+# Globals
+ERROR_RATES = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+SEQ_LENGTHS = [1000, 2000, 3000, 4000, 5000, 7500, 10000, 12500, 15000, 17500,
+               20000]
 
 
-def chunked(lst, n):
-    for i in range(0, len(lst), n):
-        yield lst[i:i + n]
-
-
-def get_parameter_metrics(file, num_trials):
-    parameter_metrics = []
+def make_simulation_df(file, parameter_name, metric_name):
+    data = []
     with open(file, 'r') as handle:
-        for lst in chunked(handle.readlines(), num_trials):
-            metrics = []
-            for i, line in enumerate(lst):
-                split_line = line.split(' ')
-                metric = float(split_line[1])
-                metrics.append(metric)
-            parameter_metrics.append(metrics)
+        for line in handle:
+            split_line = line.rstrip().split()
+            experiment = int(split_line[0].split('/')[-2].split('_')[1])
+            parameter = split_line[0].split('/')[-1].split('.')[0]
+            metric = float(split_line[1])
+            data_row = {
+                'experiment number': experiment,
+                parameter_name: parameter,
+                metric_name: metric
+            }
 
-    return parameter_metrics
+            data.append(data_row)
 
+    df = pd.DataFrame(data)
+    df = df.pivot(index='experiment number', columns=parameter_name)
+    df.columns = df.columns.droplevel(0)
+    return df
+
+def get_simulation_stats(benchmark_name, parameter_name):
+    metrics = ['sensitivity', 'specificity']
+
+    benchmark_stats = {}
+    for metric in metrics:
+        metrics = make_simulation_df(
+            'metrics/{0}_{1}.txt'.format(benchmark_name, metric),
+            parameter_name,
+            metric
+        )
+
+        means = metrics.mean(axis=0)
+        stds = metrics.std(axis=0)
+        errors = pd.DataFrame(
+            {
+                'upper': stds.apply(lambda x: x*2),
+                'lower': stds.apply(lambda x: -x*2)
+            }
+        )
+
+        stat_names = ['means', 'stds', 'errors']
+        stats = dict(zip(stat_names, [means, stds, errors]))
+        for name in stat_names:
+            benchmark_stats['{0}_{1}'.format(metric, name)] = stats[name]
+
+    return benchmark_stats
+
+
+def make_simulation_trials_figure(figure_output=False):
+    sub_stats = get_simulation_stats('sub_rate_95_32M', 'sub_rate')
+    length_stats = get_simulation_stats( 'query_length_95_32M', 'query_length')
+    #length = {key: value[:7] for (key, value) in length.items()}
+
+    # Theoritical Curve
+    error_rate_theory_sensitivities = [0.9999999999999992, 0.9999999973133248,
+                                       0.999999035776888, 0.9999633461915861,
+                                       0.9996118046476143, 0.9985398391125027,
+                                       0.9951159587019267, 0.9887248080755489,
+                                       0.9786179973528009, 0.9625853664976465]
+    error_rate_theory_specificities = [1.0, 1.0, 1.0, 0.9999999999630376,
+                                       0.8999965025321311, 0.6881394058910561,
+                                       0.2188627586201921,
+                                       5.96189764223709e-14, 0.0, 0.0]
+    query_size_theory_sensitivities = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                                       1.0, 1.0, 1.0, 1.0, 1.0]
+    query_size_theory_specificities = [0.999999585864842, 0.9999999999999574,
+                                       1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                                       1.0, 1.0, 1.0]
+
+    fig, axs = plt.subplots(1, 2, sharey='row', figsize=(12, 8))
+    fig.suptitle('Flashmap accuracy on simulated human genome sequences')
+
+    # Theoritical Curves
+    axs[0].plot(
+        ERROR_RATES,
+        error_rate_theory_sensitivities,
+        label='theoretical sensitivity'
+    )
+    axs[0].plot(
+        ERROR_RATES,
+        error_rate_theory_specificities,
+        label='theoretical specificity'
+    )
+
+    axs[1].plot(
+        SEQ_LENGTHS,
+        query_size_theory_sensitivities[:11],
+    )
+    axs[1].plot(
+        SEQ_LENGTHS,
+        query_size_theory_specificities[:11],
+    )
+
+    xs = [ERROR_RATES, SEQ_LENGTHS]
+    ys = [sub_stats, length_stats]
+
+    for i, ax in enumerate(axs):
+        ax.plot(
+            xs[i],
+            ys[i]['sensitivity_means'],
+            label="sensitivity" if i == 0 else "",
+            marker='o'
+        )
+        ax.errorbar(
+            xs[i],
+            ys[i]['sensitivity_means'],
+            # yerr=ys[i]_sensitivity_errors,
+            yerr=[
+                ys[i]['sensitivity_errors'].lower,
+                ys[i]['sensitivity_errors'].upper
+            ],
+            fmt='-',
+            color='blue',
+        )
+
+        ax.plot(
+            xs[i],
+            ys[i]['specificity_means'],
+            label="specificity" if i == 0 else "",
+            marker='o'
+        )
+        ax.errorbar(
+            xs[i],
+            ys[i]['specificity_means'],
+            yerr=[
+                ys[i]['specificity_errors'].lower,
+                ys[i]['specificity_errors'].upper
+            ],
+            fmt='-',
+            color='orange'
+        )
+
+    # Substitution Rate
+    # ax1.axhline(y=0.95, linestyle='--', color='grey')
+    axs[0].axvline(x=0.05, linestyle='--', color='grey')
+    axs[0].text(0.045, 0.1, '0.05 substitution rate threshold', rotation=90)
+    axs[0].set_xlabel('Substitutions per site')
+    # axs[1].set_ylim(ymin=0.7)
+
+    # Query Length
+    axs[1].axvline(x=5000, linestyle='--', color='grey')
+    axs[1].text(5500, 0.3, '5kb query threshold', rotation=90)
+    # axs[2].set_xscale('log')
+    axs[1].set_xlabel('Query length (kb)')
+    fig.legend(frameon=True)
+
+    if figure_output:
+        plt.savefig(figure_output)
+    else:
+        plt.show()
+
+def test():
+    #file = './metrics/sub_rate_995_32M_sensitivity.txt'
+    make_simulation_trials_figure()
+
+test()
 
 def get_read_metrics(file):
     metrics = []
@@ -34,52 +176,6 @@ def get_read_metrics(file):
             metrics.append(metric)
 
     return metrics
-
-
-def get_simulation_stats(benchmark_name, num_trials, benchmark_parameters):
-    # Sensitivity
-    benchmark_sensitivities = get_parameter_metrics(
-        'metrics/{0}_sensitivities.txt'.format(benchmark_name), num_trials, )
-
-    benchmark_sensitivity_means = [np.mean(sensitivities) for sensitivities in
-                                   benchmark_sensitivities]
-    benchmark_sensitivity_stds = [np.std(sensitivities) for sensitivities in
-                                  benchmark_sensitivities]
-
-    benchmark_sensitivity_errors_upper = []
-    for i, mean in enumerate(benchmark_sensitivity_means):
-        if (mean + 2*benchmark_sensitivity_stds[i] > 1):
-            error = 1 - mean
-            benchmark_sensitivity_errors_upper.append(error)
-        else:
-            benchmark_sensitivity_errors_upper.append(benchmark_sensitivity_stds[i]*2)
-
-    benchmark_sensitivity_errors_lower = [max((2*std, 0)) for std in
-            benchmark_sensitivity_stds]
-
-    # Specificity
-    benchmark_specificities = get_parameter_metrics(
-        'metrics/{0}_specificities.txt'.format(benchmark_name), num_trials)
-
-    benchmark_specificity_means = [np.mean(specificities) for specificities in
-                                   benchmark_specificities]
-    benchmark_specificity_stds = [np.std(specificities) for specificities in
-                                  benchmark_specificities]
-    benchmark_specificity_errors = [2*std for std in 
-                                    benchmark_specificity_stds]
-
-    benchmark_stats = {
-            'specificity_means': benchmark_specificity_means,
-            'specificity_stds': benchmark_specificity_stds,
-            'specificity_errors': benchmark_specificity_errors,
-            'sensitivity_means': benchmark_sensitivity_means,
-            'sensitivity_stds': benchmark_sensitivity_stds,
-            'sensitivity_errors_upper': benchmark_sensitivity_errors_upper,
-            'sensitivity_errors_lower': benchmark_sensitivity_errors_lower,
-            }
-
-    return benchmark_stats
-
 
 def make_mammal_figure(num_trials, figure_output=False):
     pan_trog = get_simulation_stats('pan_trog', num_trials, seq_lengths)
@@ -130,79 +226,6 @@ def make_mammal_figure(num_trials, figure_output=False):
         plt.show()
 
 
-def make_simulation_trials_figure(num_trials, figure_output):
-    subs = get_simulation_stats('sub_rate', num_trials, error_rates)
-    length = get_simulation_stats('query_length', num_trials, seq_lengths)
-
-    # Theoritical Curve
-    # error_rate_theory_sensitivities = [0.9999999999999992, 0.9999999973133248, 
-    #                                    0.999999035776888, 0.9999633461915861, 
-    #                                    0.9996118046476143, 0.9985398391125027, 
-    #                                    0.9951159587019267, 0.9887248080755489, 
-    #                                    0.9786179973528009, 0.9625853664976465]
-    # error_rate_theory_specificities = [1.0, 1.0, 1.0, 0.9999999999630376, 
-    #                                    0.9999965025321311, 0.9881394058910561, 
-    #                                    0.2188627586201921, 
-    #                                    5.96189764223709e-14, 0.0, 0.0]
-    # query_size_theory_sensitivities = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
-    #                                    1.0, 1.0, 1.0, 1.0, 1.0]
-    # query_size_theory_specificities = [0.999999585864842, 0.9999999999999574, 
-    #                                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
-    #                                    1.0, 1.0, 1.0]
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, sharey='row')
-    fig.suptitle('Flashmap accuracy on simulated data')
-
-    # Sub errors
-    ax1.plot(error_rates, subs['sensitivity_means'], label='sensitivity', 
-             marker='o')
-    # ax1.plot(error_rates, error_rate_theory_sensitivities,
-    #          label='theoretical sensitivity')
-    # ax1.plot(error_rates, error_rate_theory_specificities,
-    #         label='theoretical specificity')
-    ax1.errorbar(error_rates, subs['sensitivity_means'],
-                 #yerr=subs_sensitivity_errors, 
-                 yerr=[subs['sensitivity_errors_lower'],
-                       subs['sensitivity_errors_upper']],
-                 fmt='-', color='blue',)
-    ax1.plot(error_rates, subs['specificity_means'], label='specificity',
-             marker='o')
-    ax1.errorbar(error_rates, subs['specificity_means'],
-                 #yerr=[subs_specificity_errors_lower, subs_specificity_errors_upper], 
-                 yerr=subs['specificity_errors'],
-                 fmt='-', color='orange')
-    #ax1.axhline(y=0.95, linestyle='--', color='grey')
-    ax1.axvline(x=0.05, linestyle='--', color='grey')
-    ax1.text(0.045, 0.1, '0.05 substitution rate threshold', rotation=90)
-    ax1.set_xlabel('Substitutions per site')
-    #ax1.set_ylim(ymin=0.7)
-    fig.legend(frameon=True)
-
-    # Query Length
-    ax2.plot(seq_lengths, length['sensitivity_means'], label='sensitivity', 
-             marker='o')
-    # ax2.plot(seq_lengths, query_size_theory_sensitivities, 
-    #          label='theoretical sensitivity')
-    # ax2.plot(seq_lengths, query_size_theory_specificities,
-    #          label='theoretical specificity')
-    ax2.errorbar(seq_lengths, length['sensitivity_means'],
-                 yerr=[length['sensitivity_errors_lower'],
-                 length['sensitivity_errors_upper']],
-                 #yerr=length_sensitivity_errors, 
-                 fmt='-', color='blue')
-
-    ax2.plot(seq_lengths, length['specificity_means'], label='specificity',
-             marker='o')
-    ax2.errorbar(seq_lengths, length['specificity_means'],
-                 yerr=length['specificity_errors'], fmt='-', color='orange')
-    ax2.axvline(x=5000, linestyle='--', color='grey')
-    ax2.text(5500, 0.3, '5kb query threshold', rotation=90)
-    ax2.set_xscale('log')
-    ax2.set_xlabel('Query length (kb)')
-    if figure_output:
-        plt.savefig(figure_output)
-    else:
-        plt.show()
 
 
 def make_synth_figure():
@@ -222,28 +245,28 @@ def make_synth_figure():
     fig.suptitle('Flashmap accuracy on synthetic data')
 
     # Sub errors
-    ax1.plot(error_rates, error_sensitivities, label='sensitivity', 
+    ax1.plot(error_rates, error_sensitivities, label='sensitivity',
              marker='o')
-    #ax1.errorbar(error_rates, subs_sensitivity_means, 
+    #ax1.errorbar(error_rates, subs_sensitivity_means,
     #             yerr=subs_sensitivity_errors, fmt='-', color='blue')
-    ax1.plot(error_rates, error_specificities, label='specificity', 
+    ax1.plot(error_rates, error_specificities, label='specificity',
              marker='o')
-    #ax1.errorbar(error_rates, subs_specificity_means, 
-    #             yerr=[subs_specificity_errors_lower, 
+    #ax1.errorbar(error_rates, subs_specificity_means,
+    #             yerr=[subs_specificity_errors_lower,
     #                   subs_specificity_errors_upper], fmt='-', color='orange')
     ax1.axvline(x=0.05, linestyle='--', color='grey')
     ax1.text(0.045, 0.3, '0.05 substitution rate threshold', rotation=90)
     ax1.set_xlabel('Substitutions per site')
     fig.legend()
 
-    ax2.plot(seq_lengths, seq_length_sensitivities, label='sensitivity', 
+    ax2.plot(seq_lengths, seq_length_sensitivities, label='sensitivity',
              marker='o')
-    #ax2.errorbar(seq_lengths, length_sensitivity_means, 
+    #ax2.errorbar(seq_lengths, length_sensitivity_means,
     #             yerr=length_sensitivity_errors, fmt='-', color='blue')
 
-    ax2.plot(seq_lengths, seq_length_specificities, label='specificity', 
+    ax2.plot(seq_lengths, seq_length_specificities, label='specificity',
              marker='o')
-    #ax2.errorbar(seq_lengths, length_specificity_means, 
+    #ax2.errorbar(seq_lengths, length_specificity_means,
     #             yerr=length_specificity_errors, fmt='-', color='orange')
     ax2.axvline(x=5000, linestyle='--', color='grey')
     ax2.text(5500, 0.3, '5kb query threshold', rotation=90)
@@ -328,14 +351,14 @@ def make_runtime_figure():
 
     # BIGSI Size
     ax1.plot(bigsi_sizes, bigsi_runtime_means, marker='o')
-    ax1.errorbar(bigsi_sizes, bigsi_runtime_means, yerr=bigsi_runtime_errors, 
+    ax1.errorbar(bigsi_sizes, bigsi_runtime_means, yerr=bigsi_runtime_errors,
                  fmt='-', color='blue')
     ax1.set_ylabel('Wall-clock Runtimes (s)')
     ax1.set_xlabel('BIGSI size (MB)')
 
     # Query size
     ax2.plot(query_sizes, query_runtime_means, marker='o')
-    ax2.errorbar(query_sizes, query_runtime_means, yerr=query_runtime_errors, 
+    ax2.errorbar(query_sizes, query_runtime_means, yerr=query_runtime_errors,
                  fmt='-', color='orange')
     ax2.set_xlabel('Query size (kb)')
     #plt.show()
@@ -345,7 +368,7 @@ def make_runtime_figure():
 def make_jaccard_test_figure(window_size, savefig=False):
     #query_sizes = [5000, 10000, 20000, 40000, 80000, 160000, 300000]
     query_sizes = [5000, 20000, 80000, 300000]
-    sub_rates = ['000', '001', '002', '003', '004', '005', '006', 
+    sub_rates = ['000', '001', '002', '003', '004', '005', '006',
                  '007', '008', '009', '010']
     ref_size = 16
 
@@ -379,7 +402,7 @@ def make_jaccard_test_figure(window_size, savefig=False):
         #axs[i].set_ylim(ymin=-0.3, ymax=0.15)
         axs[i].plot(sub_rates_floats, means, marker='o')
         axs[i].errorbar(sub_rates_floats, means,
-                        yerr=[2*std for std in stds], 
+                        yerr=[2*std for std in stds],
                         fmt='-')
         axs[i].axhline(y=0)
 
@@ -390,9 +413,49 @@ def make_jaccard_test_figure(window_size, savefig=False):
     else:
         plt.show()
 
+def window_size_figure(figure_output=False):
+    error_rates = []
+    query_lengths = []
+    window_sizes = []
+    with open('./metrics/window_size_estimates.txt', 'r') as handle:
+        for line in handle:
+            split_line = line.rstrip().split(',')
+            query_lengths.append(int(split_line[0]))
+            error_rates.append(int(split_line[1]))
+            window_sizes.append(float(split_line[2]))
+
+    use_bigsi = ['bigsi filter' if window_size <= 2000 else 'mashmap' for window_size in window_sizes]
+
+    import pandas as pd
+
+    #create DataFrame
+    df = pd.DataFrame(
+        {'x': query_lengths, 'y': error_rates, 'z': use_bigsi}
+    )
+
+    plt.figure(figsize=(8, 6))
+    groups = df.groupby('z')
+    for name, group in groups:
+        plt.plot(group.x, group.y, marker='.', linestyle='', markersize=12,
+                 label=name)
+
+    plt.title('Decision boundary for using BIGSI filter')
+    plt.xlabel('Query Length')
+    plt.ylabel('Percent Identity')
+    plt.axhline(y=94, linestyle='--', color='grey')
+    plt.axvline(x=5000, linestyle='--', color='grey')
+    plt.xscale('log')
+    plt.legend(loc='upper right', frameon=True)
+    if figure_output:
+        plt.savefig(figure_output)
+    else:
+        plt.show()
+
+#window_size_figure(figure_output='figures/window_size_figure')
 #make_read_figure()
 #make_runtime_figure()
-#make_simulation_trials_figure(100)
+#make_simulation_trials_figure(10,
+#                              figure_output='figures/simulation_trials_95_32M')
 #make_mammal_figure(100)
 #make_synth_figure()
-make_jaccard_test_figure(50)
+#make_jaccard_test_figure(50)
