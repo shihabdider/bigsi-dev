@@ -236,7 +236,7 @@ def test():
     # make_simulation_trials_figure()
     make_mammal_figure()
 
-test()
+# test()
 
 
 def make_synth_figure():
@@ -435,7 +435,9 @@ def window_size_figure(figure_output=False):
             error_rates.append(int(split_line[1]))
             window_sizes.append(float(split_line[2]))
 
-    use_bigsi = ['bigsi filter' if window_size <= 2000 else 'mashmap' for window_size in window_sizes]
+    use_bigsi = ['bigsi filter' if window_size <= 2000 else 'mashmap'
+                 for window_size in window_sizes]
+
 
     import pandas as pd
 
@@ -444,11 +446,41 @@ def window_size_figure(figure_output=False):
         {'x': query_lengths, 'y': error_rates, 'z': use_bigsi}
     )
 
-    plt.figure(figsize=(8, 6))
-    groups = df.groupby('z')
-    for name, group in groups:
-        plt.plot(group.x, group.y, marker='.', linestyle='', markersize=12,
-                 label=name)
+    # To plot the line use plt.plot(x, y) with the right xs and the right ys
+    boundary_points = []
+    
+    for i, length in enumerate(set(query_lengths)):
+        row = df.loc[(df['x'] == length) & (df['z'] == 'bigsi filter')]
+        if not row.empty:
+            row = row[row['y'] == max(row['y'])]
+            boundary_points.append(
+                {
+                    'x': float(row['x']), 
+                    'y': float(row['y'])
+                }
+            )
+
+    boundary_points = pd.DataFrame(boundary_points).sort_values(by='x')
+    print(boundary_points)
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.plot(boundary_points.x, boundary_points.y)
+
+    ax.fill_between(
+        boundary_points.x, 94, boundary_points.y, 
+        where=(
+            (boundary_points.y >= 94) & (boundary_points.x >= 5000)
+        ),
+        label='Bigsi filter is required'
+    )
+    ax.fill_between(
+        boundary_points.x, 100, boundary_points.y,
+        label='MashMap only',
+    )
+    # groups = df.groupby('z')
+    # for name, group in groups:
+    #     ax.plot(group.x, group.y, marker='.', linestyle='', markersize=12,
+    #              label=name)
 
     plt.title('Decision boundary for using BIGSI filter')
     plt.xlabel('Query Length')
@@ -462,11 +494,12 @@ def window_size_figure(figure_output=False):
     else:
         plt.show()
 
-#window_size_figure(figure_output='figures/window_size_figure')
-#make_read_figure()
-#make_runtime_figure()
-#make_simulation_trials_figure(10,
-#                              figure_output='figures/simulation_trials_95_32M')
-#make_mammal_figure(100)
-#make_synth_figure()
-#make_jaccard_test_figure(50)
+
+window_size_figure()  # figure_output='figures/window_size_figure')
+# make_read_figure()
+# make_runtime_figure()
+# make_simulation_trials_figure(10,
+#                               figure_output='figures/simulation_trials_95_32M')
+# make_mammal_figure(100)
+# make_synth_figure()
+# make_jaccard_test_figure(50)
