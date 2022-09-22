@@ -424,31 +424,36 @@ def make_jaccard_test_figure(window_size, savefig=False):
     else:
         plt.show()
 
-def window_size_figure(figure_output=False):
+def make_window_size_boundary_points(genome_name):
     error_rates = []
     query_lengths = []
     window_sizes = []
-    with open('./metrics/window_size_estimates.txt', 'r') as handle:
+    with open(
+        './metrics/window_size_estimates_{0}.txt'.format(genome_name), 'r'
+    ) as handle:
         for line in handle:
             split_line = line.rstrip().split(',')
-            query_lengths.append(int(split_line[0]))
-            error_rates.append(int(split_line[1]))
+            query_lengths.append(float(split_line[0]))
+            error_rates.append(float(split_line[1]))
             window_sizes.append(float(split_line[2]))
 
-    use_bigsi = ['bigsi filter' if window_size <= 2000 else 'mashmap'
+    sketch_window_sizes = {
+        'worm': 66,
+        'hg38': 2000,
+        'plant': 8000
+    }
+
+    use_bigsi = ['bigsi filter' 
+                 if window_size <= sketch_window_sizes[genome_name] 
+                 else 'mashmap'
                  for window_size in window_sizes]
 
-
-    import pandas as pd
-
-    #create DataFrame
     df = pd.DataFrame(
         {'x': query_lengths, 'y': error_rates, 'z': use_bigsi}
     )
 
     # To plot the line use plt.plot(x, y) with the right xs and the right ys
     boundary_points = []
-    
     for i, length in enumerate(set(query_lengths)):
         row = df.loc[(df['x'] == length) & (df['z'] == 'bigsi filter')]
         if not row.empty:
@@ -461,34 +466,68 @@ def window_size_figure(figure_output=False):
             )
 
     boundary_points = pd.DataFrame(boundary_points).sort_values(by='x')
-    print(boundary_points)
+    return boundary_points
 
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.plot(boundary_points.x, boundary_points.y)
+def window_size_figure(figure_output=False):
+    genomes = ['worm', 'hg38', 'plant']
+    window_size_boundary_points = {
+    }
+    for genome in genomes:
+        boundary_points = make_window_size_boundary_points(genome)
+        window_size_boundary_points[genome] = boundary_points
 
-    ax.fill_between(
-        boundary_points.x, 94, boundary_points.y, 
-        where=(
-            (boundary_points.y >= 94) & (boundary_points.x >= 5000)
-        ),
-        label='Bigsi filter is required'
+    fig, axs = plt.subplots(
+        1, 
+        len(genomes), 
+        figsize=(12, 6),
+        sharey=True
     )
-    ax.fill_between(
-        boundary_points.x, 100, boundary_points.y,
-        label='MashMap only',
-    )
-    # groups = df.groupby('z')
-    # for name, group in groups:
-    #     ax.plot(group.x, group.y, marker='.', linestyle='', markersize=12,
-    #              label=name)
 
-    plt.title('Decision boundary for using BIGSI filter')
-    plt.xlabel('Query Length')
-    plt.ylabel('Percent Identity')
-    plt.axhline(y=94, linestyle='--', color='grey')
-    plt.axvline(x=5000, linestyle='--', color='grey')
-    plt.xscale('log')
+    for i, ax in enumerate(axs):
+        genome = genomes[i]
+        axs[i].set_title(genome)
+        axs[i].plot(
+            window_size_boundary_points[genome].x, 
+            window_size_boundary_points[genome].y
+        )
+
+        axs[i].fill_between(
+            window_size_boundary_points[genome].x, 
+            94, window_size_boundary_points[genome].y, 
+            where=(
+                (window_size_boundary_points[genome].y >= 94) & 
+                (window_size_boundary_points[genome].x >= 5000)
+            ),
+            label='Bigsi filter is required'
+        )
+        axs[i].fill_between(
+            window_size_boundary_points[genome].x, 
+            100, window_size_boundary_points[genome].y,
+            label='MashMap only',
+        )
+        axs[i].axhline(y=94, linestyle='--', color='grey')
+        axs[i].axvline(x=5000, linestyle='--', color='grey')
+
+    fig.suptitle(
+        'Decision boundary for using BIGSI filter for different genome sizes'
+    )
+    # add a big axis, hide frame
     plt.legend(loc='upper right', frameon=True)
+    fig.add_subplot(111, frameon=False)
+    # hide tick and tick label of the big axis
+    plt.tick_params(
+        labelcolor='none', 
+        which='both', 
+        top=False, 
+        bottom=False, 
+        left=False, 
+        right=False
+    )
+    plt.xlabel("Query Length")
+    plt.ylabel("Percent Identity")
+    # plt.xlabel('Query Length')
+    # plt.ylabel('Percent Identity')
+    # plt.xlim(1000, max(df.x))
     if figure_output:
         plt.savefig(figure_output)
     else:
@@ -496,6 +535,7 @@ def window_size_figure(figure_output=False):
 
 
 window_size_figure()  # figure_output='figures/window_size_figure')
+
 # make_read_figure()
 # make_runtime_figure()
 # make_simulation_trials_figure(10,
