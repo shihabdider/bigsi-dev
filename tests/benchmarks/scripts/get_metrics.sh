@@ -50,7 +50,7 @@ function query_length_metrics() {
 }
 
 function mammal_metrics() {
-    local benchmark_dir=$1/simulation/
+    local benchmark_dir=$1/simulation/query_length
     local output=$1
     get_metric ${benchmark_dir} sensitivity ${QUERY_LENGTHS[@]} > metrics/${output}_sensitivity.txt
     get_metric ${benchmark_dir} specificity ${QUERY_LENGTHS[@]} > metrics/${output}_specificity.txt
