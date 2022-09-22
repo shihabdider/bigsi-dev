@@ -1,7 +1,3 @@
-# Global parameters
-QUERY_LENGTHS=( 1000 2000 3000 4000 5000 7500 10000 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
-SUB_RATES=( 001 002 003 004 005 006 007 008 009 010 )
-
 function mammal_benchmark() {
     echo "Running $1 benchmark";
     mammal_dir=$1/simulation/query_length
@@ -80,6 +76,7 @@ function error_and_length_benchmark() {
         done
     done
 }
+
 function error_benchmark() {
     echo "Running error rate benchmark";
     HG38_SUB_RATE=hg38/simulation/substitution_rate

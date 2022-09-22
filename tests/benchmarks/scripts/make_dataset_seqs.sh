@@ -1,14 +1,17 @@
-QUERY_LENGTHS=( 7500 12500 15000 17500 ) # 40000 80000 160000 200000 250000 300000 )
+QUERY_LENGTHS=( 7500 ) # 12500 15000 17500 ) # 40000 80000 160000 200000 250000 300000 )
 #QUERY_LENGTHS=( 1000 2000 3000 4000 5000 10000 20000 40000 80000 160000 200000 250000 300000 )
 num_experiments=100
 num_queries_per_seq=4
 
 function mammal_dataset() {
     local mammal_dir=$1/simulation/query_length
+
+    N=12
     for i in ${QUERY_LENGTHS[@]};
     do
         for j in $( seq 1 $num_experiments );
         do
+            ((b=b%N)); ((b++==0)) && wait
             mkdir -p seqs/${mammal_dir}/experiment_${j};
             python3 scripts/make_benchmark_seqs.py \
                 -i scripts/${1}_acn.txt \
@@ -16,7 +19,8 @@ function mammal_dataset() {
                 -n $num_queries_per_seq \
                 -o seqs/${mammal_dir}/experiment_${j}/${i}.fasta \
                 -f ~/Research/seqs/$1.fasta \
-                -x ~/Research/seqs/$1.fasta.fai
+                -x ~/Research/seqs/$1.fasta.fai \
+        &
         done
     done
 }
@@ -77,10 +81,10 @@ function make_error_and_length_dataset() {
 #}
 
 #make_error_and_length_dataset
-#mammal_dataset "pan_trog";
-#mammal_dataset "gorilla";
+mammal_dataset "pan_trog";
+mammal_dataset "gorilla";
 
-mammal_dataset "hg38";
+#mammal_dataset "hg38";
 #make_error_rate_dataset()
 
 #pacbio_read_dir="https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/PacBio_SequelII_CCS_11kb/HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam"
