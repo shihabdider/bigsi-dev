@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Global parameters
-QUERY_LENGTHS=( 1000 2000 3000 4000 5000 7500 10000 ) # 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
+#QUERY_LENGTHS=( 1000 2000 3000 4000 5000 7500 10000 ) # 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
+QUERY_LENGTHS=( 7500 ) # 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
 SUB_RATES=( 001 002 003 004 005 006 007 008 009 010 )
 
 num_experiments=50;
@@ -30,8 +31,8 @@ source "${script_dir}/get_metrics.sh";
 
 mammal_benchmark "pan_trog" && wait;
 mammal_benchmark "gorilla" && wait;
-mammal_metrics "pan_trog";
-mammal_metrics "gorilla";
+#mammal_metrics "pan_trog";
+#mammal_metrics "gorilla";
 
 #pacbio_benchmark && wait;
 #nanopore_benchmark;
