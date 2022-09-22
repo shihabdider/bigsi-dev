@@ -290,3 +290,11 @@ outputs/gorilla/simulation//experiment_39/10000.bigsi.json 0.9534673366834171
 outputs/gorilla/simulation//experiment_40/10000.bigsi.json 0.9497740345110929
 outputs/gorilla/simulation//experiment_38/10000.bigsi.json 0.9362569610182976
 outputs/gorilla/simulation//experiment_31/10000.bigsi.json 0.9228140703517588
+outputs/gorilla/simulation//experiment_43/10000.bigsi.json 0.9898661944116489
+outputs/gorilla/simulation//experiment_46/10000.bigsi.json 0.9875024601456406
+outputs/gorilla/simulation//experiment_44/10000.bigsi.json 0.958602978941962
+outputs/gorilla/simulation//experiment_50/10000.bigsi.json 0.9511197663096397
+outputs/gorilla/simulation//experiment_49/10000.bigsi.json 0.9467729240456513
+outputs/gorilla/simulation//experiment_48/10000.bigsi.json 0.9391047712739793
+outputs/gorilla/simulation//experiment_47/10000.bigsi.json 0.9446084218811491
+outputs/gorilla/simulation//experiment_45/10000.bigsi.json 0.9214149331725455
