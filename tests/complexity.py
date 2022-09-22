@@ -326,8 +326,9 @@ def main():
         'kmer_len': 16,
     }
 
-    bigsi_stats = compute_bigsi_stats(hg38)
-    print(hg38, '\n', bigsi_stats)
+    print(compute_minimizer_index_size(3e9, 2000))
+    #bigsi_stats = compute_bigsi_stats(hg38)
+    #print(hg38, '\n', bigsi_stats)
 
     # print(compute_containment_diff_bound(0.18, 50, 5000, 0.1749, 0.45))
 

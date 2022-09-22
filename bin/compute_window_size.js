@@ -226,16 +226,20 @@ function main(
     return Math.min(Math.max(windowSizeEstimate, 1), lengthQuery)
 }
 
-function generateWindowData() {
+function generateWindowData(refLength) {
     const pValueCutoff = 1e-3
     const kmerLength = 16
     const alphaSize = 4
-    const refLength = 3e9 // hg38
 
-    const queryLengths = [1000, 2500, 5000, 10_000, 20_000, 40_000, 80_000, 160_000, 300_000, 600_000]
+    const queryLengths = []
+    const maxQueryLength = 400_000
+    for (let i=1000; i <= maxQueryLength; i+=1000) {
+        queryLengths.push(i)
+    }
+
     const data = []
     for (const queryLength of queryLengths) {
-        for (let percIdentity=80; percIdentity <= 100; percIdentity++) {
+        for (let percIdentity=80; percIdentity <= 100; percIdentity+=0.5) {
             const windowSize = main(pValueCutoff, kmerLength, alphaSize, percIdentity, queryLength, refLength)
             data.push([queryLength, percIdentity, windowSize])
         }
@@ -246,7 +250,7 @@ function generateWindowData() {
 
 function writeData(data, outputFile) {
     const file = fs.createWriteStream(outputFile);
-    file.on('error', function(err) { console.error('Could not write') });
+    file.on('error', function(err) { console.error('Could not write', err) });
     data.forEach(function(v) { file.write(v.join(', ') + '\n'); });
     file.end();
 }
@@ -262,7 +266,16 @@ function tests() {
     console.log(main(pValueCutoff, 16, 4, 95, 20000, 1e7))
 }
 
-const data = generateWindowData()
-writeData(data, 'window_size_estimates.txt')
+const refLengths = {
+    'worm': 1e8, 
+    'hg38': 3e9, 
+    'plant': 12e9,
+}
+
+for (const ref in refLengths) {
+    console.log(`Computing window size for ${ref}...`)
+    const data = generateWindowData(refLengths[ref])
+    writeData(data, `../tests/benchmarks/metrics/window_size_estimates_${ref}.txt`)
+}
 
 module.exports = { main: main }
