@@ -125,8 +125,8 @@ def main():
 
     if args.mashmap:
         mashmap_results_path = args.output + '.mashmap.out'
-        #mashmap_query_length = min(query_lengths) - 1
-        mashmap_query_length = min(5000, min(query_lengths) - 1)
+        mashmap_query_length = min(query_lengths) / 2
+        #mashmap_query_length = min(5000, min(query_lengths) - 1)
         mashmap_identity = (1 - subrate) * 100
         run_sketched_mashmap(args.query, config, mashmap_identity, mashmap_query_length, output=mashmap_results_path)
 

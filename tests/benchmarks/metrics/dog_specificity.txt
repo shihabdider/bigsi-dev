@@ -1,6 +1,6 @@
-outputs/dog/simulation/query_length/experiment_1/1000.bigsi.json 0.7476635514018691
 outputs/dog/simulation/query_length/experiment_2/1000.bigsi.json 0.7663551401869159
 outputs/dog/simulation/query_length/experiment_4/1000.bigsi.json 0.7990654205607477
+outputs/dog/simulation/query_length/experiment_1/1000.bigsi.json 0.7476635514018691
 outputs/dog/simulation/query_length/experiment_2/2000.bigsi.json 0.9018691588785047
 outputs/dog/simulation/query_length/experiment_6/2000.bigsi.json 0.9626168224299065
 outputs/dog/simulation/query_length/experiment_6/1000.bigsi.json 0.8691588785046729

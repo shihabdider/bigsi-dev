@@ -203,7 +203,7 @@ def main():
                     random_record = get_pysam_record(args.fasta, identifier,
                                                     rand_start, rand_end)
                     num_n = str(random_record.seq).count('N')
-                    is_valid_seq = num_n/len(random_record.seq) < 0.3
+                    is_valid_seq = num_n/len(random_record.seq) < 0.1
                     #print(identifier, i, random_record)
                     if is_valid_seq:
                         output_records.append(random_record)

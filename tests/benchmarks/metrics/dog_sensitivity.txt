@@ -6,8 +6,8 @@ outputs/dog/simulation/query_length/experiment_5/1000.bigsi.json 0.5
 outputs/dog/simulation/query_length/experiment_10/1000.bigsi.json 0.8
 outputs/dog/simulation/query_length/experiment_8/1000.bigsi.json 0.6
 outputs/dog/simulation/query_length/experiment_4/1000.bigsi.json 0.5
-outputs/dog/simulation/query_length/experiment_6/3000.bigsi.json 1.0
 outputs/dog/simulation/query_length/experiment_2/3000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_6/3000.bigsi.json 1.0
 outputs/dog/simulation/query_length/experiment_6/2000.bigsi.json 0.3333333333333333
 outputs/dog/simulation/query_length/experiment_7/2000.bigsi.json 1.0
 outputs/dog/simulation/query_length/experiment_6/4000.bigsi.json 1.0
