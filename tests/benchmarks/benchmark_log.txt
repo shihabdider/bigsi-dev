@@ -3,110 +3,6 @@ Running mashmap query?: 1
 Running dog benchmark
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
->>>>>>>>>>>>>>>>>>
-Kmer size = 16
-Kmer size = 16
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Window size = 32766
-Window size = 32766
-Kmer size = 16
-Segment length = 998 (read split allowed)
-Segment length = 1998 (read split allowed)
-Alphabet = DNA
-Alphabet = DNA
-Window size = 32766
-Percentage identity threshold = 94%
-Segment length = 998 (read split allowed)
-Percentage identity threshold = 94%
-Alphabet = DNA
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_1/2000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_1/2000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Percentage identity threshold = 94%
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_3/1000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_3/1000.mashmap.out
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_1/1000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_1/1000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_5/1000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_5/1000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_8/1000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_8/1000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 1998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_2/2000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_2/2000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_9/1000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_9/1000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_2/1000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_2/1000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
 Segment length = 998 (read split allowed)
@@ -122,13 +18,52 @@ Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_1/2000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_1/2000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+>>>>>>>>>>>>>>>>>>
+Kmer size = 16
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Window size = 32766
+Kmer size = 16
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Window size = 32766
+Percentage identity threshold = 94%
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_2/2000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_2/2000.mashmap.out
+Execution threads  = 1
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+Query = [seqs/dog/simulation/query_length/experiment_5/1000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_5/1000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
 Segment length = 998 (read split allowed)
 Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_4/1000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_4/1000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_6/1000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_6/1000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -153,8 +88,73 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_6/1000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_6/1000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_2/1000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_2/1000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_1/1000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_1/1000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_8/1000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_8/1000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_9/1000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_9/1000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_4/1000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_4/1000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_3/1000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_3/1000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
@@ -170,101 +170,101 @@ INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 39.9608 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [4, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.068096 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/1000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 41.414 sec
+INFO, skch::main, Time spent computing the reference index: 36.7609 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [3, 68, 68]
+INFO, skch::main, Time spent mapping the query : 0.0187156 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/1000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 41.4811 sec
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.0758192 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/2000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [7, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.0722648 sec
+INFO, skch::main, Time spent computing the reference index: 44.2501 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [5, 57, 57]
+INFO, skch::main, Time spent mapping the query : 0.0162718 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/1000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 41.2133 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [5, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.0600942 sec
+INFO, skch::main, Time spent computing the reference index: 36.0551 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [5, 70, 70]
+INFO, skch::main, Time spent mapping the query : 0.0164425 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/1000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.9551 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [2, 59, 59]
+INFO, skch::main, Time spent mapping the query : 0.017502 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/1000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.4633 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [2, 57, 57]
+INFO, skch::main, Time spent mapping the query : 0.0215383 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/2000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.9519 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 57, 57]
+INFO, skch::main, Time spent mapping the query : 0.025871 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/2000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 36.8938 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [2, 71, 71]
+INFO, skch::main, Time spent mapping the query : 0.019916 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/1000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 47.1184 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 56, 56]
+INFO, skch::main, Time spent mapping the query : 0.013931 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/1000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.8678 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [5, 158, 158]
-INFO, skch::main, Time spent mapping the query : 0.0569502 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/1000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::main, Time spent computing the reference index: 39.9997 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [2, 67, 67]
+INFO, skch::main, Time spent mapping the query : 0.0177864 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/1000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.3392 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 43.7647 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 158, 158]
-INFO, skch::main, Time spent mapping the query : 0.0782597 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/2000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [6, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.118983 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/1000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 43.2596 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [3, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.0488923 sec
+INFO, skch::main, Time spent computing the reference index: 37.5763 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 71, 71]
+INFO, skch::main, Time spent mapping the query : 0.0200388 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/1000.mashmap.out
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.9348 sec
+INFO, skch::main, Time spent computing the reference index: 42.7948 sec
 INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [5, 64, 64]
+INFO, skch::main, Time spent mapping the query : 0.0200792 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/1000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 43.8358 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [7, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.0576634 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/1000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [6, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.344281 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/1000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 44.8368 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [6, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.0712299 sec
+INFO, skch::main, Time spent computing the reference index: 35.9349 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 76, 76]
+INFO, skch::main, Time spent mapping the query : 0.0202256 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/1000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 43.7038 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [5, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.112962 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/1000.mashmap.out
-Wrote to outputs/dog/simulation/query_length/experiment_8/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/1000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_1/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/1000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_5/1000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_8/1000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_4/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/1000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_6/1000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_2/2000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_7/1000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_1/2000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_2/1000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_9/1000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_10/1000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_3/1000.bigsi.json
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
@@ -287,8 +287,34 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_2/3000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_2/3000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_4/3000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_4/3000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_9/2000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_9/2000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_3/2000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_3/2000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -308,13 +334,13 @@ Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
-Segment length = 1998 (read split allowed)
+Segment length = 2998 (read split allowed)
 Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_4/2000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_4/2000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_3/3000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_3/3000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -347,78 +373,52 @@ Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
-Segment length = 2998 (read split allowed)
-Alphabet = DNA
->>>>>>>>>>>>>>>>>>
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
->>>>>>>>>>>>>>>>>>
-Execution threads  = 1
-Kmer size = 16
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Query = [seqs/dog/simulation/query_length/experiment_4/3000.fasta]
-Window size = 32766
-Kmer size = 16
-Mapping output file = outputs/dog/simulation/query_length/experiment_4/3000.mashmap.out
 Segment length = 1998 (read split allowed)
 Alphabet = DNA
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
-Window size = 32766
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Segment length = 2998 (read split allowed)
 Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_4/2000.fasta]
+>>>>>>>>>>>>>>>>>>
+Mapping output file = outputs/dog/simulation/query_length/experiment_4/2000.mashmap.out
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Alphabet = DNA
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Percentage identity threshold = 94%
-Kmer size = 16
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Kmer size = 16
->>>>>>>>>>>>>>>>>>
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Window size = 32766
-Execution threads  = 1
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Window size = 32766
-Kmer size = 16
-Execution threads  = 1
-Window size = 32766
-Segment length = 1998 (read split allowed)
-Query = [seqs/dog/simulation/query_length/experiment_3/2000.fasta]
-Alphabet = DNA
-Query = [seqs/dog/simulation/query_length/experiment_3/3000.fasta]
-Segment length = 1998 (read split allowed)
-Segment length = 1998 (read split allowed)
-Mapping output file = outputs/dog/simulation/query_length/experiment_3/2000.mashmap.out
-Mapping output file = outputs/dog/simulation/query_length/experiment_3/3000.mashmap.out
-Percentage identity threshold = 94%
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
-Alphabet = DNA
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
-Alphabet = DNA
+Kmer size = 16
+Window size = 32766
 >>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Percentage identity threshold = 94%
-Execution threads  = 1
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_9/2000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_9/2000.mashmap.out
-Query = [seqs/dog/simulation/query_length/experiment_7/2000.fasta]
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
 Execution threads  = 1
 Query = [seqs/dog/simulation/query_length/experiment_8/2000.fasta]
 Mapping output file = outputs/dog/simulation/query_length/experiment_8/2000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_7/2000.fasta]
 Mapping output file = outputs/dog/simulation/query_length/experiment_7/2000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_2/3000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_2/3000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
@@ -435,139 +435,100 @@ INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 41.2797 sec
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 158, 158]
-INFO, skch::main, Time spent mapping the query : 0.0843137 sec
+INFO, skch::main, Time spent computing the reference index: 42.1492 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 53, 53]
+INFO, skch::main, Time spent mapping the query : 0.0209224 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/2000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 40.8297 sec
+INFO, skch::main, Time spent computing the reference index: 34.9518 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 64, 64]
+INFO, skch::main, Time spent mapping the query : 0.0339464 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/3000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 39.9488 sec
+INFO, skch::main, Time spent computing the reference index: 39.5266 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 60, 60]
+INFO, skch::main, Time spent mapping the query : 0.0300956 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/3000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 40.003 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.0840835 sec
+INFO, skch::main, Time spent computing the reference index: 40.463 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 59, 59]
+INFO, skch::main, Time spent mapping the query : 0.0223461 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/2000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.3501 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 57, 57]
+INFO, skch::main, Time spent mapping the query : 0.0311728 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/3000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.3916 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 69, 69]
+INFO, skch::main, Time spent mapping the query : 0.0292574 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/2000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.7654 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [3, 69, 69]
+INFO, skch::main, Time spent mapping the query : 0.0254776 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/2000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.68 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 58, 58]
+INFO, skch::main, Time spent mapping the query : 0.0229387 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/2000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.123695 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/3000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.084509 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.391 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 69, 69]
+INFO, skch::main, Time spent mapping the query : 0.0245085 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/2000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 38.6603 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 65, 65]
+INFO, skch::main, Time spent mapping the query : 0.0231631 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/2000.mashmap.out
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 40.4771 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.121665 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/3000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 40.8961 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [2, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.0910624 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/2000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 41.8089 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.088072 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/2000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.198 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.9245 sec
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.0843885 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/2000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.1088 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/3000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.3979 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.11931 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/3000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 43.2373 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.0914992 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/2000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.8893 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.0803817 sec
+INFO, skch::main, Time spent computing the reference index: 35.079 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 71, 71]
+INFO, skch::main, Time spent mapping the query : 0.0319769 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/2000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.4418 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 77, 77]
+INFO, skch::main, Time spent mapping the query : 0.0405887 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/3000.mashmap.out
 Wrote to outputs/dog/simulation/query_length/experiment_10/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/3000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_3/3000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_1/3000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_3/2000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_8/2000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_4/3000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_9/2000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_6/2000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_4/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/3000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_5/2000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_7/2000.bigsi.json
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 2998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_10/3000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_10/3000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 2998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_9/3000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_9/3000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 3998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_6/4000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_6/4000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
+Wrote to outputs/dog/simulation/query_length/experiment_2/3000.bigsi.json
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
@@ -590,8 +551,8 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_5/3000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_5/3000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_7/3000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_7/3000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -605,10 +566,62 @@ Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
 Query = [seqs/dog/simulation/query_length/experiment_4/4000.fasta]
 Mapping output file = outputs/dog/simulation/query_length/experiment_4/4000.mashmap.out
->>>>>>>>>>>>>>>>>>
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 >>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_1/4000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_1/4000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_6/4000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_6/4000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_10/3000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_10/3000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_5/3000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_5/3000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
 Segment length = 2998 (read split allowed)
@@ -618,32 +631,6 @@ Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
 Query = [seqs/dog/simulation/query_length/experiment_8/3000.fasta]
 Mapping output file = outputs/dog/simulation/query_length/experiment_8/3000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
->>>>>>>>>>>>>>>>>>
-Kmer size = 16
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Window size = 32766
-Kmer size = 16
-Window size = 32766
-Segment length = 2998 (read split allowed)
-Alphabet = DNA
-Segment length = 2998 (read split allowed)
-Percentage identity threshold = 94%
-Alphabet = DNA
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_7/3000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_7/3000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_6/3000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_6/3000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -662,23 +649,45 @@ Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Window size = 32766
-Kmer size = 16
-Window size = 32766
-Segment length = 3998 (read split allowed)
-Segment length = 3998 (read split allowed)
+Segment length = 2998 (read split allowed)
 Alphabet = DNA
-Alphabet = DNA
-Percentage identity threshold = 94%
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_1/4000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_1/4000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_6/3000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_6/3000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_9/3000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_9/3000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
 Query = [seqs/dog/simulation/query_length/experiment_2/4000.fasta]
@@ -688,111 +697,102 @@ Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 39.5683 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.166742 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/4000.mashmap.out
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.2778 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.108774 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/3000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::main, Time spent computing the reference index: 32.5948 sec
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.3735 sec
+INFO, skch::main, Time spent computing the reference index: 41.2313 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 65, 65]
+INFO, skch::main, Time spent mapping the query : 0.0347403 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/3000.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 52, 52]
+INFO, skch::main, Time spent mapping the query : 0.0346084 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/4000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.3985 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.118821 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/3000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.138656 sec
+INFO, skch::main, Time spent computing the reference index: 45.6692 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 46, 46]
+INFO, skch::main, Time spent mapping the query : 0.0316294 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/4000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.0173 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.168985 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/4000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 42.2647 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.180984 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/4000.mashmap.out
+INFO, skch::main, Time spent computing the reference index: 45.3845 sec
 INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 43.8423 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 43.1254 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.146945 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 47, 47]
+INFO, skch::main, Time spent mapping the query : 0.0275757 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/3000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.16674 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/4000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 44.1181 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 43.4509 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.116471 sec
+INFO, skch::main, Time spent computing the reference index: 38.4114 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 58, 58]
+INFO, skch::main, Time spent mapping the query : 0.0318301 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/3000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.8748 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 53, 53]
+INFO, skch::main, Time spent mapping the query : 0.0347837 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/3000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.9069 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.3679 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 49, 49]
+INFO, skch::main, Time spent mapping the query : 0.0352789 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/4000.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 50, 50]
+INFO, skch::main, Time spent mapping the query : 0.0347673 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/4000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 39.3738 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 58, 58]
+INFO, skch::main, Time spent mapping the query : 0.0309404 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/3000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.1362 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/3000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 44.3711 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.117412 sec
+INFO, skch::main, Time spent computing the reference index: 36.955 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 63, 63]
+INFO, skch::main, Time spent mapping the query : 0.0459513 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/4000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 31.8804 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 74, 74]
+INFO, skch::main, Time spent mapping the query : 0.0512182 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/4000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.8578 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 70, 70]
+INFO, skch::main, Time spent mapping the query : 0.037169 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/3000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 44.8026 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.169187 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/4000.mashmap.out
-Wrote to outputs/dog/simulation/query_length/experiment_2/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/3000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_3/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/4000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_6/3000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_6/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/3000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_7/3000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_5/3000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_4/4000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_10/3000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_1/4000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_8/3000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_5/4000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_2/4000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_9/3000.bigsi.json
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
@@ -804,58 +804,6 @@ Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
 Query = [seqs/dog/simulation/query_length/experiment_8/5000.fasta]
 Mapping output file = outputs/dog/simulation/query_length/experiment_8/5000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 4998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_3/5000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_3/5000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 3998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_8/4000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_8/4000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 4998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_6/5000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_6/5000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 4998 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_2/5000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_2/5000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -875,6 +823,19 @@ Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_7/4000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_7/4000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
 Segment length = 4998 (read split allowed)
 Alphabet = DNA
 Percentage identity threshold = 94%
@@ -884,6 +845,7 @@ Query = [seqs/dog/simulation/query_length/experiment_1/5000.fasta]
 Mapping output file = outputs/dog/simulation/query_length/experiment_1/5000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
@@ -893,8 +855,8 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_7/4000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_7/4000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_8/4000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_8/4000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -927,13 +889,13 @@ Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
-Segment length = 3998 (read split allowed)
+Segment length = 4998 (read split allowed)
 Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_9/4000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_9/4000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_3/5000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_3/5000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -950,113 +912,23 @@ Mapping output file = outputs/dog/simulation/query_length/experiment_4/5000.mash
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_9/4000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_9/4000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 314.695 sec
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.59304 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/5000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 318.33 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 316.331 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 318.624 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 316.585 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 316.619 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 316.748 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 158, 158]
-INFO, skch::main, Time spent mapping the query : 0.578672 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/5000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.522256 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/5000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 158, 158]
-INFO, skch::main, Time spent mapping the query : 0.524985 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/4000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 315.39 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.551699 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/4000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.561457 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/5000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.574172 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/5000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 319.506 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 317.599 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.600135 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/5000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 317.648 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.653292 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/5000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.531225 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/5000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.605169 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/4000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 318.523 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.62539 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/4000.mashmap.out
-Wrote to outputs/dog/simulation/query_length/experiment_6/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/4000.bigsi.json
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
@@ -1066,21 +938,190 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_9/5000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_9/5000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_2/5000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_2/5000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_6/5000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_6/5000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 37.2555 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 39, 39]
+INFO, skch::main, Time spent mapping the query : 0.0411901 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/5000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.4957 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 47, 47]
+INFO, skch::main, Time spent mapping the query : 0.0309035 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/4000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.5735 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 50, 50]
+INFO, skch::main, Time spent mapping the query : 0.0328006 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/4000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 33.555 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 52, 52]
+INFO, skch::main, Time spent mapping the query : 0.0421755 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/5000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.2976 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 51, 51]
+INFO, skch::main, Time spent mapping the query : 0.0419769 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/5000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.1939 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 53, 53]
+INFO, skch::main, Time spent mapping the query : 0.0357648 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/4000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 33.9191 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 54, 54]
+INFO, skch::main, Time spent mapping the query : 0.0443061 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/5000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.3564 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 56, 56]
+INFO, skch::main, Time spent mapping the query : 0.0460675 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/5000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.0744 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 55, 55]
+INFO, skch::main, Time spent mapping the query : 0.0443641 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/5000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.8801 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 57, 57]
+INFO, skch::main, Time spent mapping the query : 0.0370103 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/4000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 33.5252 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 62, 62]
+INFO, skch::main, Time spent mapping the query : 0.0500692 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/5000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.531 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 63, 63]
+INFO, skch::main, Time spent mapping the query : 0.0512317 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/5000.mashmap.out
+Wrote to outputs/dog/simulation/query_length/experiment_8/5000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_10/4000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_7/4000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_1/5000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_5/5000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_7/5000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_8/4000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_4/5000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_3/5000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_9/4000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_2/5000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_6/5000.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_10/7500.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_10/7500.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
-Segment length = 4998 (read split allowed)
+Segment length = 5000 (read split allowed)
 Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_10/5000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_10/5000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_2/7500.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_2/7500.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_4/7500.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_4/7500.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_6/7500.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_6/7500.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_5/7500.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_5/7500.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -1105,23 +1146,11 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_6/7500.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_6/7500.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_3/7500.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_3/7500.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_8/7500.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_8/7500.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
@@ -1144,68 +1173,33 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_4/7500.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_4/7500.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_8/7500.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_8/7500.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
-Segment length = 5000 (read split allowed)
+Segment length = 4998 (read split allowed)
 Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_2/7500.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_2/7500.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_9/5000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_9/5000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
 Window size = 32766
 Segment length = 5000 (read split allowed)
 Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_3/7500.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_3/7500.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_10/7500.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_10/7500.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Percentage identity threshold = 94%
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_5/7500.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_5/7500.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
@@ -1216,111 +1210,143 @@ Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_10/5000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_10/5000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 325.69 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 322.963 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 317.673 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 321.174 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 319.358 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 319.362 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 317.686 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 319.369 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 326.732 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 319.386 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 322.167 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 319.427 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 157, 157]
-INFO, skch::main, Time spent mapping the query : 0.669396 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.72618 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.726892 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.711917 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/5000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.726028 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.774777 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/5000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.750619 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.72276 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.760473 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.747543 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.801999 sec
+INFO, skch::main, Time spent computing the reference index: 33.9173 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 31, 31]
+INFO, skch::main, Time spent mapping the query : 0.0255262 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/7500.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.804101 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.9814 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 36, 36]
+INFO, skch::main, Time spent mapping the query : 0.0322247 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/7500.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.7886 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 41, 41]
+INFO, skch::main, Time spent mapping the query : 0.0361921 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/7500.mashmap.out
-Wrote to outputs/dog/simulation/query_length/experiment_3/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/7500.bigsi.json
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.4749 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 44, 44]
+INFO, skch::main, Time spent mapping the query : 0.0355596 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/7500.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.07 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 48, 48]
+INFO, skch::main, Time spent mapping the query : 0.0402762 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/7500.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.8474 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.13 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 49, 49]
+INFO, skch::main, Time spent mapping the query : 0.0396342 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/7500.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 50, 50]
+INFO, skch::main, Time spent mapping the query : 0.0413545 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/7500.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 35.2896 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 49, 49]
+INFO, skch::main, Time spent mapping the query : 0.0415261 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/7500.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.4639 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 52, 52]
+INFO, skch::main, Time spent mapping the query : 0.0437388 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/7500.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.5941 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 54, 54]
+INFO, skch::main, Time spent mapping the query : 0.0438194 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/5000.mashmap.out
 Wrote to outputs/dog/simulation/query_length/experiment_10/7500.bigsi.json
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.8606 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 58, 58]
+INFO, skch::main, Time spent mapping the query : 0.0472162 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/7500.mashmap.out
+Wrote to outputs/dog/simulation/query_length/experiment_2/7500.bigsi.json
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 33.068 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 66, 66]
+INFO, skch::main, Time spent mapping the query : 0.0528863 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/5000.mashmap.out
+Wrote to outputs/dog/simulation/query_length/experiment_4/7500.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_6/7500.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_5/7500.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_3/7500.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_9/7500.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_7/7500.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_8/7500.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_9/5000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_1/7500.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_10/5000.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_4/10000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_4/10000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_1/10000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_1/10000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
 Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
 Kmer size = 16
@@ -1343,8 +1369,51 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_1/10000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_1/10000.mashmap.out
+Query = [seqs/dog/simulation/query_length/experiment_8/10000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_8/10000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_10/10000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_10/10000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_7/10000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_7/10000.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/dog/simulation/query_length/experiment_9/10000.fasta]
+Mapping output file = outputs/dog/simulation/query_length/experiment_9/10000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>
@@ -1382,162 +1451,93 @@ Alphabet = DNA
 Percentage identity threshold = 94%
 Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
 Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_4/10000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_4/10000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
 Query = [seqs/dog/simulation/query_length/experiment_3/10000.fasta]
 Mapping output file = outputs/dog/simulation/query_length/experiment_3/10000.mashmap.out
 Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
 >>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_10/10000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_10/10000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_8/10000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_8/10000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_9/10000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_9/10000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>>>>
-Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
-Kmer size = 16
-Window size = 32766
-Segment length = 5000 (read split allowed)
-Alphabet = DNA
-Percentage identity threshold = 94%
-Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
-Execution threads  = 1
-Query = [seqs/dog/simulation/query_length/experiment_7/10000.fasta]
-Mapping output file = outputs/dog/simulation/query_length/experiment_7/10000.mashmap.out
-Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
->>>>>>>>>>>>>>>>>>
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
 INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::build, minimizers picked from reference = 58257260
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 35.0994 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.195053 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/10000.mashmap.out
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 36.8715 sec
+INFO, skch::main, Time spent computing the reference index: 32.4614 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 29, 29]
+INFO, skch::main, Time spent mapping the query : 0.02492 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/10000.mashmap.out
 INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 36.864 sec
-INFO, skch::Sketch::index, unique minimizers = 19500262
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.192985 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/10000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.19547 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/10000.mashmap.out
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 37.0801 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 38.4648 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 37.8284 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 39.9032 sec
-INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
-INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 37.1936 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.190845 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/10000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 158, 158]
-INFO, skch::main, Time spent mapping the query : 0.19485 sec
+INFO, skch::main, Time spent computing the reference index: 32.8404 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 29, 29]
+INFO, skch::main, Time spent mapping the query : 0.0248996 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_1/10000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.18488 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/10000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 157, 157]
-INFO, skch::main, Time spent mapping the query : 0.192363 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 32.2102 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 31, 31]
+INFO, skch::main, Time spent mapping the query : 0.0255863 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_2/10000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 160, 160]
-INFO, skch::main, Time spent mapping the query : 0.192808 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 32.8873 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 36, 36]
+INFO, skch::main, Time spent mapping the query : 0.0308979 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_8/10000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 31.996 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 44, 44]
+INFO, skch::main, Time spent mapping the query : 0.0371072 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_10/10000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 33.0992 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 45, 45]
+INFO, skch::main, Time spent mapping the query : 0.0422692 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_7/10000.mashmap.out
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 38.1395 sec
+INFO, skch::main, Time spent computing the reference index: 30.1706 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 50, 50]
+INFO, skch::main, Time spent mapping the query : 0.0418214 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_3/10000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
 INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
 INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
-INFO, skch::main, Time spent computing the reference index: 38.2998 sec
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.203404 sec
-INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_4/10000.mashmap.out
-INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 159, 159]
-INFO, skch::main, Time spent mapping the query : 0.183007 sec
+INFO, skch::main, Time spent computing the reference index: 33.7559 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [1, 46, 46]
+INFO, skch::main, Time spent mapping the query : 0.0391529 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_9/10000.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 32.3658 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 48, 48]
+INFO, skch::main, Time spent mapping the query : 0.039834 sec
+INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_5/10000.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 33.3697 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [0, 49, 49]
+INFO, skch::main, Time spent mapping the query : 0.0410275 sec
 INFO, skch::main, mapping results saved in : outputs/dog/simulation/query_length/experiment_6/10000.mashmap.out
-Wrote to outputs/dog/simulation/query_length/experiment_5/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/10000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_4/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/10000.bigsi.json
 Wrote to outputs/dog/simulation/query_length/experiment_1/10000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_2/10000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_8/10000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_10/10000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_7/10000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_3/10000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_5/10000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_9/10000.bigsi.json
+Wrote to outputs/dog/simulation/query_length/experiment_6/10000.bigsi.json
