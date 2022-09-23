@@ -31,8 +31,10 @@ source "${script_dir}/get_metrics.sh";
 
 #mammal_benchmark "pan_trog" && wait;
 #mammal_benchmark "gorilla" && wait;
-mammal_metrics "pan_trog";
-mammal_metrics "gorilla";
+mammal_benchmark "dog" && wait;
+#mammal_metrics "pan_trog";
+#mammal_metrics "gorilla";
+mammal_metrics "dog";
 
 #pacbio_benchmark && wait;
 #nanopore_benchmark;

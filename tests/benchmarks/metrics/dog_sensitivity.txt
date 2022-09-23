@@ -1,0 +1,13 @@
+outputs/dog/simulation/query_length/experiment_6/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_7/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_5/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_32/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_26/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_30/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_33/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_39/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_45/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_42/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_47/1000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_36/2000.bigsi.json 1.0
+outputs/dog/simulation/query_length/experiment_42/2000.bigsi.json 1.0

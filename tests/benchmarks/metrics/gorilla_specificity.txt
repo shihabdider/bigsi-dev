@@ -340,3 +340,11 @@ outputs/gorilla/simulation/query_length/experiment_33/10000.bigsi.json 0.9915481
 outputs/gorilla/simulation/query_length/experiment_41/10000.bigsi.json 0.9856218547807333
 outputs/gorilla/simulation/query_length/experiment_31/10000.bigsi.json 0.9699309223892727
 outputs/gorilla/simulation/query_length/experiment_38/10000.bigsi.json 0.9748433926618276
+outputs/gorilla/simulation/query_length/experiment_43/10000.bigsi.json 0.9998984049578381
+outputs/gorilla/simulation/query_length/experiment_46/10000.bigsi.json 0.9994974369283345
+outputs/gorilla/simulation/query_length/experiment_50/10000.bigsi.json 0.9966192701600876
+outputs/gorilla/simulation/query_length/experiment_49/10000.bigsi.json 0.9925620665393506
+outputs/gorilla/simulation/query_length/experiment_44/10000.bigsi.json 0.9854134565998973
+outputs/gorilla/simulation/query_length/experiment_48/10000.bigsi.json 0.9872374635715003
+outputs/gorilla/simulation/query_length/experiment_47/10000.bigsi.json 0.9790468364831553
+outputs/gorilla/simulation/query_length/experiment_45/10000.bigsi.json 0.9701537533916189
