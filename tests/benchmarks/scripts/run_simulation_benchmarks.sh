@@ -50,9 +50,6 @@ function error_and_length_benchmark() {
     echo "Running variable error rate x query length benchmark";
     HG38_SUB_RATE=hg38/simulation/error_and_query_length
 
-    #local sub_rates=( 001 002 003 004 005 006 )
-    local sub_rates=( 006 )
-
     for j in $( seq 1 $num_experiments );
     do
         mkdir -p outputs/${HG38_SUB_RATE}/experiment_${j};
@@ -60,9 +57,9 @@ function error_and_length_benchmark() {
 
     N=12
     for i in ${!QUERY_LENGTHS[@]}; do
-        for j in ${!sub_rates[@]};
+        for j in ${!SUB_RATES[@]};
         do
-            filename=${QUERY_LENGTHS[i]}_${sub_rates[j]}
+            filename=${QUERY_LENGTHS[i]}_${SUB_RATES[j]}
             for k in $( seq 1 $num_experiments );
             do
                 ((b=b%N)); ((b++==0)) && wait
@@ -70,7 +67,7 @@ function error_and_length_benchmark() {
                     -q seqs/${HG38_SUB_RATE}/experiment_${k}/${filename}.fasta \
                     -c scripts/hg38.office.config.json \
                     -o outputs/${HG38_SUB_RATE}/experiment_${k}/${filename} \
-                    -i ${sub_rates[j]} \
+                    -i ${SUB_RATES[j]} \
                     -m $mashmap_flag \
             &
             done
