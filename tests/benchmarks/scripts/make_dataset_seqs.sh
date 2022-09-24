@@ -1,5 +1,5 @@
-#QUERY_LENGTHS=( 7500 ) # 12500 15000 17500 ) # 40000 80000 160000 200000 250000 300000 )
-QUERY_LENGTHS=( 1000 2000 3000 4000 5000 7500 10000 ) # 40000 80000 160000 200000 250000 300000 )
+#QUERY_LENGTHS=( 7500 12500 15000 17500 ) # 40000 80000 160000 200000 250000 300000 )
+QUERY_LENGTHS=( 1000 2000 3000 4000 5000 7500 10000 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
 num_experiments=100
 num_queries_per_seq=4
 
@@ -53,7 +53,7 @@ function make_error_rate_dataset() {
 }
 
 function make_error_and_length_dataset() {
-    local sub_rates=( 001 002 003 004 005 )
+    local sub_rates=( 001 002 003 004 005 006 )
     local num_experiments=100
 
     for n in $( seq 1 $num_experiments );
@@ -80,10 +80,10 @@ function make_error_and_length_dataset() {
 #function make_synth_dataset() {
 #}
 
-#make_error_and_length_dataset
+make_error_and_length_dataset
 #mammal_dataset "pan_trog";
 #mammal_dataset "gorilla";
-mammal_dataset "dog";
+#mammal_dataset "dog";
 
 #mammal_dataset "hg38";
 #make_error_rate_dataset()

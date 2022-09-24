@@ -1,73 +1,2423 @@
 Computing metrics for 10 experiments on /Users/shihabdider/Research/bigsi-dev/bigsis/hg38_32M_bins_query_config.json BIGSI...
 Running mashmap query?: 1
-Running dog benchmark
-Wrote to outputs/dog/simulation/query_length/experiment_9/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/1000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/2000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/3000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/4000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/7500.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/5000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_9/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_5/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_1/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_8/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_3/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_10/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_7/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_2/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_4/10000.bigsi.json
-Wrote to outputs/dog/simulation/query_length/experiment_6/10000.bigsi.json
+Running variable error rate x query length benchmark
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/1000_006.mashmap.out
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Kmer size = 16
+Window size = 32766
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Segment length = 998 (read split allowed)
+Percentage identity threshold = 94%
+Alphabet = DNA
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/1000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/1000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.745 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [69, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.573744 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/1000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.0755 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [70, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.114723 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/1000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.939 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.5003 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.665 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [73, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.0590807 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/1000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [68, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.370517 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/1000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.5694 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [71, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.647284 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/1000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.9917 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [70, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.30522 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/2000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [67, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.0924975 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/2000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.6342 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.4203 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.2234 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.8907 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [70, 92, 92]
+INFO, skch::main, Time spent mapping the query : 0.189178 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/1000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 46.1384 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [66, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.408775 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/1000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [66, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.156873 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/1000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [70, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.486958 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/1000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [75, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.781471 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/1000_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/1000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/1000_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+>>>>>>>>>>>>>>>>>>
+Percentage identity threshold = 94%
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Kmer size = 16
+Execution threads  = 1
+Window size = 32766
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/2000_006.fasta]
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/2000_006.mashmap.out
+Percentage identity threshold = 94%
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 1998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/2000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/2000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 37.5695 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 34.4891 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [70, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.427428 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/2000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [68, 93, 93]
+INFO, skch::main, Time spent mapping the query : 0.381844 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/2000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 37.5967 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 36.9477 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [52, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.173784 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/3000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [69, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.390261 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/2000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 36.2003 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 38.1866 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [73, 93, 93]
+INFO, skch::main, Time spent mapping the query : 0.172247 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/2000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 38.3972 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [59, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.126517 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/3000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 39.9237 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 39.9254 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [53, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.124769 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/3000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [71, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.524231 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/2000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.0349 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.4494 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.5133 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [68, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.127662 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/2000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [48, 83, 83]
+INFO, skch::main, Time spent mapping the query : 0.316679 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/3000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [73, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.931388 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/2000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [67, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.482536 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/2000_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/2000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/2000_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Segment length = 3998 (read split allowed)
+Percentage identity threshold = 94%
+Alphabet = DNA
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Percentage identity threshold = 94%
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 2998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/3000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/3000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 38.2132 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [62, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.337799 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/3000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 37.6536 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [55, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.492461 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/3000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.0552 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.4321 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.1735 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.4682 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [48, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.416788 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/3000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.359 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [55, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.607476 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/4000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [59, 83, 83]
+INFO, skch::main, Time spent mapping the query : 0.150455 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/3000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [57, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.514402 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/3000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [60, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.604827 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/4000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.7829 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.1572 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [61, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.209695 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/4000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [56, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.162658 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/3000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.1492 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 46.2185 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [49, 84, 84]
+INFO, skch::main, Time spent mapping the query : 0.171955 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/4000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [56, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.268741 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/4000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.4452 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [64, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.642419 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/4000_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/3000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/4000_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 3998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/4000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/4000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.8435 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [52, 85, 85]
+INFO, skch::main, Time spent mapping the query : 0.435303 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/5000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.1421 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [43, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.235527 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/5000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.0739 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.1252 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [44, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.274358 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/5000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [56, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.324314 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/5000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.2662 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 46.0169 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 48.4139 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [60, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.28149 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/4000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.2351 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [53, 86, 86]
+INFO, skch::main, Time spent mapping the query : 0.27853 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/5000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [55, 83, 83]
+INFO, skch::main, Time spent mapping the query : 0.212137 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/4000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.3685 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.5389 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [56, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.317402 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/4000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.2775 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [52, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.272769 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/5000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.6028 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [59, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.661549 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/5000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [51, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.619228 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/5000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [70, 92, 92]
+INFO, skch::main, Time spent mapping the query : 0.30944 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/4000_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/4000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/5000_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/7500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/7500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/7500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/7500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Segment length = 5000 (read split allowed)
+Kmer size = 16
+Window size = 32766
+Alphabet = DNA
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/7500_006.fasta]
+Execution threads  = 1
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/7500_006.mashmap.out
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/7500_006.fasta]
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/7500_006.mashmap.out
+>>>>>>>>>>>>>>>>>>
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/7500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/7500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/7500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/7500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/7500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/7500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/7500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/7500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/7500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/7500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/7500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/7500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 4998 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/5000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/5000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 38.8525 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 39.7509 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [75, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.365251 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/7500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [68, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.588951 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/7500_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.7021 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [76, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.287092 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/7500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.9357 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.6388 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [72, 86, 86]
+INFO, skch::main, Time spent mapping the query : 0.312863 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/7500_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [56, 92, 92]
+INFO, skch::main, Time spent mapping the query : 0.24589 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/5000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 39.9242 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.1441 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.3627 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.283 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [61, 93, 93]
+INFO, skch::main, Time spent mapping the query : 0.416281 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/5000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [72, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.275003 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/7500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [69, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.280151 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/7500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [64, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.518199 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/7500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 47.4954 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.0938 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.5034 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [64, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.427048 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/7500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [65, 84, 84]
+INFO, skch::main, Time spent mapping the query : 0.562545 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/7500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [71, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.506663 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/7500_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/5000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/7500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/7500_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/10000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/10000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/10000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/10000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Percentage identity threshold = 94%
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/10000_006.fasta]
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/10000_006.mashmap.out
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/10000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/10000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/10000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/10000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/10000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/10000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/10000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/10000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/10000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/10000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+>>>>>>>>>>>>>>>>>>
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/10000_006.fasta]
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/10000_006.mashmap.out
+Kmer size = 16
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+Window size = 32766
+>>>>>>>>>>>>>>>>>>
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/10000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/10000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 39.1498 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [74, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.226444 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/10000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.0553 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.8134 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 39.9668 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [74, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.392957 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/10000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [74, 86, 86]
+INFO, skch::main, Time spent mapping the query : 0.291864 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/10000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.9086 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [73, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.322558 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/10000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [80, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.597084 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/10000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.4466 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.1967 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.754 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.9924 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [76, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.376828 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/10000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [73, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.320272 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/10000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [83, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.395971 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/12500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.2105 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.2148 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [80, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.824286 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/12500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.102 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [77, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.367188 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/10000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [75, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.456072 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/10000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [75, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.328337 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/10000_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/12500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/10000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/12500_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/12500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/12500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.0911 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [81, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.612721 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/12500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 39.4546 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.2876 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.8136 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.98 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [78, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.376258 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/12500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [85, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.529872 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/15000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [81, 93, 93]
+INFO, skch::main, Time spent mapping the query : 0.899046 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/12500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.7997 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [87, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.860171 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/15000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.9122 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.2866 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [85, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.505389 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/15000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [82, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.965941 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/12500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 46.6065 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.8872 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.9525 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [82, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.649006 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/12500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [78, 86, 86]
+INFO, skch::main, Time spent mapping the query : 0.465479 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/12500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 46.5009 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [81, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.397214 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/15000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [78, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.416759 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/12500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [79, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.80383 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/12500_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/12500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/12500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/12500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/12500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/12500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/12500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/12500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/12500_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/15000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/15000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.1817 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.1791 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [81, 85, 85]
+INFO, skch::main, Time spent mapping the query : 0.613258 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/15000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [88, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.828422 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/17500_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 40.7649 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 41.0913 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [89, 92, 92]
+INFO, skch::main, Time spent mapping the query : 0.58973 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/15000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.1491 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [85, 92, 92]
+INFO, skch::main, Time spent mapping the query : 0.75283 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/17500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [80, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.475501 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/17500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.945 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.9811 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [86, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.440128 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/17500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [83, 88, 88]
+INFO, skch::main, Time spent mapping the query : 0.501012 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/15000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.274 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.3619 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.2328 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.6647 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [85, 93, 93]
+INFO, skch::main, Time spent mapping the query : 0.60202 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/15000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [87, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.458626 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/15000_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.1878 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [89, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.841695 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/17500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [79, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.864822 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/15000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [87, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.586222 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/17500_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/15000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/17500_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_7/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_7/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_2/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_2/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_3/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_3/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_6/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_6/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_5/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_5/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_1/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_1/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_4/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_4/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_8/17500_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_8/17500_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 38.9479 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.6162 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.7366 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [87, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.597507 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/20000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [91, 93, 93]
+INFO, skch::main, Time spent mapping the query : 1.15141 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/17500_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [83, 88, 88]
+INFO, skch::main, Time spent mapping the query : 1.08734 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/17500_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 42.1097 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.5369 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 45.9782 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 46.9597 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [88, 91, 91]
+INFO, skch::main, Time spent mapping the query : 1.34265 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_1/20000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [84, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.938058 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_2/20000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [86, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.598757 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_6/20000_006.mashmap.out
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [84, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.676663 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/17500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 46.972 sec
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 44.9539 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 48.0295 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 43.8225 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [80, 86, 86]
+INFO, skch::main, Time spent mapping the query : 0.410283 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_7/17500_006.mashmap.out
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 46.1891 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [88, 90, 90]
+INFO, skch::main, Time spent mapping the query : 0.708526 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_8/20000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [86, 87, 87]
+INFO, skch::main, Time spent mapping the query : 0.914525 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_3/20000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [84, 89, 89]
+INFO, skch::main, Time spent mapping the query : 0.643304 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_5/20000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [90, 92, 92]
+INFO, skch::main, Time spent mapping the query : 1.35848 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_4/20000_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/20000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_1/20000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_8/20000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_2/20000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_7/17500_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_6/20000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_4/20000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_3/20000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_5/20000_006.bigsi.json
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_9/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_9/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>
+Reference = /Users/shihabdider/Research/seqs/hg38.80pi.sketch
+Kmer size = 16
+Window size = 32766
+Segment length = 5000 (read split allowed)
+Alphabet = DNA
+Percentage identity threshold = 94%
+Sketch output mode = 0 (0 = map only (default), 1 = sketch only, 2 = both)
+Execution threads  = 1
+Query = [seqs/hg38/simulation/error_and_query_length/experiment_10/20000_006.fasta]
+Mapping output file = outputs/hg38/simulation/error_and_query_length/experiment_10/20000_006.mashmap.out
+Filter mode = 1 (1 = map, 2 = one-to-one, 3 = none)
+>>>>>>>>>>>>>>>>>>
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::build, minimizers picked from reference = 58257260
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::index, unique minimizers = 19500262
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 25.4309 sec
+INFO, skch::Sketch::computeFreqHist, Frequency histogram of minimizers = (1, 20717258) ... (117873, 2)
+INFO, skch::Sketch::computeFreqHist, With threshold 0.001%, ignore minimizers occurring >= 9838 times during lookup.
+INFO, skch::main, Time spent computing the reference index: 24.3223 sec
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [87, 91, 91]
+INFO, skch::main, Time spent mapping the query : 0.515264 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_9/20000_006.mashmap.out
+INFO, skch::Map::mapQuery, [count of mapped reads, reads qualified for mapping, total input reads] = [89, 93, 93]
+INFO, skch::main, Time spent mapping the query : 0.696315 sec
+INFO, skch::main, mapping results saved in : outputs/hg38/simulation/error_and_query_length/experiment_10/20000_006.mashmap.out
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_9/20000_006.bigsi.json
+Wrote to outputs/hg38/simulation/error_and_query_length/experiment_10/20000_006.bigsi.json
