@@ -53,7 +53,8 @@ function make_error_rate_dataset() {
 }
 
 function make_error_and_length_dataset() {
-    local sub_rates=( 001 002 003 004 005 006 )
+    #local sub_rates=( 001 002 003 004 005 006 )
+    local sub_rates=( 007 008 009 010 )
     local num_experiments=100
 
     for n in $( seq 1 $num_experiments );

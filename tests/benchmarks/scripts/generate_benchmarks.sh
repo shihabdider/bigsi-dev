@@ -1,10 +1,12 @@
 #!/bin/bash
 
 # Global parameters
-QUERY_LENGTHS=( 1000 2000 3000 4000 5000 7500 10000 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
+#QUERY_LENGTHS=( 1000 2000 3000 4000 5000 7500 10000 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
 #QUERY_LENGTHS=( 7500 ) # 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
+QUERY_LENGTHS=( 5000 ) # 12500 15000 17500 20000 ) # 40000 80000 160000 200000 250000 300000 )
 #SUB_RATES=( 001 002 003 004 005 006 007 008 009 010 )
-SUB_RATES=( 006 )
+SUB_RATES=( 001 002 003 004 005 006 007 008 009 010 )
+#SUB_RATES=( 006 )
 
 num_experiments=50;
 query_config="/Users/shihabdider/Research/bigsi-dev/bigsis/hg38_32M_bins_query_config.json";
@@ -24,7 +26,7 @@ source "${script_dir}/get_metrics.sh";
 # Simulation benchmarks
 
 error_and_length_benchmark && wait;
-error_and_length_metrics "query_length_006";
+error_and_length_metrics "sub_rate_5000";
 #error_benchmark && wait;
 #query_length_benchmark && wait;
 #sub_rate_metrics "sub_rate_95_32M";
