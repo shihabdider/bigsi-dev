@@ -4,7 +4,8 @@ num_experiments=100
 num_queries_per_seq=4
 
 function mammal_dataset() {
-    local mammal_dir=$1/simulation/query_length
+    local mammal_dir=$1/simulation/query_length;
+    mkdir -p $mammal_dir;
 
     N=12
     for i in ${QUERY_LENGTHS[@]};
@@ -81,10 +82,11 @@ function make_error_and_length_dataset() {
 #function make_synth_dataset() {
 #}
 
-make_error_and_length_dataset
+#make_error_and_length_dataset
 #mammal_dataset "pan_trog";
 #mammal_dataset "gorilla";
 #mammal_dataset "dog";
+mammal_dataset "bas";
 
 #mammal_dataset "hg38";
 #make_error_rate_dataset()
