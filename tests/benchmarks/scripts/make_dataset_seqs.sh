@@ -86,7 +86,8 @@ function make_error_and_length_dataset() {
 #mammal_dataset "pan_trog";
 #mammal_dataset "gorilla";
 #mammal_dataset "dog";
-mammal_dataset "bas";
+#mammal_dataset "bas";
+mammal_dataset "bonobo";
 
 #mammal_dataset "hg38";
 #make_error_rate_dataset()

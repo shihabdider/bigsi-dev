@@ -105,3 +105,4 @@ outputs/bas/simulation/query_length/experiment_7/15000.bigsi.json 1.0
 outputs/bas/simulation/query_length/experiment_20/15000.bigsi.json 1.0
 outputs/bas/simulation/query_length/experiment_26/20000.bigsi.json 1.0
 outputs/bas/simulation/query_length/experiment_38/20000.bigsi.json 1.0
+outputs/bas/simulation/query_length/experiment_47/20000.bigsi.json 1.0
