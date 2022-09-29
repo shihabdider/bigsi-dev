@@ -32,17 +32,17 @@ source "${script_dir}/get_metrics.sh";
 #sub_rate_metrics "sub_rate_95_32M";
 #query_length_metrics "query_length_95_32M";
 
-#mammal_benchmark "pan_trog" && wait;
-#mammal_benchmark "gorilla" && wait;
+mammal_benchmark "pan_trog" && wait;
+mammal_benchmark "gorilla" && wait;
 #mammal_benchmark "dog" && wait;
 #mammal_benchmark "bas" && wait;
-mammal_benchmark "bonobo" && wait;
+#mammal_benchmark "bonobo" && wait;
 
-#mammal_metrics "pan_trog";
-#mammal_metrics "gorilla";
+mammal_metrics "pan_trog";
+mammal_metrics "gorilla";
 #mammal_metrics "dog";
 #mammal_metrics "bas";
-mammal_metrics "bonobo";
+#mammal_metrics "bonobo";
 
 #pacbio_benchmark && wait;
 #nanopore_benchmark;

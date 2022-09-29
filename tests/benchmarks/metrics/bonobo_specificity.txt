@@ -542,3 +542,9 @@ outputs/bonobo/simulation/query_length/experiment_43/20000.bigsi.json 1.0
 outputs/bonobo/simulation/query_length/experiment_39/20000.bigsi.json 0.9998949910742413
 outputs/bonobo/simulation/query_length/experiment_44/20000.bigsi.json 1.0
 outputs/bonobo/simulation/query_length/experiment_40/20000.bigsi.json 1.0
+outputs/bonobo/simulation/query_length/experiment_46/20000.bigsi.json 1.0
+outputs/bonobo/simulation/query_length/experiment_45/20000.bigsi.json 1.0
+outputs/bonobo/simulation/query_length/experiment_49/20000.bigsi.json 0.999670112161865
+outputs/bonobo/simulation/query_length/experiment_47/20000.bigsi.json 0.999890049477735
+outputs/bonobo/simulation/query_length/experiment_48/20000.bigsi.json 1.0
+outputs/bonobo/simulation/query_length/experiment_50/20000.bigsi.json 0.9998873873873874

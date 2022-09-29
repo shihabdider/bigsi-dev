@@ -17,7 +17,7 @@ function mammal_benchmark() {
                 -q seqs/${mammal_dir}/experiment_$j/${QUERY_LENGTHS[i]}.fasta \
                 -c scripts/hg38.office.config.json \
                 -o outputs/${mammal_dir}/experiment_$j/${QUERY_LENGTHS[i]} \
-                -i 2 \
+                -i 3 \
                 -m $mashmap_flag \
         &
         done
