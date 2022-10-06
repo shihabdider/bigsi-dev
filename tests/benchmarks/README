@@ -1,0 +1,12 @@
+This directory contains all the scripts and other necessary files to generate 
+benchmark results. 
+
+The directory structure is as follows:
+- figures: contains all the figures generated from the metric files
+- metrics: contains all the files containing the metric results for a 
+  particular benchmark
+- outputs: contains all the output files for the benchmark trials (which are 
+  used to compute the metrics for each benchmark experiment)
+- scripts: contains scripts (python and bash) for handling the benchmark 
+  (description of each script's function is given at the top of the file)
+- seqs: contains all the query sequences that used in the benchmark

@@ -1,6 +1,3 @@
-# Todo: 
-# - add QUERY_LENGTHS to nanopore benchmark
-
 function get_metric() {
     local benchmark_dir=$1
     local metric=$2

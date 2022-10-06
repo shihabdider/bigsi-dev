@@ -84,6 +84,7 @@ def get_simulation_stats(benchmark_name, parameter_name):
 
     return benchmark_stats
 
+
 def make_experiments_figure(xs, ys, metrics):
     '''
     Generates template figure for experiments
@@ -99,17 +100,17 @@ def make_experiments_figure(xs, ys, metrics):
 
     for i, ax in enumerate(axs):
         for metric in metrics:
-            xs = ys[i]['{0}_means'.format(metric['name'])].index
+            # xs = ys[i]['{0}_means'.format(metric['name'])].index
             ax.plot(
-                xs,
-                # xs[i] if i < len(xs) else xs[0],
+                # xs,
+                xs[i] if i < len(xs) else xs[0],
                 ys[i]['{0}_means'.format(metric['name'])],
                 label=metric['name'] if i == 0 else "",
                 marker='o'
             )
             ax.errorbar(
-                xs,
-                # xs[i] if i < len(xs) else xs[0],
+                # xs,
+                xs[i] if i < len(xs) else xs[0],
                 ys[i]['{0}_means'.format(metric['name'])],
                 yerr=[
                     ys[i]['{0}_errors'.format(metric['name'])].lower,
@@ -120,6 +121,7 @@ def make_experiments_figure(xs, ys, metrics):
             )
 
     return fig, axs
+
 
 def make_simulation_trials_figure(figure_output=False):
     sub_stats = get_simulation_stats('sub_rate_95_32M', 'sub_rate')
@@ -138,54 +140,58 @@ def make_simulation_trials_figure(figure_output=False):
 
     fig, axs = make_experiments_figure(xs, ys, metrics)
 
-    # Theoritical Curve
-    error_rate_theory_sensitivities = [0.9999999999999992, 0.9999999973133248,
-                                       0.999999035776888, 0.9999633461915861,
-                                       0.9996118046476143, 0.9985398391125027,
-                                       0.9951159587019267, 0.9887248080755489,
-                                       0.9786179973528009, 0.9625853664976465]
-    error_rate_theory_specificities = [1.0, 1.0, 1.0, 0.9999999999630376,
-                                       0.8999965025321311, 0.6881394058910561,
-                                       0.2188627586201921,
-                                       5.96189764223709e-14, 0.0, 0.0]
-    query_size_theory_sensitivities = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-                                       1.0, 1.0, 1.0, 1.0, 1.0]
-    query_size_theory_specificities = [0.999999585864842, 0.9999999999999574,
-                                       1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-                                       1.0, 1.0, 1.0]
+    # Theoretical Accuracies
 
-    # Theoritical Curves
-    axs[0].plot(
-        ERROR_RATES,
-        error_rate_theory_sensitivities,
-        label='theoretical sensitivity'
+    theory_error_rate_df_10000 = pd.read_csv(
+        './metrics/theory_error_rate_acc_10000.txt'
     )
-    axs[0].plot(
-        ERROR_RATES,
-        error_rate_theory_specificities,
-        label='theoretical specificity'
+    theory_error_rate_df_5000 = pd.read_csv(
+        './metrics/theory_error_rate_acc_5000.txt'
     )
 
-    axs[1].plot(
-        SEQ_LENGTHS,
-        query_size_theory_sensitivities[:11],
+    theory_query_size_df_000 = pd.read_csv(
+        './metrics/theory_query_size_acc_00.txt'
     )
-    axs[1].plot(
-        SEQ_LENGTHS,
-        query_size_theory_specificities[:11],
+    theory_query_size_df_006 = pd.read_csv(
+        './metrics/theory_query_size_acc_006.txt'
     )
+
+    # Theoretical Curves
+
+    metrics = ['sensitivities', 'specificities']
+    for metric in metrics:
+        axs[0].plot(
+            ERROR_RATES,
+            theory_error_rate_df_10000[metric],
+            label='theoretical {0}'.format(metric)
+        )
+
+        axs[1].plot(
+            SEQ_LENGTHS,
+            theory_query_size_df_000[metric],
+        )
+
+        axs[2].plot(
+            ERROR_RATES,
+            theory_error_rate_df_5000[metric],
+        )
+
+        axs[3].plot(
+            SEQ_LENGTHS,
+            theory_query_size_df_006[metric],
+        )
 
     fig.suptitle('Flashmap accuracy on simulated human genome sequences')
 
     # Substitution Rate
     axs[0].set_title('10Kb query')
     axs[0].axvline(x=0.06, linestyle='--', color='grey')
-    axs[0].text(0.045, 0.1, '0.06 substitution rate threshold', rotation=90)
+    axs[0].text(0.045, 0.2, '0.06 substitution rate threshold', rotation=90)
     axs[0].set_xlabel('Substitutions per site')
 
     axs[2].set_title('5Kb query')
     axs[2].axvline(x=0.06, linestyle='--', color='grey')
-    axs[2].text(0.045, 0.1, '0.06 substitution rate threshold', rotation=90)
+    axs[2].text(0.045, 0.2, '0.06 substitution rate threshold', rotation=90)
     axs[2].set_xlabel('Substitutions per site')
 
     # Query Length
@@ -659,11 +665,11 @@ def window_size_figure(figure_output=False):
         plt.show()
 
 
-window_size_figure(figure_output='figures/window_size_figure')
+# window_size_figure(figure_output='figures/window_size_figure')
 
 # make_read_figure()
 # make_runtime_figure()
-# make_simulation_trials_figure(figure_output='figures/simulation_trials_95_32M')
+make_simulation_trials_figure() #figure_output='figures/simulation_trials_95_32M')
 # make_mammal_figure(figure_output='figures/mammal_accuracy')
 # make_synth_figure()
 # make_jaccard_test_figure(50)
