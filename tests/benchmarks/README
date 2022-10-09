@@ -7,6 +7,29 @@ The directory structure is as follows:
   particular benchmark
 - outputs: contains all the output files for the benchmark trials (which are 
   used to compute the metrics for each benchmark experiment)
-- scripts: contains scripts (python and bash) for handling the benchmark 
-  (description of each script's function is given at the top of the file)
+- scripts: contains scripts (python and bash) for handling the benchmark and 
+  any auxillary files (e.g files containing accession headers for reference 
+  sequences: *_acn.txt)
 - seqs: contains all the query sequences that used in the benchmark
+
+The benchmark consists of a number of experiments. Each experiment consists of 
+a query fasta file that contains a number of query sequences extracted from a 
+reference (and possibly mutated with random substitutions).
+
+The workflow is as follows:
+
+1. Generate query sequences for the benchmark from some reference
+2. Run a specific benchmark using those query sequences
+3. Compute the metric from the benchmark output files (BIGSI and MashMap)
+4. Generate figure from the metric
+
+The master script is `generate_benchmarks.sh` which sources the other necessary 
+scripts to run the benchmarks and compute the metrics from their outputs.
+
+The `hg38.office.config.json` is the main configuration file which contains the 
+paths to all the required files for running the benchmarks.
+
+To make the query sequences use the `make_dataset_seqs.sh` script.
+
+Note that these scripts will try to take advantage of multiple cores. It is 
+best to run them by SSH'ing to the office computer.
